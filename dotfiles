@@ -1,0 +1,72 @@
+#!/bin/zsh
+
+help() {
+    cat << EOF | cut -c 9-
+        Usage: dotfiles OPTION
+        Deploy dotfiles from a repository to ~/.*
+
+            help        display this help text and exit
+            build       generate dotfiles from *.example where applicable
+            install     symlink *.symlink files to ~ (also runs build)
+            uninstall   remove symlinks
+
+        See README.md for more information
+EOF
+}
+
+build() {
+    for x in **/*.example(N); do
+        if [[ ! -a ${x%.example} ]]; then
+            cp ${x} ${x%.example}
+            while [[ `grep -c '__.*__' ${x%.example}` -gt 0 ]]; do
+                token=`grep -o -m 1 '__.*__' ${x%.example}`
+                replace=
+                vared -p "Replace ${token} in ${x%.example} with: " replace
+                sed -i "s/${token}/${replace}/" ${x%.example}
+            done
+        fi
+    done
+}
+
+install() {
+    for x in **/*.symlink(N); do
+        if [[ -a ${HOME}/.${${x:t}%.symlink} ]]; then
+            echo -n "~/.${${x:t}%.symlink} already exists.  Overwrite? [y/N]: "
+            read -q
+            [[ ${REPLY} == "y" ]] && rm ${HOME}/.${${x:t}%.symlink}
+        fi
+        if [[ ! -a ${HOME}/.${${x:t}%.symlink} ]]; then
+            ln -s ${PWD}/${x} ${HOME}/.${${x:t}%.symlink}
+        fi
+    done
+}
+
+uninstall() {
+    for x in **/*.symlink(N); do
+        [[ -h ${HOME}/.${${x:t}%.symlink} ]] && rm ${HOME}/.${${x:t}%.symlink}
+    done
+}
+
+case $1 in
+    help)
+        help
+        exit 0
+        ;;
+    build)
+        build
+        exit 0
+        ;;
+    install)
+        build
+        install
+        exit 0
+        ;;
+    uninstall)
+        uninstall
+        exit 0
+        ;;
+    *)
+        help
+        exit 1
+        ;;
+esac
