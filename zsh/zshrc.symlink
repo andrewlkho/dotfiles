@@ -1,0 +1,5 @@
+# Shortcut to root of dotfiles repository
+export ZSH=$HOME/git/dotfiles.git
+
+# Source all *.zsh
+for config_file ($ZSH/**/*.zsh) source $config_file
