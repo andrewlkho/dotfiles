@@ -1,0 +1,21 @@
+[core]
+    fileMode = false
+    editor = "vim -c 'set wrap tw=76 fo=tqwanl1 spell ft=markdown' +1"
+    pager = cat
+    autocrlf = false
+
+[alias]
+    st = "status -sb"
+    lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+    wtf = "!git-wtf"
+
+[user]
+    email = andrewho@andrewho.co.uk
+    name = Andrew Ho
+    signingkey = AF72A573
+
+[branch]
+    autosetuprebase = always
+
+[github]
+    user = "andrewlkho"
