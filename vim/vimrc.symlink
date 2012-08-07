@@ -1,0 +1,94 @@
+set nocompatible
+
+" vim-pathogen
+runtime bundle/pathogen/autoload/pathogen.vim
+call pathogen#infect()
+filetype plugin indent on
+
+" basic behaviour
+set backspace=indent,eol,start
+set whichwrap=b,s,h,l
+set autoindent
+set nobackup
+set visualbell t_vb=
+set scrolloff=5
+set number
+
+" colours
+syntax enable
+set background=dark
+let g:solarized_termcolors=16
+let g:solarized_underline=0
+colorscheme solarized
+
+" soft tabs
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+nmap <leader><Tab> :set et!<CR>
+
+" searching
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+" UTF-8
+set encoding=utf-8
+set fileencoding=utf-8
+set termencoding=utf-8
+
+" spelling
+set spelllang=en_gb
+set spellfile=~/.vim/spell/spellfile.utf-8.add
+
+" invisibles
+set listchars=tab:>-,trail:-,eol:¬
+nmap <leader>i :set list!<CR>
+
+" buffers
+set hidden
+nmap <leader>` :bnext<CR>
+nmap <leader>1 :buffer 1<CR>
+nmap <leader>2 :buffer 2<CR>
+nmap <leader>3 :buffer 3<CR>
+nmap <leader>4 :buffer 4<CR>
+nmap <leader>5 :buffer 5<CR>
+nmap <leader>6 :buffer 6<CR>
+nmap <leader>7 :buffer 7<CR>
+nmap <leader>8 :buffer 8<CR>
+nmap <leader>9 :buffer 9<CR>
+
+" status bar
+let g:buftabs_only_basename=1
+let g:buftabs_in_statusline=1
+let g:buftabs_separator=":"
+let g:buftabs_marker_modified="*"
+set laststatus=2
+highlight! link StatusLine WildMenu
+highlight! link StatusLineNC LineNr
+set statusline=\ 
+set statusline+=%{buftabs#statusline()}
+set statusline+=%=
+set statusline+=%{&eol?'eol':''}
+set statusline+=%#WarningMsg#%{&eol?'':'noeol'}%*
+set statusline+=\ \ \ \ 
+set statusline+=Tabs:\ %{&et?'soft':'hard'}
+set statusline+=\ \ \ \ 
+set statusline+=Line\ endings:\ 
+set statusline+=%{&ff=='unix'?'LF':''}
+set statusline+=%#WarningMsg#%{&ff=='dos'?'CRLF':''}%*
+set statusline+=%#WarningMsg#%{&ff=='mac'?'CR':''}%*
+set statusline+=\ \ \ \ 
+set statusline+=Position:\ %c,%l/%L
+set statusline+=\ 
+
+" file-specific settings
+autocmd BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md setlocal wrap
+autocmd BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md setlocal textwidth=80
+autocmd BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md setlocal formatoptions=toqwanl12
+autocmd BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md setlocal spell
+
+" LaTeX
+let g:tex_flavor="latex"
