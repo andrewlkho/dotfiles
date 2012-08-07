@@ -27,10 +27,10 @@ This will symlink any file `foo.symlink` as `~/.foo`
 
 ## Passwords
 
-Some dotfiles inevitable contain sensitive data.  The way I handle this is to 
+Some dotfiles inevitably contain sensitive data.  The way I handle this is to 
 create a template file called `foo.example` and replace any sensitive data with 
-`__SOME TOKEN__`.  Then, when you run `./dotfiles install` it will ask you want 
+`__SOME TOKEN__`.  Then, when you run `./dotfiles install` it will ask you what 
 to replace that token with (and generate a file called `foo`).
 
-Don't forget that you may want to call files `bar.symlink.example` if they both 
+Don't forget that you may want to name files `bar.symlink.example` if they both 
 contain sensitive data and need to be symlinked.
