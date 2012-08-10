@@ -1,0 +1,22 @@
+Host cooper
+    HostName cooper.joyent.us
+
+Host strongspace
+    HostName andrewlkho.strongspace.com
+
+Host sebastian
+    HostName sebastian.andrewho.co.uk
+
+# Uamuzi Bora EC2 instances
+Host *.amazonaws.com
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+
+Host *
+    CheckHostIP no
+    Compression yes
+    HashKnownHosts yes
+    NoHostAuthenticationForLocalhost yes
+    PreferredAuthentications publickey,keyboard-interactive,password
+    Protocol 2
+    User andrewlkho
