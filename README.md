@@ -1,7 +1,7 @@
 # @andrewlkho's dotfiles
 
 This repository contains most of the dotfiles that I use on a regular basis.  It 
-is divided up broadly by the UNIX tools they each belong too (zsh, vim _et 
+is divided up broadly by the UNIX tools they each belong to (zsh, vim _et 
 cetera_).  The layout and concept behind this organisation is heavily borrowed 
 from [Zach Holman](https://github.com/holman/dotfiles)'s work.  Hopefully others 
 will find parts of this useful, or suggest ways in which my setup could be 
