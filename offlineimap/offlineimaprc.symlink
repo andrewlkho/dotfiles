@@ -1,0 +1,34 @@
+[general]
+accounts = fastmail
+ui = basic, Noninteractive.Basic
+pythonfile = ~/.offlineimap-def.py
+
+[mbnames]
+enabled = yes
+filename = ~/.mutt/offlineimap
+header = "mailboxes "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = " "
+footer = "\n"
+
+# fastmail #####################################################################
+
+[Account fastmail]
+localrepository = LocalFastmail
+remoterepository = RemoteFastmail
+
+[Repository LocalFastmail]
+type = Maildir
+localfolders = ~/mail/fastmail
+sep = .
+restoreatime = no
+
+[Repository RemoteFastmail]
+type=IMAP
+remotehost = mail.messagingengine.com
+ssl = yes
+remoteport = 993
+remoteuser = andrewlkho@fastmail.fm
+remotepasseval = get_password(account="andrewlkho", server="mail.messagingengine.com")
+nametrans = lambda foldername: re.sub('Sent Items', 'Sent', re.sub('^INBOX\.', '', foldername))
+folderfilter = lambda foldername: foldername[6:] not in ['Junk Mail', 'Trash', 'Archive']
