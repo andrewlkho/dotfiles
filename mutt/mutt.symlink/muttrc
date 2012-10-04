@@ -1,0 +1,93 @@
+# mailboxes
+set mbox_type = Maildir
+set folder = ~/mail
+set spoolfile = +fastmail/INBOX
+source ~/.mutt/offlineimap
+set my_account = fastmail
+set spoolfile = +$my_account/INBOX
+set sendmail = "msmtp -a $my_account"
+set postponed = +$my_account/Drafts
+set record = +$my_account/Sent
+
+# behaviour
+set nobeep
+set bounce = no
+set nocheck_new
+set noconfirmappend
+set delete = yes
+set fast_reply = yes
+set ignore_list_reply_to
+set include = yes
+set nomark_old
+set move = no
+set recall = no
+set nowait_key
+
+# display
+set attribution = "%n <%a> wrote [%{%Y-%m-%d %H:%M %z}]:"
+set forward_format = "Fwd: %s"
+set nohelp
+set hide_limited
+set index_format = "%4C (%Z) %[%Y-%m-%d %H:%M] %25.25F : %?M?(%M) ?%s "
+set nomenu_move_off
+set menu_scroll
+set pager_format = "-%S- [%C/%m] %n (%c) %s"
+set pager_stop
+set reverse_alias
+set smart_wrap
+set markers = no
+set wrap = 80
+set strict_threads = yes
+set sort = reverse-threads ; set sort_aux = last-date-received
+set status_format = "-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?d?  Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?l? %l?]---(%s/%S)-%>-"
+set text_flowed
+
+# miscellaneous
+alternates 'andrewho(\+.+)?@andrewho\.co\.uk'
+alternates andrewlkho@cantab.net
+alternates andrewho.ho08@imperial.ac.uk
+alternates andrewlkho@doctors.org.uk
+set reverse_name
+set reverse_realname = no
+set realname = "Andrew Ho"
+alternative_order text/enriched text/plain text/html
+hdr_order Date: From: Reply-To: To: Cc: Subject:
+set alias_file = ~/.mutt/aliases
+set editor = "vim -c 'set wrap tw=76 fo=toqwal12 nonumber spell ft=markdown' +1"
+set from = "Andrew Ho <andrewho@andrewho.co.uk>"
+set mailcap_path = ~/.mutt/mailcap
+set query_command = "icloud-addressbook-query.py '%s'"
+set sleep_time = 0
+set header_cache = ~/.mutt/header_cache
+folder-hook . 'exec collapse-all'
+
+# gpg
+my_hdr X-Crypto: `gpg --version | head -n 1` http://gnupg.org/
+my_hdr X-PGP-Key: http://andrewho.co.uk/files/AF72A573.asc
+my_hdr X-PGP-Fingerprint: DAEA BF95 8F39 728B 31F0  4E9A 21E5 508E AF72 A573
+#set crypt_autosign = yes
+set pgp_clearsign_command = "gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_decode_command = "gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_decrypt_command = "gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_encrypt_only_command = "pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0xAF72A573 -- -r %r -- %f"
+set pgp_encrypt_sign_command = "pgpewrap gpg %?p?--passphrase-fd 0? --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0xAF72A573 -- -r %r -- %f"
+set pgp_export_command = "gpg --no-verbose --export --armor %r"
+set pgp_good_sign = "^gpg: Good signature from"
+set pgp_import_command = "gpg --no-verbose --import %f"
+set pgp_list_pubring_command = "gpg --no-verbose --batch --quiet --with-colons --list-keys %r"
+set pgp_list_secring_command = "gpg --no-verbose --batch --quiet --with-colons --list-secret-keys %r"
+set pgp_sign_as = 0xAF72A573
+set pgp_sign_command = "gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_timeout = 1800
+set pgp_verify_command = "gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
+set pgp_verify_key_command = "gpg --verbose --batch --fingerprint --check-sigs %r"
+auto_view = application/x-pgp-message text/html
+
+# ignores
+ignore *
+unignore From: To: Date: Subject: Cc: Reply-To: Content-Type: Message-Id:
+
+# source...
+source ~/.mutt/aliases
+source ~/.mutt/keybindings
+source ~/.mutt/colours

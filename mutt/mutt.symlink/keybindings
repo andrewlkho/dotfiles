@@ -1,0 +1,42 @@
+bind generic \cA first-entry
+bind generic \cE last-entry
+bind generic \cF next-page
+bind generic \cB previous-page
+bind generic N search-opposite
+
+bind index \cF next-page
+bind index \cB previous-page
+bind index \cA first-entry
+bind index \cE last-entry
+bind index q exit
+bind index G sync-mailbox
+
+bind pager \cE bottom
+bind pager \cU mark-as-new
+bind pager <down> next-line
+bind pager <up> previous-line
+bind pager N search-reverse
+bind pager \cA top
+bind pager \cF next-page
+bind pager \cB previous-page
+
+macro compose a "<attach-file>?"
+bind compose d detach-file
+bind compose A edit-description
+
+macro index $ "<sync-mailbox><shell-escape>offlineimap -a $my_account<enter><change-folder>+$my_account/INBOX<enter>"
+macro index,pager c "<change-folder>+$my_account/<tab><tab>"
+macro index,pager C "<copy-message>+$my_account/<tab><tab>"
+macro index,pager ! "<change-folder>+$my_account/INBOX<enter>"
+macro index,pager < "<change-folder>+$my_account/Sent<enter>"
+macro index,pager \cL "<pipe-message>mutt-to-omnifocus.py -q<enter>" "Create OmniFocus task from message"
+
+folder-hook . 'bind index \cU toggle-new'
+
+macro attach s "<save-entry>~/<enter>y"
+
+macro compose ,f0 ":set sendmail='msmtp -a fastmail -f andrewho@andrewho.co.uk'<enter><edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>:macro compose x ,f1<enter>"
+macro compose ,f1 ":set sendmail='msmtp -a fastmail -f andrewlkho@doctors.org.uk'<enter><edit-from><kill-line>Andrew Ho <andrewlkho@doctors.org.uk><enter>:macro compose x ,f2<enter>"
+macro compose ,f2 ":set sendmail='msmtp -a fastmail -f andrewlkho@cantab.net'<enter><edit-from><kill-line>Andrew Ho <andrewlkho@cantab.net><enter>:macro compose x ,f0<enter>"
+
+macro compose x ,f1
