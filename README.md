@@ -7,9 +7,6 @@ from [Zach Holman](https://github.com/holman/dotfiles)'s work.  Hopefully others
 will find parts of this useful, or suggest ways in which my setup could be 
 improved.
 
-I'm slowly migrating my dotfiles over from an older repository so with time more 
-will appear.
-
 
 ## Installation
 
