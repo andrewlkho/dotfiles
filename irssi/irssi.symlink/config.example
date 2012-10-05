@@ -1,0 +1,41 @@
+servers = (
+  { address = "irc.freenode.net"; chatnet = "freenode"; },
+  { address = "irc.srcf.ucam.org"; chatnet = "srcf"; },
+  {
+    address = "chat.hipchat.com";
+    use_ssl = "yes";
+    chatnet = "hipchat";
+    password = "__HIPCHAT PASSWORD__";
+  }
+);
+
+chatnets = {
+  freenode = {
+    type = "IRC";
+    autosendcmd = "/msg nickserv identify __FREENODE PASSWORD__";
+  };
+  srcf = {
+    type = "IRC";
+  };
+  hipchat = {
+    type = "XMPP";
+    nick = "17293_112131@chat.hipchat.com";
+    user_name = "Andrew Ho";
+  };
+};
+
+settings = {
+  core = {
+    real_name = "Andrew Ho";
+    user_name = "andrewlkho";
+    nick = "andrewlkho";
+    timestamp_format = "%Y-%m-%dT%H:%M%z";
+  };
+  "fe-common/core" = {
+    beep_when_away = "no";
+    beep_when_window_active = "no";
+    hide_text_style = "yes";
+    show_nickmode_empty = "no";
+  };
+  "fe-text" = { actlist_sort = "refnum"; colors = "no"; };
+};
