@@ -85,7 +85,7 @@ auto_view = application/x-pgp-message text/html
 
 # ignores
 ignore *
-unignore From: To: Date: Subject: Cc: Reply-To: Content-Type: Message-Id:
+unignore From: To: Date: Subject: Cc: Reply-To:
 
 # source...
 source ~/.mutt/aliases
