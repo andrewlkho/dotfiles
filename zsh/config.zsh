@@ -18,8 +18,6 @@ unset TESTDIR
 fpath=($ZSH/zsh/functions $fpath)
 autoload -U $ZSH/zsh/functions/*(:t)
 
-export PS1='[%m] %1~ %# '
-export PS2='[%m] %1~ > '
 export EDITOR='vim'
 export PAGER='less'
 export LANG=$( locale -a | grep -i 'en_gb.utf-\?8' )
