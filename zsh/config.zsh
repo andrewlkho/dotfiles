@@ -14,10 +14,6 @@ do
 done
 unset TESTDIR
 
-# Load functions
-fpath=($ZSH/zsh/functions $fpath)
-autoload -U $ZSH/zsh/functions/*(:t)
-
 export EDITOR='vim'
 export PAGER='less'
 export LANG=$( locale -a | grep -i 'en_gb.utf-\?8' )
