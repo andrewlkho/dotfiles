@@ -3,3 +3,8 @@ export ZSH=$HOME/git/dotfiles.git
 
 # Source all *.zsh
 for config_file ($ZSH/**/*.zsh) source $config_file
+
+# Initialise autocomplete here (after function definitions) then reload completions
+autoload -U compinit
+compinit
+for config_file ($ZSH/**/completion.zsh) source $config_file
