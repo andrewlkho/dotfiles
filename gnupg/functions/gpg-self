@@ -1,8 +1,9 @@
 # Encrypt and sign a file to myself
 gpg-self () {
     gpg \
-        --output "${*}.gpg" \
+        --output "$*.gpg" \
         --sign \
         --recipient 0xAF72A573 \
-        --encrypt "${*}"
+        --encrypt "$*"
+    [[ $? == 0 ]] && rm "$*"
 }
