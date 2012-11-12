@@ -1,0 +1,8 @@
+PENGUIN="off"
+XFACE="off"
+DATE="local"
+DATE_FORMAT="%Y-%m-%d %H:%M"
+ADDRESSFORMAT="%r <%a>,\n"
+PAPER="A4"
+FONT="Helvetica"
+PRINTED_HEADERS="Date_From_To_CC_Subject"
