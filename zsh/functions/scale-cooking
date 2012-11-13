@@ -1,0 +1,10 @@
+# Handy shortcut for an image resizing operation that I do frequently
+
+scale-cooking() {
+    # Normalise input according to my naming convention
+    base=${*%%_*}
+
+    convert -scale 400x400 ${base}_me.jpg ${base}_me_400.jpg
+    convert -scale 130x130 ${base}_me.jpg ${base}_me_130.jpg
+    convert -scale 400x400 ${base}_nigella.jpg ${base}_nigella_400.jpg
+}
