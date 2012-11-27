@@ -33,7 +33,7 @@ macro index,pager \cL "<pipe-message>mutt-to-omnifocus.py -q<enter>" "Create Omn
 
 folder-hook . 'bind index \cU toggle-new'
 
-macro attach s "<save-entry>~/<enter>y"
+macro attach s "<save-entry>~/Dropbox/<enter>y"
 
 macro compose ,f0 ":set sendmail='msmtp -a fastmail -f andrewho@andrewho.co.uk'<enter><edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>:macro compose x ,f1<enter>"
 macro compose ,f1 ":set sendmail='msmtp -a fastmail -f andrewlkho@doctors.org.uk'<enter><edit-from><kill-line>Andrew Ho <andrewlkho@doctors.org.uk><enter>:macro compose x ,f2<enter>"
