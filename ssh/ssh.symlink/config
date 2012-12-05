@@ -7,6 +7,9 @@ Host strongspace
 Host sebastian
     HostName sebastian.andrewho.co.uk
 
+Host yale
+    HostName yale.textdrive.us
+
 # Uamuzi Bora EC2 instances
 Host *.amazonaws.com
     UserKnownHostsFile /dev/null
