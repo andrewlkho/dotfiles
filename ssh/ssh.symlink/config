@@ -10,6 +10,10 @@ Host sebastian
 Host yale
     HostName yale.textdrive.us
 
+Host skunkworks
+    HostName skunkworks.uamuzibora.org
+    User andrew
+
 # Uamuzi Bora EC2 instances
 Host *.amazonaws.com
     UserKnownHostsFile /dev/null
