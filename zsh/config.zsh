@@ -7,6 +7,7 @@ for TESTDIR in /bin /sbin \
                /usr/local/bin /usr/local/sbin \
                /usr/local/apache/bin \
                /usr/local/mysql/bin \
+               /var/lib/gems/1.8/bin \
                `find -L /usr/local/texlive -maxdepth 3 -mindepth 3 -name universal-darwin 2> /dev/null` \
                $HOME/bin
 do
