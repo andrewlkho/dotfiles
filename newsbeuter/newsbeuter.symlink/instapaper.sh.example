@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+STATUS=$( curl \
+    --silent \
+    --output /dev/null \
+    --write-out "%{http_code}" \
+    --user andrewho@andrewho.co.uk:__INSTAPAPER PASSWORD__ \
+    --data-urlencode "url=$1" \
+    --data-urlencode "title=$2" \
+    https://www.instapaper.com/api/add )
+
+case ${STATUS} in
+    201)
+        exit 0
+        ;;
+    400)
+        echo "Bad request or exceeded the rate limit. Probably missing a required parameter, such as url."
+        exit 1
+        ;;
+    403)
+        echo "Invalid username or password."
+        exit 1
+        ;;
+    500)
+        echo "The service encountered an error. Please try again later."
+        exit 1
+        ;;
+    *)
+        echo "Unknown status code returned by instapaper: HTTP ${STATUS}"
+        exit 1
+        ;;
+esac

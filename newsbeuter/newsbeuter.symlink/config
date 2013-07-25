@@ -1,0 +1,46 @@
+# refresh feeds BD
+auto-reload yes
+suppress-first-reload yes
+reload-time 720
+reload-threads 2
+
+# use w3m
+browser "w3m %u"
+html-renderer "w3m -I %{charset} -T text/html"
+
+# behaviour
+cleanup-on-quit no
+delete-read-articles-on-quit yes
+goto-next-feed no
+
+# display settings
+display-article-progress no
+feed-sort-order title-desc
+show-keymap-hint no
+show-read-articles no
+show-read-feeds no
+text-width 80
+
+# format strings
+datetime-format "%Y-%m-%d"
+feedlist-format "%4i  %t %> %9u "
+articlelist-format "%4i  %D  %t"
+feedlist-title-format "---Newsbeuter: Index (%u unread)%>-"
+articlelist-title-format "---Newsbeuter: %T (%u unread)-%>-%U---"
+itemview-title-format "---Newsbeuter: %T%>-"
+
+# keybindings
+unbind-key C
+bind-key $ reload-all
+bind-key j next
+bind-key k prev
+
+# colors
+color listnormal color136 default 
+color listfocus  color234 color136 
+color info       color136 default
+color background color244 default
+color article    color244 default
+
+# instapaper
+bookmark-cmd "~/.newsbeuter/instapaper.sh"
