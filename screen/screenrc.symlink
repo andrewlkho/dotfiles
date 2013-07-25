@@ -5,6 +5,7 @@ startup_message off
 defutf8 on
 defscrollback 5000
 nonblock on
+term "screen-256color"
 
 
 # startup windows
