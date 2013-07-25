@@ -18,4 +18,7 @@ screen -t remind 2
 stuff "rem\012"
 chdir $HOME
 
+screen -t newsbeuter 3
+stuff "newsbeuter\012"
+
 screen -t zsh  0
