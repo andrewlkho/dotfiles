@@ -34,6 +34,7 @@ unbind-key C
 bind-key $ reload-all
 bind-key j next
 bind-key k prev
+bind-key ^L bookmark
 
 # colors
 color listnormal color136 default 
