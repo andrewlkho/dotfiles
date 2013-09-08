@@ -7,6 +7,10 @@ Host strongspace
 Host sebastian
     HostName sebastian.andrewho.co.uk
 
+Host lish
+    HostName lish-london.linode.com
+    RequestTTY force
+
 Host yale
     HostName yale.textdrive.us
 
