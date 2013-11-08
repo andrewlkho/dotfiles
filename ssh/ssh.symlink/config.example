@@ -6,6 +6,7 @@ Host strongspace
 
 Host sebastian
     HostName sebastian.andrewho.co.uk
+    ForwardAgent yes
 
 Host lish
     HostName lish-london.linode.com
