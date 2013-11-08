@@ -10,6 +10,7 @@ if [[ ! -n $SSH_TTY && `uname -s` == "Darwin" ]]; then
         eval $( gpg-agent \
             --daemon \
             --enable-ssh-support \
+            --disable-scdaemon \
             --write-env-file=$HOME/.zshrc-ssh )
     fi
 fi
