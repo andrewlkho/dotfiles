@@ -19,3 +19,6 @@
 
 [github]
     user = "andrewlkho"
+
+[push]
+    default = simple
