@@ -21,4 +21,4 @@
     user = "andrewlkho"
 
 [push]
-    default = simple
+    default = current
