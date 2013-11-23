@@ -1,6 +1,12 @@
 # Encrypt and sign a file to myself
 gpg-self () {
-    gpg \
+    if [[ $+commands[gpg2] -gt $+commands[gpg] ]]; then
+        GPG_COMMAND=gpg2
+    else
+        GPG_COMMAND=gpg
+    fi
+
+    $GPG_COMMAND \
         --output "$*.gpg" \
         --sign \
         --recipient 0xAF72A573 \
