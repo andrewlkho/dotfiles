@@ -1,0 +1,29 @@
+bind generic \cA first-entry
+bind generic \cE last-entry
+bind generic \cF next-page
+bind generic \cB previous-page
+bind generic N search-opposite
+
+bind index \cF next-page
+bind index \cB previous-page
+bind index \cA first-entry
+bind index \cE last-entry
+bind index q exit
+bind index G sync-mailbox
+bind index \cU toggle-new
+
+bind pager \cE bottom
+bind pager \cU mark-as-new
+bind pager <down> next-line
+bind pager <up> previous-line
+bind pager N search-reverse
+bind pager \cA top
+bind pager \cF next-page
+bind pager \cB previous-page
+
+macro index,pager c "<change-folder>+<tab><tab>"
+macro index,pager C "<copy-message>+<tab><tab>"
+macro index,pager ! "<change-folder>+Incoming<enter>"
+
+macro index \cL "<copy-message>+Instapaper<enter><delete-message><sync-mailbox>"
+macro pager \cL "<copy-message>+Instapaper<enter><delete-message>"

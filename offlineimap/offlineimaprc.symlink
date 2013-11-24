@@ -11,6 +11,7 @@ peritem = "+%(accountname)s/%(foldername)s"
 sep = " "
 footer = "\n"
 
+
 # fastmail #####################################################################
 
 [Account fastmail]
@@ -24,11 +25,35 @@ sep = .
 restoreatime = no
 
 [Repository RemoteFastmail]
-type=IMAP
+type = IMAP
 remotehost = mail.messagingengine.com
 ssl = yes
 remoteport = 993
 remoteuser = andrewlkho@fastmail.fm
 remotepasseval = get_password(account="andrewlkho", server="mail.messagingengine.com")
-nametrans = lambda foldername: re.sub('Sent Items', 'Sent', re.sub('^INBOX\.', '', foldername))
-folderfilter = lambda foldername: foldername[6:] not in ['Junk Mail', 'Trash', 'Archive']
+nametrans = lambda f: re.sub('Sent Items', 'Sent', re.sub('^INBOX\.', '', f))
+folderfilter = lambda f: re.sub('^INBOX\.', '', f) not in ['Junk Mail', 'Trash', 'Archive'] \
+                         and not re.search('^INBOX\.RSS', f)
+
+
+# rss ##########################################################################
+
+[Account rss]
+localrepository = LocalRSS
+remoterepository = RemoteRSS
+
+[Repository LocalRSS]
+type = Maildir
+localfolders = ~/mail/rss
+sep = .
+restoreatime = no
+
+[Repository RemoteRSS]
+type = IMAP
+remotehost = mail.messagingengine.com
+ssl = yes
+remoteport = 993
+remoteuser = andrewlkho@fastmail.fm
+remotepasseval = get_password(account="andrewlkho", server="mail.messagingengine.com")
+nametrans = lambda f: re.sub('^INBOX\.RSS\.', '', f)
+folderfilter = lambda f: re.search('^INBOX\.RSS\.', f)
