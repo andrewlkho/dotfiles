@@ -1,9 +1,20 @@
 set nocompatible
 
-" vim-pathogen
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
+" vundle
+filetype on  " for OS X (see http://andrewho.co.uk/weblog/vim-pathogen-with-mutt-and-git)
+filetype off
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+" GitHub repos
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'othree/html5.vim'
+Bundle 'andrewlkho/buftabs'
+Bundle 'tpope/vim-markdown'
+" vim-scripts repos
+Bundle 'indentpython.vim'
+Bundle 'python.vim--Vasiliev'
 filetype plugin indent on
+
 
 " basic behaviour
 set backspace=indent,eol,start
