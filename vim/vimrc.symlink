@@ -9,13 +9,17 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'othree/html5.vim'
-Bundle 'andrewlkho/buftabs'
 Bundle 'tpope/vim-markdown'
+Bundle 'scrooloose/syntastic'
+Bundle 'kien/ctrlp.vim'
+Bundle 'ervandew/supertab'
+Bundle 'bling/vim-airline'
+Bundle 'bling/vim-bufferline'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
 " vim-scripts repos
 Bundle 'indentpython.vim'
 Bundle 'python.vim--Vasiliev'
 filetype plugin indent on
-
 
 " basic behaviour
 set backspace=indent,eol,start
@@ -25,6 +29,8 @@ set nobackup
 set visualbell t_vb=
 set scrolloff=5
 set number
+nmap j gj
+nmap k gk
 
 " colours
 syntax enable
@@ -32,8 +38,8 @@ set background=dark
 let g:solarized_termcolors=16
 let g:solarized_underline=0
 colorscheme solarized
-autocmd BufEnter,BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md set background=light
-autocmd BufLeave *.txt,*.tex,*.markdown,*.md set background=dark
+"autocmd BufEnter,BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md set background=light
+"autocmd BufLeave *.txt,*.tex,*.markdown,*.md set background=dark
 
 " soft tabs
 set expandtab
@@ -47,6 +53,7 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+nmap <leader>q :nohlsearch<CR>
 
 " UTF-8
 set encoding=utf-8
@@ -74,35 +81,27 @@ nmap <leader>7 :buffer 7<CR>
 nmap <leader>8 :buffer 8<CR>
 nmap <leader>9 :buffer 9<CR>
 
-" status bar
-let g:buftabs_only_basename=1
-let g:buftabs_in_statusline=1
-let g:buftabs_separator=":"
-let g:buftabs_marker_modified="*"
+" vim-airline
 set laststatus=2
-highlight! link StatusLine WildMenu
-highlight! link StatusLineNC LineNr
-set statusline=\ 
-set statusline+=%{buftabs#statusline()}
-set statusline+=%=
-set statusline+=%{&eol?'eol':''}
-set statusline+=%#WarningMsg#%{&eol?'':'noeol'}%*
-set statusline+=\ \ \ \ 
-set statusline+=Tabs:\ %{&et?'soft':'hard'}
-set statusline+=\ \ \ \ 
-set statusline+=Line\ endings:\ 
-set statusline+=%{&ff=='unix'?'LF':''}
-set statusline+=%#WarningMsg#%{&ff=='dos'?'CRLF':''}%*
-set statusline+=%#WarningMsg#%{&ff=='mac'?'CR':''}%*
-set statusline+=\ \ \ \ 
-set statusline+=Position:\ %c,%l/%L
-set statusline+=\ 
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_section_y="%{&fenc}[%{&ff=='unix'?'LF':''}%{&ff=='dos'?'CRLF':''}%{&ff=='mac'?'CR':''}]"
+let g:airline_section_z="%c,%l/%L"
 
 " file-specific settings
-autocmd BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md setlocal wrap
-autocmd BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md setlocal textwidth=80
-autocmd BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md setlocal formatoptions=toqwanl12
-autocmd BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md setlocal spell
+autocmd BufRead,BufNewFile *.txt,*.markdown,*.md setlocal wrap
+autocmd BufRead,BufNewFile *.txt,*.markdown,*.md setlocal textwidth=80
+autocmd BufRead,BufNewFile *.txt,*.markdown,*.md setlocal formatoptions=toqwanl12
+autocmd BufRead,BufNewFile *.txt,*.markdown,*.md setlocal spell
+autocmd BufRead,BufNewFile *.tex setlocal ft=tex
 
-" LaTeX
-let g:tex_flavor="latex"
+" CtrlP settings
+let g:ctrlp_match_window = 'top,order:ttb'
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v\.(pyc|gpg\~?)$'
+    \ }
+
+" toggles
+nmap <leader>p :setlocal paste!<CR>
