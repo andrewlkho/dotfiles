@@ -1,17 +1,17 @@
 # If I am logged on to a console on a Mac then this is a local machine not 
-# server so setup gpg-agent and propagate across sessions via ~/.zshrc-ssh
+# server so setup ssh-agent and propagate across sessions via ~/.zshrc-ssh
 if [[ ! -n $SSH_TTY && `uname -s` == "Darwin" ]]; then
     if [[ -a $HOME/.zshrc-ssh ]]; then
         . $HOME/.zshrc-ssh
-        export GPG_AGENT_INFO SSH_AUTH_SOCK SSH_AGENT_PID
     fi
     kill -0 $SSH_AGENT_PID &> /dev/null
     if [[ $? -eq 1 ]]; then
-        eval $( gpg-agent \
-            --daemon \
-            --enable-ssh-support \
-            --disable-scdaemon \
-            --write-env-file=$HOME/.zshrc-ssh )
+        local EXPORT_SSH
+        EXPORT_SSH=$( ssh-agent | head -n 2 )
+        echo $EXPORT_SSH > $HOME/.zshrc-ssh
+        eval $EXPORT_SSH
+        unset EXPORT_SSH
+        ssh-add $HOME/.ssh/id_rsa
     fi
 fi
 
