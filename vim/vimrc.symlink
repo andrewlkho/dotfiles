@@ -46,7 +46,6 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
-nmap <leader><Tab> :set et!<CR>
 
 " searching
 set incsearch
@@ -66,7 +65,6 @@ set spellfile=~/.vim/spell/spellfile.utf-8.add
 
 " invisibles
 set listchars=tab:>-,trail:-,eol:¬
-nmap <leader>i :set list!<CR>
 
 " buffers
 set hidden
@@ -104,4 +102,6 @@ let g:ctrlp_custom_ignore = {
     \ }
 
 " toggles
-nmap <leader>p :setlocal paste!<CR>
+nnoremap <leader>p :setlocal paste! paste?<CR>
+nnoremap <leader><Tab> :setlocal expandtab! expandtab?<CR>
+nnoremap <leader>i :setlocal list! list?<CR>
