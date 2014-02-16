@@ -16,6 +16,7 @@ Bundle 'ervandew/supertab'
 Bundle 'bling/vim-airline'
 Bundle 'bling/vim-bufferline'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'davidoc/taskpaper.vim'
 " vim-scripts repos
 Bundle 'indentpython.vim'
 Bundle 'python.vim--Vasiliev'
