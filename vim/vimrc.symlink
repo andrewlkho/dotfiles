@@ -17,6 +17,7 @@ Bundle 'bling/vim-airline'
 Bundle 'bling/vim-bufferline'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'davidoc/taskpaper.vim'
+Bundle 'scy/vim-remind'
 " vim-scripts repos
 Bundle 'indentpython.vim'
 Bundle 'python.vim--Vasiliev'
@@ -40,10 +41,10 @@ set background=dark
 let g:solarized_termcolors=16
 let g:solarized_underline=0
 colorscheme solarized
-autocmd BufEnter,BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md set background=light
-autocmd BufEnter,BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md AirlineRefresh
-autocmd BufLeave *.txt,*.tex,*.markdown,*.md set background=dark
-autocmd BufLeave *.txt,*.tex,*.markdown,*.md AirlineRefresh
+autocmd BufEnter,BufRead,BufNewFile *.tex,*.markdown,*.md set background=light
+autocmd BufEnter,BufRead,BufNewFile *.tex,*.markdown,*.md AirlineRefresh
+autocmd BufLeave *.tex,*.markdown,*.md set background=dark
+autocmd BufLeave *.tex,*.markdown,*.md AirlineRefresh
 
 " soft tabs
 set expandtab
@@ -93,11 +94,7 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline_section_y="%{&fenc}[%{&ff=='unix'?'LF':''}%{&ff=='dos'?'CRLF':''}%{&ff=='mac'?'CR':''}]"
 let g:airline_section_z="%c,%l/%L"
 
-" file-specific settings
-autocmd BufRead,BufNewFile *.txt,*.markdown,*.md setlocal wrap
-autocmd BufRead,BufNewFile *.txt,*.markdown,*.md setlocal textwidth=80
-autocmd BufRead,BufNewFile *.txt,*.markdown,*.md setlocal formatoptions=toqwanl12
-autocmd BufRead,BufNewFile *.txt,*.markdown,*.md setlocal spell
+" tex, not plaintex
 autocmd BufRead,BufNewFile *.tex setlocal ft=tex
 
 " CtrlP settings
