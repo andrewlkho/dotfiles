@@ -27,7 +27,8 @@ set backspace=indent,eol,start
 set whichwrap=b,s,h,l
 set autoindent
 set nobackup
-set visualbell t_vb=
+set visualbell
+set noerrorbells
 set scrolloff=5
 set number
 nmap j gj
@@ -39,8 +40,10 @@ set background=dark
 let g:solarized_termcolors=16
 let g:solarized_underline=0
 colorscheme solarized
-"autocmd BufEnter,BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md set background=light
-"autocmd BufLeave *.txt,*.tex,*.markdown,*.md set background=dark
+autocmd BufEnter,BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md set background=light
+autocmd BufEnter,BufRead,BufNewFile *.txt,*.tex,*.markdown,*.md AirlineRefresh
+autocmd BufLeave *.txt,*.tex,*.markdown,*.md set background=dark
+autocmd BufLeave *.txt,*.tex,*.markdown,*.md AirlineRefresh
 
 " soft tabs
 set expandtab
@@ -53,6 +56,8 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+noremap / /\v
+noremap ? ?\v
 nmap <leader>q :nohlsearch<CR>
 
 " UTF-8
