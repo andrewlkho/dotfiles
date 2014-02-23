@@ -19,9 +19,6 @@ Bundle 'scrooloose/syntastic'
 Bundle 'scy/vim-remind'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-markdown'
-" vim-scripts repos
-Bundle 'indentpython.vim'
-Bundle 'python.vim--Vasiliev'
 filetype plugin indent on
 
 " UI
@@ -81,7 +78,7 @@ set listchars=tab:>-,trail:-,eol:¬
 " folding
 let g:LatexBox_Folding = 1
 set foldlevelstart=99
-nnoremap <leader><space> za
+nnoremap <leader>f za
 nnoremap <leader>z zMzv
 
 " buffers
@@ -104,6 +101,12 @@ let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_section_y="%{&fenc}[%{&ff=='unix'?'LF':''}%{&ff=='dos'?'CRLF':''}%{&ff=='mac'?'CR':''}]"
 let g:airline_section_z="%c,%l/%L"
+
+" syntastic symbols
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_style_error_symbol = ">"
+let g:syntastic_style_warning_symbol = ">"
 
 " tex, not plaintex
 autocmd BufRead,BufNewFile *.tex setlocal ft=tex
