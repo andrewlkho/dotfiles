@@ -72,14 +72,14 @@ set termencoding=utf-8
 set spelllang=en_gb
 set spellfile=~/.vim/spell/spellfile.utf-8.add
 
-" invisibles
-set listchars=tab:>-,trail:-,eol:¬
-
 " folding
 let g:LatexBox_Folding = 1
 set foldlevelstart=99
 nnoremap <leader>f za
 nnoremap <leader>z zMzv
+nnoremap <silent> ,f0 zR:nmap <leader>F ,f1<CR>
+nnoremap <silent> ,f1 zM:nmap <leader>F ,f0<CR>
+nmap <leader>F ,f0
 
 " buffers
 set hidden
@@ -94,6 +94,15 @@ nmap <leader>7 :buffer 7<CR>
 nmap <leader>8 :buffer 8<CR>
 nmap <leader>9 :buffer 9<CR>
 
+" toggles
+nnoremap <leader>p :setlocal paste! paste?<CR>
+nnoremap <leader><Tab> :setlocal expandtab! expandtab?<CR>
+set listchars=tab:>-,trail:-,eol:¬
+nnoremap <leader>i :setlocal list! list?<CR>
+
+" tex, not plaintex
+autocmd BufRead,BufNewFile *.tex setlocal ft=tex
+
 " vim-airline
 set laststatus=2
 let g:airline_powerline_fonts = 1
@@ -102,23 +111,16 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline_section_y="%{&fenc}[%{&ff=='unix'?'LF':''}%{&ff=='dos'?'CRLF':''}%{&ff=='mac'?'CR':''}]"
 let g:airline_section_z="%c,%l/%L"
 
-" syntastic symbols
+" syntastic
+highlight clear SignColumn
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_style_error_symbol = ">"
 let g:syntastic_style_warning_symbol = ">"
 
-" tex, not plaintex
-autocmd BufRead,BufNewFile *.tex setlocal ft=tex
-
-" CtrlP settings
+" CtrlP
 let g:ctrlp_match_window = 'top,order:ttb'
 let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/]\.(git|hg|svn)$',
     \ 'file': '\v\.(pyc|gpg\~?)$'
     \ }
-
-" toggles
-nnoremap <leader>p :setlocal paste! paste?<CR>
-nnoremap <leader><Tab> :setlocal expandtab! expandtab?<CR>
-nnoremap <leader>i :setlocal list! list?<CR>
