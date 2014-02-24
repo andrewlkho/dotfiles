@@ -30,6 +30,8 @@ set noerrorbells
 set scrolloff=5
 set number
 set colorcolumn=+1
+set splitbelow
+set splitright
 nmap k gk
 nmap j gj
 
