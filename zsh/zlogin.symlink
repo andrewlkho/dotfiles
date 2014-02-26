@@ -1,1 +1,1 @@
-screen -dR && logout
+tmux attach-session && logout
