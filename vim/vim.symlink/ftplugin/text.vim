@@ -1,3 +1,3 @@
 setlocal textwidth=80
-setlocal formatoptions=tcqwal1
+setlocal formatoptions=tcqwl1
 setlocal spell
