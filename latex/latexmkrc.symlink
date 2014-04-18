@@ -1,6 +1,6 @@
 $pdf_mode = 1;
 $pdf_previewer = "open -a Preview";
-$clean_ext = "aux bbl blg fdb_latexmk fls log out synctex.gz";
+$clean_ext = "aux bbl blg fdb_latexmk fls log out synctex.gz ttt fff";
 
 # Needed for Papers.app which adds an unnecessary URL attribute to bibtex output
 system('for x in *.bib; do ' .
