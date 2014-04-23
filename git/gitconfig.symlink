@@ -3,6 +3,7 @@
     editor = "vim -c 'set wrap tw=76 fo=tqwanl1 spell ft=markdown' +1"
     pager = cat
     autocrlf = false
+    excludesfile = ~/.gitignore
 
 [alias]
     st = "status -sb"
