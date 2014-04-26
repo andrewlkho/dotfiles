@@ -1,2 +1,3 @@
 vim.symlink/bundle/*/
 !vim.symlink/bundle/vundle/
+simplenoterc.symlink
