@@ -23,7 +23,7 @@ set pager_stop
 set smart_wrap
 set markers = no
 set wrap = 80
-set sort = reverse-date-sent
+set sort = date-sent
 set index_format = "%4C (%Z) %[%Y-%m-%d] %25.25F : %s "
 set status_format = "-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?d?  Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?l? %l?]---(%s/%S)-%>-"
 
