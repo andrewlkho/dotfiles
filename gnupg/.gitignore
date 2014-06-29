@@ -1,4 +1,5 @@
 gnupg.symlink/*~
+gnupg.symlink/pubring.gpg
 gnupg.symlink/secring.gpg
 gnupg.symlink/random_seed
 gnupg.symlink/trustdb.gpg
