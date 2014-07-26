@@ -46,10 +46,10 @@ set background=dark
 let g:solarized_termcolors=16
 let g:solarized_underline=0
 colorscheme solarized
-autocmd BufEnter,BufRead,BufNewFile *.tex,*.markdown,*.md set background=light
-autocmd BufEnter,BufRead,BufNewFile *.tex,*.markdown,*.md AirlineRefresh
-autocmd BufLeave *.tex,*.markdown,*.md set background=dark
-autocmd BufLeave *.tex,*.markdown,*.md AirlineRefresh
+autocmd BufEnter,BufRead,BufNewFile *.tex,*.markdown,*.md,todo.txt set background=light
+autocmd BufEnter,BufRead,BufNewFile *.tex,*.markdown,*.md,todo.txt AirlineRefresh
+autocmd BufLeave *.tex,*.markdown,*.md,todo.txt set background=dark
+autocmd BufLeave *.tex,*.markdown,*.md,todo.txt AirlineRefresh
 
 " soft tabs
 set expandtab
