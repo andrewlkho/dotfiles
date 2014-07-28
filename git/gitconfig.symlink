@@ -1,3 +1,6 @@
+[apply]
+    whitespace = fix
+
 [core]
     fileMode = false
     editor = "vim -c 'set wrap tw=76 fo=tqwanl1 spell ft=markdown' +1"
