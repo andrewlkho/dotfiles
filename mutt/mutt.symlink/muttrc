@@ -44,7 +44,7 @@ set text_flowed
 
 # printing
 set print = yes
-set print_command = "muttprint --printer - | ps2pdf - ~/Dropbox/e-mail.pdf"
+set print_command = "muttprint --printer - | ps2pdf - ~/unison/e-mail.pdf"
 
 # miscellaneous
 alternates 'andrewho(\+.+)?@andrewho\.co\.uk'
