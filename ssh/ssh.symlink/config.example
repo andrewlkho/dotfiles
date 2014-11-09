@@ -9,24 +9,9 @@ Host lish
     HostName lish-london.linode.com
     RequestTTY force
 
-Host skunkworks
-    HostName skunkworks.uamuzibora.org
-    User andrew
-
-Host kasha
-    HostName 192.168.1.2
-    HostKeyAlias kasha.uamuzibora.org
-    User __username on kasha__
-    ProxyCommand sudo sh -c 'vpnc --gateway __UB VPN server__ --id __UB IPSec ID__ --username __UB Xauth username__ 1>&2; nc -w 1 %h %p'
-
 Host nfsn
     HostName ssh.phx.nearlyfreespeech.net
     User andrewlkho_andrewho
-
-# Uamuzi Bora EC2 instances
-Host *.amazonaws.com
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
 
 Host *
     CheckHostIP no
