@@ -39,6 +39,10 @@ nmap j gj
 set backupdir=~/.vim/sessions,.
 set directory=~/.vim/sessions//,.
 
+" Infinite undo
+set undofile
+set undodir=~/.vim/undodir
+
 " colours
 syntax enable
 set background=dark
