@@ -1,12 +1,6 @@
 servers = (
   { address = "irc.freenode.net"; chatnet = "freenode"; },
-  { address = "irc.srcf.ucam.org"; chatnet = "srcf"; },
-  {
-    address = "chat.hipchat.com";
-    use_ssl = "yes";
-    chatnet = "hipchat";
-    password = "__HIPCHAT PASSWORD__";
-  }
+  { address = "irc.srcf.ucam.org"; chatnet = "srcf"; }
 );
 
 chatnets = {
@@ -16,11 +10,6 @@ chatnets = {
   };
   srcf = {
     type = "IRC";
-  };
-  hipchat = {
-    type = "XMPP";
-    nick = "17293_112131@chat.hipchat.com";
-    user_name = "Andrew Ho";
   };
 };
 
