@@ -1,3 +1,7 @@
+# When mutt starts up, decrypt the fastmail password
+set my_fastmail_user = "andrewlkho@fastmail.fm"
+set my_fastmail_pass = `gpg --quiet --decrypt ~/.secret/fastmail.gpg`
+
 # mailboxes
 set mbox_type = Maildir
 set folder = ~/mail
@@ -5,9 +9,9 @@ set spoolfile = +fastmail/INBOX
 source ~/.mutt/offlineimap
 set my_account = fastmail
 set spoolfile = +$my_account/INBOX
-set sendmail = "msmtp -a $my_account"
 set postponed = +$my_account/Drafts
 set record = +$my_account/Sent
+set smtp_url = smtps://$my_fastmail_user:$my_fastmail_pass@mail.messagingengine.com:465
 
 # behaviour
 set nobeep

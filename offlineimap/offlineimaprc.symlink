@@ -1,7 +1,6 @@
 [general]
 accounts = fastmail
-ui = basic, Noninteractive.Basic
-pythonfile = ~/.offlineimap-def.py
+ui = basic
 
 [mbnames]
 enabled = yes
@@ -30,7 +29,6 @@ remotehost = mail.messagingengine.com
 ssl = yes
 remoteport = 993
 remoteuser = andrewlkho@fastmail.fm
-remotepasseval = get_password(account="andrewlkho", server="mail.messagingengine.com")
 nametrans = lambda f: re.sub('Sent Items', 'Sent', re.sub('^INBOX\.', '', f))
 folderfilter = lambda f: re.sub('^INBOX\.', '', f) not in ['Junk Mail', 'Trash', 'Archive'] \
                          and not re.search('^INBOX\.RSS', f)
