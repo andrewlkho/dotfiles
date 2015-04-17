@@ -6,7 +6,6 @@ servers = (
 chatnets = {
   freenode = {
     type = "IRC";
-    autosendcmd = "/msg nickserv identify __FREENODE PASSWORD__";
   };
   srcf = {
     type = "IRC";
