@@ -2,5 +2,4 @@ lists '.+@lists\.cam\.ac\.uk'
 
 subscribe remind-fans@lists.roaringpenguin.com
 
-alias family __FAMILY E-MAIL ADDRESSES__
-alias fuat __FUAT E-MAIL ADDRESSES__
+source ~/.secret/mutt-aliases
