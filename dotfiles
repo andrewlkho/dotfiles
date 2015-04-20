@@ -41,7 +41,6 @@ case $1 in
         if [[ $# -lt 2 ]]; then
             echo "Not enough in hashtag"
         else
-            unset 1
             for topic in ${*[2,${#*}]}; do
                 install $topic
             done
