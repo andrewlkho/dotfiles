@@ -22,11 +22,11 @@ install() {
     else
         echo "Installing ${topic}..."
         for x in ${basedir}/${topic}/**/*.symlink(N); do
-            if [[ -a ${HOME}/.${${x:t}%.symlink} ]]; then
-                echo "- Ignoring ${x#${basedir}/}: ${HOME}/.${${x:t}%.symlink} already exists"
+            if [[ -a ${HOME}/.${x:t:r} ]]; then
+                echo "- Ignoring ${x#${basedir}/}: ${HOME}/.${x:t:r} already exists"
             else
                 echo "- Creating symlink for ${x#${basedir}/}"
-                ln -s ${x} ${HOME}/.${${x:t}%.symlink}
+                ln -s ${x} ${HOME}/.${x:t:r}
             fi
         done
     fi
