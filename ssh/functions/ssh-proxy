@@ -1,0 +1,27 @@
+# Convenience function for setting up a quick SSH SOCKS proxy
+# Usage: ssh-proxy start|stop server-name
+ssh-proxy () {
+    case $1 in
+        start)
+            # If it is already running then kill it because it's probably hung
+            PID=$( ps ax | grep "[s]sh -NfD 8080 $2" | awk '{ print $1 }' )
+            [[ -n ${PID} ]] && kill ${PID}
+
+            # Start the ssh tunnel
+            ssh -NfD 8080 $2
+
+            # Enable it in OS X (presumes that en0 is the interface used)
+            NETWORKSERVICE=$(networksetup -listnetworkserviceorder | awk '/en0/{print x}; {x=substr($0, index($0,")")+2)}')
+            networksetup -setsocksfirewallproxy "${NETWORKSERVICE}" 127.0.0.1 8080 off
+            ;;
+        stop)
+            # Stop the tunnel
+            PID=$( ps ax | grep "[s]sh -NfD 8080 $2" | awk '{ print $1 }' )
+            [[ -n ${PID} ]] && kill ${PID}
+
+            # Disable use of the proxy
+            NETWORKSERVICE=$(networksetup -listnetworkserviceorder | awk '/en0/{print x}; {x=substr($0, index($0,")")+2)}')
+            networksetup -setsocksfirewallproxystate "${NETWORKSERVICE}" off
+            ;;
+    esac
+}
