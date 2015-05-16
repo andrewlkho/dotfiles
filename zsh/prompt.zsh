@@ -2,7 +2,7 @@ setopt PROMPT_SUBST
 
 # print the current directory, highlighting the git top level directory
 _prompt_pwd() {
-    local pwd=$( print -Pn "%~" )
+    local pwd="$( print -Pn "%~" )"
     if [[ $( git rev-parse --is-inside-work-tree 2> /dev/null ) == "true" ]]; then
         local git_tld=$( basename $( git rev-parse --show-toplevel ) )
         print -Pn "%F{blue}${pwd/${git_tld}/"%F{166}${git_tld}%F{blue}"}%f"
