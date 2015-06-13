@@ -9,6 +9,7 @@ call vundle#rc()
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'bling/vim-airline'
 Bundle 'bling/vim-bufferline'
+Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'davidoc/taskpaper.vim'
 Bundle 'ervandew/supertab'
 Bundle 'gmarik/vundle'
