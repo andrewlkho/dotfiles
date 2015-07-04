@@ -5,6 +5,10 @@ Host sebastian
     HostName sebastian.andrewho.co.uk
     ForwardAgent yes
 
+Host photon
+    HostName photon.andrewho.co.uk
+    ForwardAgent yes
+
 Host lish
     HostName lish-london.linode.com
     RequestTTY force
