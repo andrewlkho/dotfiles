@@ -1,0 +1,18 @@
+# Edit text files stored on fastmail's webdav server
+vim-dav () {
+    [[ -f ~/.davfs2/secrets ]] && rm -f ~/.davfs2/secrets
+    if [[ ! -d /mnt/fastmail-dav/andrewlkho.fastmail.fm ]]; then
+        gpg --quiet --output ~/.davfs2/secrets \
+            --decrypt ~/.secret/fastmail-davfs2-secrets.gpg
+        chmod 600 ~/.davfs2/secrets
+        mount /mnt/fastmail-dav
+        rm -f ~/.davfs2/secrets
+    fi
+
+    pushd /mnt/fastmail-dav/andrewlkho.fastmail.fm/files/text
+    vim ./
+    popd
+
+    [[ ! -n ${PWD:#/mnt/fastmail-dav(|/*)} ]] && cd ~
+    umount /mnt/fastmail-dav
+}
