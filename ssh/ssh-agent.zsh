@@ -5,7 +5,7 @@ if [[ ! -n $SSH_TTY && `uname -s` == "Darwin" ]]; then
         . $HOME/.zshrc-ssh
     fi
     kill -0 $SSH_AGENT_PID &> /dev/null
-    if [[ $? -eq 1 ]]; then
+    if [[ $? -eq 1 && $( ps -o comm= -p ${SSH_AGENT_PID} ) == "ssh-agent" ]]; then
         local EXPORT_SSH
         EXPORT_SSH=$( ssh-agent | head -n 2 )
         echo $EXPORT_SSH > $HOME/.zshrc-ssh
