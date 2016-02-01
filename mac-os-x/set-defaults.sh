@@ -10,3 +10,6 @@ defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 
 # Expand print dialogue by default
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+
+# Display attachments as icons, not previews in Mail
+defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
