@@ -7,7 +7,8 @@ set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 " GitHub repos
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'bling/vim-airline'
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 Bundle 'bling/vim-bufferline'
 Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'davidoc/taskpaper.vim'
