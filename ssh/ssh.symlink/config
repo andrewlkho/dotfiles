@@ -5,13 +5,13 @@ Host sebastian
     HostName sebastian.andrewho.co.uk
     ForwardAgent yes
 
+Host sebastian-admin
+    HostName admin.sebastian.vs.mythic-beasts.com
+    User sebastian
+
 Host photon
     HostName photon.andrewho.co.uk
     ForwardAgent yes
-
-Host lish
-    HostName lish-london.linode.com
-    RequestTTY force
 
 Host nfsn
     HostName ssh.phx.nearlyfreespeech.net
