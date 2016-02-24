@@ -1,16 +1,24 @@
 servers = (
   { address = "irc.freenode.net"; chatnet = "freenode"; },
-  { address = "irc.srcf.ucam.org"; chatnet = "srcf"; }
+  { address = "irc.srcf.ucam.org"; chatnet = "srcf"; },
+  {
+    address = "textdriven.irc.slack.com";
+    chatnet = "textdriven";
+    port = "6667";
+    password = "";
+    use_ssl = "yes";
+  }
 );
 
 chatnets = {
-  freenode = {
-    type = "IRC";
-  };
-  srcf = {
-    type = "IRC";
-  };
+  freenode = { type = "IRC"; };
+  srcf = { type = "IRC"; };
+  textdriven = { type = "IRC"; };
 };
+
+channels = (
+  { name = "#general"; chatnet = "textdriven"; autojoin = "yes"; }
+);
 
 settings = {
   core = {
@@ -27,3 +35,5 @@ settings = {
   };
   "fe-text" = { actlist_sort = "refnum"; colors = "no"; };
 };
+
+ignores = ( { level = "MODES"; servertag = "textdriven"; } );
