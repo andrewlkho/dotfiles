@@ -6,7 +6,6 @@ servers = (
     use_ssl = "yes";
     password = "andrewlkho:";
   },
-  { address = "irc.srcf.ucam.org"; chatnet = "srcf"; },
   {
     address = "textdriven.irc.slack.com";
     chatnet = "textdriven";
@@ -18,7 +17,6 @@ servers = (
 
 chatnets = {
   freenode = { type = "IRC"; };
-  srcf = { type = "IRC"; };
   textdriven = { type = "IRC"; };
 };
 
