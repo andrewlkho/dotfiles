@@ -1,5 +1,11 @@
 servers = (
-  { address = "irc.freenode.net"; chatnet = "freenode"; },
+  {
+    address = "irc.freenode.net";
+    chatnet = "freenode";
+    port = "6697";
+    use_ssl = "yes";
+    password = "andrewlkho:";
+  },
   { address = "irc.srcf.ucam.org"; chatnet = "srcf"; },
   {
     address = "textdriven.irc.slack.com";
