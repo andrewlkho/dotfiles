@@ -9,13 +9,12 @@ Host sebastian-admin
     HostName admin.sebastian.vs.mythic-beasts.com
     User sebastian
 
-Host photon
-    HostName photon.andrewho.co.uk
-    ForwardAgent yes
-
 Host nfsn
     HostName ssh.phx.nearlyfreespeech.net
     User andrewlkho_andrewho
+
+Host *.onion
+    ProxyCommand netcat -x localhost:9050 -X 5 %h %p
 
 Host *
     CheckHostIP no
