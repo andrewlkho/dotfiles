@@ -31,4 +31,29 @@ ssl = yes
 remoteport = 993
 remoteuser = andrewlkho@fastmail.fm
 nametrans = lambda f: re.sub('Sent Items', 'Sent', re.sub('^INBOX\.', '', f))
-folderfilter = lambda f: re.sub('^INBOX\.', '', f) not in ['Junk Mail', 'Trash', 'Archive', 'Notes']
+folderfilter = lambda f: re.sub('^INBOX\.', '', f) not in ['Junk Mail', 'Trash', 'Archive', 'EduSpam'] \
+    and not re.search('^INBOX\.Notes', f)
+
+
+# fastmail-notes ###############################################################
+
+[Account fastmail-notes]
+localrepository = LocalFastmailNotes
+remoterepository = RemoteFastmailNotes
+
+[Repository LocalFastmailNotes]
+type = Maildir
+localfolders = ~/mail/fastmail-notes
+sep = .
+restoreatime = no
+nametrans = lambda f: 'INBOX.' + f
+readonly = True
+
+[Repository RemoteFastmailNotes]
+type = IMAP
+remotehost = mail.messagingengine.com
+ssl = yes
+remoteport = 993
+remoteuser = andrewlkho@fastmail.fm
+nametrans = lambda f: re.sub('^INBOX\.', '', f)
+folderfilter = lambda f: re.search('^INBOX\.Notes', f)
