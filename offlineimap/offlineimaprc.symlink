@@ -22,6 +22,7 @@ type = Maildir
 localfolders = ~/mail/fastmail
 sep = .
 restoreatime = no
+nametrans = lambda f: 'INBOX.' + re.sub('^Sent$', 'Sent Items', f)
 
 [Repository RemoteFastmail]
 type = IMAP
