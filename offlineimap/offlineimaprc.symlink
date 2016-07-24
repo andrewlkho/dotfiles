@@ -31,5 +31,4 @@ ssl = yes
 remoteport = 993
 remoteuser = andrewlkho@fastmail.fm
 nametrans = lambda f: re.sub('Sent Items', 'Sent', re.sub('^INBOX\.', '', f))
-folderfilter = lambda f: re.sub('^INBOX\.', '', f) not in ['Junk Mail', 'Trash', 'Archive', 'Notes'] \
-                         and not re.search('^INBOX\.RSS', f)
+folderfilter = lambda f: re.sub('^INBOX\.', '', f) not in ['Junk Mail', 'Trash', 'Archive', 'Notes']
