@@ -22,17 +22,18 @@ type = Maildir
 localfolders = ~/mail/fastmail
 sep = .
 restoreatime = no
-nametrans = lambda f: 'INBOX.' + re.sub('^Sent$', 'Sent Items', f)
+nametrans = lambda f: re.sub('^Sent$', 'Sent Items', f)
 
 [Repository RemoteFastmail]
 type = IMAP
-remotehost = mail.messagingengine.com
+remotehost = imap.fastmail.com
 ssl = yes
 remoteport = 993
+sslcacertfile = ~/.offlineimap/fastmail.crt
 remoteuser = andrewlkho@fastmail.fm
-nametrans = lambda f: re.sub('Sent Items', 'Sent', re.sub('^INBOX\.', '', f))
-folderfilter = lambda f: re.sub('^INBOX\.', '', f) not in ['Junk Mail', 'Trash', 'Archive', 'EduSpam'] \
-    and not re.search('^INBOX\.Notes', f)
+nametrans = lambda f: re.sub('Sent Items', 'Sent', f)
+folderfilter = lambda f: f not in ['Junk Mail', 'Trash', 'Archive', 'EduSpam'] \
+    and not re.search('^Notes', f)
 
 
 # fastmail-notes ###############################################################
@@ -46,14 +47,13 @@ type = Maildir
 localfolders = ~/mail/fastmail-notes
 sep = .
 restoreatime = no
-nametrans = lambda f: 'INBOX.' + f
 readonly = True
 
 [Repository RemoteFastmailNotes]
 type = IMAP
-remotehost = mail.messagingengine.com
+remotehost = imap.fastmail.com
 ssl = yes
 remoteport = 993
+sslcacertfile = ~/.offlineimap/fastmail.crt
 remoteuser = andrewlkho@fastmail.fm
-nametrans = lambda f: re.sub('^INBOX\.', '', f)
-folderfilter = lambda f: re.search('^INBOX\.Notes', f)
+folderfilter = lambda f: re.search('^Notes', f)

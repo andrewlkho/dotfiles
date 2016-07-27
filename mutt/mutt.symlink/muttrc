@@ -11,7 +11,7 @@ set my_account = fastmail
 set spoolfile = +$my_account/INBOX
 set postponed = +$my_account/Drafts
 set record = +$my_account/Sent
-set smtp_url = smtps://$my_fastmail_user:$my_fastmail_pass@mail.messagingengine.com:465
+set smtp_url = smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465
 
 # behaviour
 set nobeep
