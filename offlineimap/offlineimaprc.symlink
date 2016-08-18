@@ -47,7 +47,6 @@ type = Maildir
 localfolders = ~/mail/fastmail-notes
 sep = .
 restoreatime = no
-readonly = True
 
 [Repository RemoteFastmailNotes]
 type = IMAP
@@ -57,3 +56,4 @@ remoteport = 993
 sslcacertfile = ~/.offlineimap/fastmail.crt
 remoteuser = andrewlkho@fastmail.fm
 folderfilter = lambda f: re.search('^Notes', f)
+readonly = True
