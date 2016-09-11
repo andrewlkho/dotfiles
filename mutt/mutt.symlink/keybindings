@@ -10,6 +10,7 @@ bind index \cA first-entry
 bind index \cE last-entry
 bind index q exit
 bind index G sync-mailbox
+macro index a "<limit>all\n"
 
 bind pager \cE bottom
 bind pager \cU mark-as-new
