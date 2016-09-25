@@ -1,1 +1,1 @@
-alias rem=$'pretty_remind ~/.remind/remind'
+alias rem=$'pretty_remind ~/git/pim.git/remind/remind'
