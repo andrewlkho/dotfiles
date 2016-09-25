@@ -1,2 +1,4 @@
 mutt.symlink/header_cache
 mutt.symlink/offlineimap
+vdirsyncer.symlink/config
+vdirsyncer.symlink/status
