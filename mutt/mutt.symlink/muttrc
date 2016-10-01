@@ -1,6 +1,8 @@
-# When mutt starts up, decrypt the fastmail password
+# When mutt starts up, decrypt passwords
 set my_fastmail_user = "andrewlkho@fastmail.fm"
 set my_fastmail_pass = `gpg --quiet --decrypt ~/.secret/fastmail.gpg`
+set my_doctors_user = "andrewlkho"
+set my_doctors_pass = `gpg --quiet --decrypt ~/.secret/doctors.gpg`
 
 # mailboxes
 set mbox_type = Maildir

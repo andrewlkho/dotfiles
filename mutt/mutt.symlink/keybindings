@@ -39,8 +39,8 @@ folder-hook . 'bind index \cU toggle-new'
 
 macro attach s "<save-entry>~/unison/<enter>y"
 
-macro compose ,f0 ":set sendmail='msmtp -a fastmail -f andrewho@andrewho.co.uk'<enter><edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>:macro compose x ,f1<enter>"
-macro compose ,f1 ":set sendmail='msmtp -a fastmail -f andrewlkho@doctors.org.uk'<enter><edit-from><kill-line>Andrew Ho <andrewlkho@doctors.org.uk><enter>:macro compose x ,f2<enter>"
-macro compose ,f2 ":set sendmail='msmtp -a fastmail -f andrewlkho@cantab.net'<enter><edit-from><kill-line>Andrew Ho <andrewlkho@cantab.net><enter>:macro compose x ,f0<enter>"
+macro compose ,f0 ":set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter><edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>:macro compose x ,f1<enter>"
+macro compose ,f1 ":set smtp_url=smtps://$my_doctors_user:$my_doctors_pass@mail1.doctors.org.uk:465<enter><edit-from><kill-line>Andrew Ho <andrewlkho@doctors.org.uk><enter>:macro compose x ,f2<enter>"
+macro compose ,f2 ":set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter><edit-from><kill-line>Andrew Ho <andrewlkho@cantab.net><enter>:macro compose x ,f0<enter>"
 
 macro compose x ,f1
