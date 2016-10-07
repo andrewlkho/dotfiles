@@ -28,7 +28,12 @@ bind compose A edit-description
 # Passing the password to OfflineIMAP as a command line option which is visible
 # whenever I ask it to sync is marginally preferable to storing it as plaintext
 # on disk as I am the only person with an account on this machine
-macro index $ "<sync-mailbox><shell-escape>offlineimap -k Repository_RemoteFastmail:remotepass='$my_fastmail_pass' -k Repository_RemoteFastmailNotes:remotepass='$my_fastmail_pass' -a $my_account,fastmail-notes && vdirsyncer sync<enter><change-folder>+$my_account/INBOX<enter>"
+macro index $ "<sync-mailbox>\
+               <shell-escape>offlineimap -k Repository_RemoteFastmail:remotepass='$my_fastmail_pass' \
+                                         -k Repository_RemoteFastmailNotes:remotepass='$my_fastmail_pass' \
+                                         -a $my_account,fastmail-notes && \
+                             vdirsyncer sync \
+               <enter><change-folder>+$my_account/INBOX<enter>"
 macro index,pager c "<change-folder>+$my_account/<tab><tab>"
 macro index,pager C "<copy-message>+$my_account/<tab><tab>"
 macro index,pager ! "<change-folder>+$my_account/INBOX<enter>"
