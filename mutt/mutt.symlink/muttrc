@@ -3,6 +3,8 @@ set my_fastmail_user = "andrewlkho@fastmail.fm"
 set my_fastmail_pass = `gpg --quiet --decrypt ~/.secret/fastmail.gpg`
 set my_doctors_user = "andrewlkho"
 set my_doctors_pass = `gpg --quiet --decrypt ~/.secret/doctors.gpg`
+set my_hermes_user = "alkh2"
+set my_hermes_pass = `gpg --quiet --decrypt ~/.secret/hermes.gpg`
 
 # mailboxes
 set mbox_type = Maildir
@@ -10,10 +12,11 @@ set folder = ~/mail
 set spoolfile = +fastmail/INBOX
 source ~/.mutt/offlineimap
 set my_account = fastmail
-set spoolfile = +$my_account/INBOX
-set postponed = +$my_account/Drafts
-set record = +$my_account/Sent
-set smtp_url = smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465
+folder-hook /INBOX$ 'set spoolfile = +$my_account/INBOX'
+folder-hook /INBOX$ 'set postponed = +$my_account/Drafts'
+folder-hook /INBOX$ 'set record = +$my_account/Sent'
+folder-hook +fastmail/INBOX 'set smtp_url = smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465'
+folder-hook +hermes/INBOX 'set smtp_url = smtp://$my_hermes_user:$my_hermes_pass@smtp.hermes.cam.ac.uk:587'
 
 # behaviour
 set nobeep
@@ -57,6 +60,7 @@ alternates 'andrewho(\+.+)?@andrewho\.co\.uk'
 alternates andrewlkho@cantab.net
 alternates andrewho.ho08@imperial.ac.uk
 alternates andrewlkho@doctors.org.uk
+alternates alkh2@cam.ac.uk
 set reverse_name
 set reverse_realname = no
 set realname = "Andrew Ho"
@@ -64,7 +68,8 @@ alternative_order text/enriched text/plain text/html
 hdr_order Date: From: Reply-To: To: Cc: Subject:
 set alias_file = ~/.mutt/aliases
 set editor = "vim -c 'set wrap tw=76 fo=toqwal12 nonumber spell ft=markdown' +1"
-set from = "Andrew Ho <andrewho@andrewho.co.uk>"
+folder-hook +fastmail/INBOX 'set from = "Andrew Ho <andrewho@andrewho.co.uk>"'
+folder-hook +hermes/INBOX 'set from = "Andrew Ho <alkh2@cam.ac.uk>"'
 set mailcap_path = ~/.mutt/mailcap
 set query_command= "KHARD_CONFIG=~/.khard.conf khard email --parsable %s"
 set sleep_time = 0

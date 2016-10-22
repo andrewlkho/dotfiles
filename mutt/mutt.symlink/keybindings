@@ -25,27 +25,58 @@ macro compose a "<attach-file>?"
 bind compose d detach-file
 bind compose A edit-description
 
+macro index ,a0 "\
+<sync-mailbox>\
+:set my_account = fastmail<enter>\
+:macro index x ,a1<enter>\
+<change-folder>+fastmail/INBOX<enter>\
+"
+macro index ,a1 "\
+<sync-mailbox>\
+:set my_account = hermes<enter>\
+:macro index x ,a0<enter>\
+<change-folder>+hermes/INBOX<enter>\
+"
+macro index x ,a1
+
+
 # Passing the password to OfflineIMAP as a command line option which is visible
 # whenever I ask it to sync is marginally preferable to storing it as plaintext
 # on disk as I am the only person with an account on this machine
-macro index $ "<sync-mailbox>\
-               <shell-escape>offlineimap -k Repository_RemoteFastmail:remotepass='$my_fastmail_pass' \
-                                         -k Repository_RemoteFastmailNotes:remotepass='$my_fastmail_pass' \
-                                         -a $my_account,fastmail-notes && \
-                             vdirsyncer sync \
-               <enter><change-folder>+$my_account/INBOX<enter>"
-macro index,pager c "<change-folder>+$my_account/<tab><tab>"
-macro index,pager C "<copy-message>+$my_account/<tab><tab>"
-macro index,pager ! "<change-folder>+$my_account/INBOX<enter>"
-macro index,pager < "<change-folder>+$my_account/Sent<enter>"
+folder-hook /INBOX$ 'macro index $ "\
+<sync-mailbox>\
+<shell-escape>offlineimap -k Repository_RemoteFastmail:remotepass=$my_fastmail_pass\
+                          -k Repository_RemoteFastmailNotes:remotepass=$my_fastmail_pass\
+                          -k Repository_RemoteHermes:remotepass=$my_hermes_pass\
+                          -a $my_account,fastmail-notes && \
+              vdirsyncer sync \
+<enter>\
+<change-folder>+$my_account/INBOX<enter>\
+"'
+
+folder-hook /INBOX$ 'macro index,pager c "<change-folder>+$my_account/<tab><tab>"'
+folder-hook /INBOX$ 'macro index,pager C "<copy-message>+$my_account/<tab><tab>"'
+folder-hook /INBOX$ 'macro index,pager ! "<change-folder>+$my_account/INBOX<enter>"'
+folder-hook /INBOX$ 'macro index,pager < "<change-folder>+$my_account/Sent<enter>"'
 macro index,pager \cL "<pipe-message>mutt-to-omnifocus.py -q<enter>" "Create OmniFocus task from message"
 
 folder-hook . 'bind index \cU toggle-new'
 
 macro attach s "<save-entry>~/unison/<enter>y"
 
-macro compose ,f0 ":set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter><edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>:macro compose x ,f1<enter>"
-macro compose ,f1 ":set smtp_url=smtps://$my_doctors_user:$my_doctors_pass@mail1.doctors.org.uk:465<enter><edit-from><kill-line>Andrew Ho <andrewlkho@doctors.org.uk><enter>:macro compose x ,f2<enter>"
-macro compose ,f2 ":set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter><edit-from><kill-line>Andrew Ho <andrewlkho@cantab.net><enter>:macro compose x ,f0<enter>"
-
+macro compose ,f0 "\
+:set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter>\
+<edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>\
+:macro compose x ,f1<enter>\
+"
+macro compose ,f1 "\
+:set smtp_url=smtps://$my_doctors_user:$my_doctors_pass@mail1.doctors.org.uk:465<enter>\
+<edit-from><kill-line>Andrew Ho <andrewlkho@doctors.org.uk><enter>\
+:macro compose x ,f2<enter>\
+"
+macro compose ,f2 "\
+:set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter>\
+<edit-from><kill-line>Andrew Ho <andrewlkho@cantab.net><enter>\
+:macro compose x ,f0<enter>\
+"
 macro compose x ,f1

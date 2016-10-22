@@ -57,3 +57,27 @@ sslcacertfile = ~/.offlineimap/fastmail.crt
 remoteuser = andrewlkho@fastmail.fm
 folderfilter = lambda f: re.search('^Notes', f)
 readonly = True
+
+
+# hermes #######################################################################
+
+[Account hermes]
+localrepository = LocalHermes
+remoterepository = RemoteHermes
+
+[Repository LocalHermes]
+type = Maildir
+localfolders = ~/mail/hermes
+sep = .
+restoreatime = no
+nametrans = lambda f: re.sub('^Sent$', 'sent-mail', f)
+
+[Repository RemoteHermes]
+type = IMAP
+remotehost = imap.hermes.cam.ac.uk
+ssl = yes
+remoteport = 993
+sslcacertfile = ~/.offlineimap/hermes.crt
+remoteuser = alkh2
+nametrans = lambda f: re.sub('sent-mail', 'Sent', f)
+folderfilter = lambda f: f not in ['spam', 'Trash']
