@@ -8,6 +8,7 @@ bind index \cF next-page
 bind index \cB previous-page
 bind index \cA first-entry
 bind index \cE last-entry
+bind index \cU toggle-new
 bind index q exit
 bind index G sync-mailbox
 macro index a "<limit>all\n"
@@ -25,6 +26,14 @@ macro compose a "<attach-file>?"
 bind compose d detach-file
 bind compose A edit-description
 
+macro attach s "<save-entry>~/unison/<enter>y"
+
+folder-hook /INBOX$ 'macro index,pager c "<change-folder>+$my_account/<tab><tab>"'
+folder-hook /INBOX$ 'macro index,pager C "<copy-message>+$my_account/<tab><tab>"'
+folder-hook /INBOX$ 'macro index,pager ! "<change-folder>+$my_account/INBOX<enter>"'
+folder-hook /INBOX$ 'macro index,pager < "<change-folder>+$my_account/Sent<enter>"'
+
+# Switching between accounts/mailboxes
 macro index ,a0 "\
 <sync-mailbox>\
 :set my_account = fastmail<enter>\
@@ -54,16 +63,8 @@ folder-hook /INBOX$ 'macro index $ "\
 <change-folder>+$my_account/INBOX<enter>\
 "'
 
-folder-hook /INBOX$ 'macro index,pager c "<change-folder>+$my_account/<tab><tab>"'
-folder-hook /INBOX$ 'macro index,pager C "<copy-message>+$my_account/<tab><tab>"'
-folder-hook /INBOX$ 'macro index,pager ! "<change-folder>+$my_account/INBOX<enter>"'
-folder-hook /INBOX$ 'macro index,pager < "<change-folder>+$my_account/Sent<enter>"'
-macro index,pager \cL "<pipe-message>mutt-to-omnifocus.py -q<enter>" "Create OmniFocus task from message"
 
-folder-hook . 'bind index \cU toggle-new'
-
-macro attach s "<save-entry>~/unison/<enter>y"
-
+# Switching between e-mail addresses
 macro compose ,f0 "\
 :set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter>\
 <edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>\
