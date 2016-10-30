@@ -12,6 +12,7 @@ bind index \cU toggle-new
 bind index q exit
 bind index G sync-mailbox
 macro index a "<limit>all\n"
+macro index l "<limit>!~G "
 
 bind pager \cE bottom
 bind pager \cU mark-as-new
