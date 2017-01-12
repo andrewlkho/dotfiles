@@ -21,6 +21,11 @@ install() {
         echo "${basedir}/${topic} does not exist"
     else
         echo "Installing ${topic}..."
+        for x in ${basedir}/${topic}/**/*.example(N); do
+            if [[ ! -a ${x:r} ]]; then
+                echo "- Warning: ${x#${basedir}/} exists but ${${x:r}#${basedir}/} does not"
+            fi
+        done
         for x in ${basedir}/${topic}/**/*.symlink(N); do
             if [[ -a ${HOME}/.${x:t:r} ]]; then
                 echo "- Ignoring ${x#${basedir}/}: ${HOME}/.${x:t:r} already exists"
