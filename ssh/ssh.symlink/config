@@ -22,6 +22,7 @@ Host github.com
 Host *
     Protocol 2
     CheckHostIP no
+    VerifyHostKeyDNS yes
     Compression yes
     HashKnownHosts yes
     NoHostAuthenticationForLocalhost yes
