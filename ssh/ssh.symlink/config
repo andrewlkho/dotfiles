@@ -5,9 +5,9 @@ Host sebastian
     HostName sebastian.andrewho.co.uk
     ForwardAgent yes
 
-Host sebastian-admin
-    HostName admin.sebastian.vs.mythic-beasts.com
-    User sebastian
+Host sebastian-ipv4
+    HostName ssh.sebastian.hostedpi.com
+    Port 5138
 
 Host nfsn
     HostName ssh.phx.nearlyfreespeech.net
