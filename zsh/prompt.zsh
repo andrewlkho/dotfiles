@@ -3,9 +3,13 @@ setopt PROMPT_SUBST
 # print the current directory, highlighting the git top level directory
 _prompt_pwd() {
     local pwd="$( print -Pn "%~" )"
-    if [[ $( git rev-parse --is-inside-work-tree 2> /dev/null ) == "true" ]]; then
-        local git_tld=$( basename $( git rev-parse --show-toplevel ) )
-        print -Pn "%F{blue}${pwd/${git_tld}/"%F{166}${git_tld}%F{blue}"}%f"
+    if [[ $( uname -m ) != "armv7l" ]]; then
+        if [[ $( git rev-parse --is-inside-work-tree 2> /dev/null ) == "true" ]]; then
+            local git_tld=$( basename $( git rev-parse --show-toplevel ) )
+            print -Pn "%F{blue}${pwd/${git_tld}/"%F{166}${git_tld}%F{blue}"}%f"
+        else
+            print -Pn "%F{blue}${pwd}%f"
+        fi
     else
         print -Pn "%F{blue}${pwd}%f"
     fi
@@ -13,11 +17,13 @@ _prompt_pwd() {
 
 # print info about the current git branch
 _prompt_git_info() {
-    if [[ $( git rev-parse --is-inside-work-tree 2> /dev/null ) == "true" ]]; then
-        echo -n " ⟶  "
-        echo -n "$( git symbolic-ref HEAD | cut -d'/' -f 3 )"
-        [[ -n $( git status --porcelain --ignore-submodules ) ]] && print -Pn "%F{red}*%f"
-        (( $( git rev-list --left-only --count HEAD...@'{u}' ) > 0 )) && print -Pn " %F{cyan}⇡%f"
+    if [[ $( uname -m ) != "armv7l" ]]; then
+        if [[ $( git rev-parse --is-inside-work-tree 2> /dev/null ) == "true" ]]; then
+            echo -n " ⟶  "
+            echo -n "$( git symbolic-ref HEAD | cut -d'/' -f 3 )"
+            [[ -n $( git status --porcelain --ignore-submodules ) ]] && print -Pn "%F{red}*%f"
+            (( $( git rev-list --left-only --count HEAD...@'{u}' ) > 0 )) && print -Pn " %F{cyan}⇡%f"
+        fi
     fi
 }
 
