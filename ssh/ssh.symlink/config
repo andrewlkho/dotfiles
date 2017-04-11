@@ -8,6 +8,7 @@ Host sebastian
 Host sebastian-ipv4
     HostName ssh.sebastian.hostedpi.com
     Port 5138
+    ForwardAgent yes
 
 Host nfsn
     HostName ssh.phx.nearlyfreespeech.net
