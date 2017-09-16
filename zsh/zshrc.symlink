@@ -1,9 +1,11 @@
 # Shortcut to root of dotfiles repository
 export ZSH=$HOME/git/dotfiles.git
 
-# Source all *.zsh except those in vim's undodir
+# Source all *.zsh except those in vim's undodir.  The zsh topic's files should
+# be sourced first (otherwise path gets overwritten).
+for config_file ($ZSH/zsh/*.zsh) source $config_file
 for config_file in $ZSH/**/*.zsh(.N); do
-    [[ ! ${config_file} =~ "^${ZSH}/vim/vim.symlink/undodir/" ]] && source ${config_file}
+    [[ ! ${config_file} =~ "^${ZSH}/(vim/vim.symlink/undodir|zsh)/" ]] && source ${config_file}
 done
 
 # Initialise autocomplete here (after function definitions) then reload completions
