@@ -16,6 +16,7 @@ footer = "\n"
 [Account fastmail]
 localrepository = LocalFastmail
 remoterepository = RemoteFastmail
+status_backend = sqlite
 
 [Repository LocalFastmail]
 type = Maildir
@@ -41,6 +42,7 @@ folderfilter = lambda f: f not in ['Junk Mail', 'Trash', 'Archive', 'EduSpam'] \
 [Account fastmail-notes]
 localrepository = LocalFastmailNotes
 remoterepository = RemoteFastmailNotes
+status_backend = sqlite
 
 [Repository LocalFastmailNotes]
 type = Maildir
@@ -64,6 +66,7 @@ readonly = True
 [Account hermes]
 localrepository = LocalHermes
 remoterepository = RemoteHermes
+status_backend = sqlite
 
 [Repository LocalHermes]
 type = Maildir

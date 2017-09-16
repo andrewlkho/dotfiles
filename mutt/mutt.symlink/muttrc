@@ -31,6 +31,7 @@ set nomark_old
 set move = no
 set recall = no
 set nowait_key
+set read_inc = 500
 
 # display
 set attribution = "%n <%a> wrote [%{%Y-%m-%d %H:%M %z}]:"
