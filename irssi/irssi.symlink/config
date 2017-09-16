@@ -1,10 +1,10 @@
 servers = (
   {
-    address = "irc.freenode.net";
+    address = "chat.freenode.net";
     chatnet = "freenode";
     port = "6697";
     use_ssl = "yes";
-    password = "andrewlkho:";
+    ssl_cert = "~/.irssi/certs/freenode.pem";
   },
   {
     address = "textdriven.irc.slack.com";
@@ -15,10 +15,7 @@ servers = (
   }
 );
 
-chatnets = {
-  freenode = { type = "IRC"; };
-  textdriven = { type = "IRC"; };
-};
+chatnets = { freenode = { type = "IRC"; }; textdriven = { type = "IRC"; }; };
 
 channels = (
   { name = "#general"; chatnet = "textdriven"; autojoin = "yes"; }
@@ -30,12 +27,12 @@ settings = {
     user_name = "andrewlkho";
     nick = "andrewlkho";
     timestamp_format = "%Y-%m-%dT%H:%M%z";
+    resolve_prefer_ipv6 = "yes";
   };
   "fe-common/core" = {
     beep_when_away = "no";
     beep_when_window_active = "no";
     hide_text_style = "yes";
-    show_nickmode_empty = "no";
   };
   "fe-text" = { actlist_sort = "refnum"; colors = "no"; };
 };
