@@ -1,19 +1,11 @@
-# Try a bunch of directories that I might want in my path.  Stuff towards the
-# end of this list will be earlier in $PATH.
+# Set default path.  Other topics can prepend to this if needed with
+# path[1,0]=( /foo(N) )
 typeset -U path
-local TESTDIR
-for TESTDIR in /bin /sbin \
-               /usr/bin /usr/sbin \
-               /usr/local/bin /usr/local/sbin \
-               /usr/local/apache/bin \
-               /usr/local/mysql/bin \
-               /var/lib/gems/1.8/bin \
-               `find -L /usr/local/texlive -maxdepth 3 -mindepth 3 -name universal-darwin 2> /dev/null` \
-               $HOME/bin
-do
-    [[ -d ${TESTDIR} ]] && path=( ${TESTDIR} $path )
-done
-unset TESTDIR
+path=( ${HOME}/bin(N)
+       /usr/local/{,s}bin(N)
+       /usr/{,s}bin(N)
+       /{,s}bin(N)
+     )
 
 export EDITOR='vim'
 export PAGER='less'
