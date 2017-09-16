@@ -1,6 +1,6 @@
 if [[ `uname -s` == 'Darwin' ]]; then
     # MacTeX puts a symlink to the binaries here
-    path[1,0]=( /Library/TeX/texbin(N) )
+    path[1,0]+=( /Library/TeX/texbin(N) )
 
     # Some useful utilities
     alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
