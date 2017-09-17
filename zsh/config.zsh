@@ -10,7 +10,7 @@ path=( ${HOME}/bin(N)
 export EDITOR='vim'
 export PAGER='less'
 export LANG=$( locale -a | grep -i 'en_gb.utf-\?8' )
-export LC_ALL=$( locale -a | grep -i 'en_gb.utf-\?8' )
+export LC_COLLATE="C" LC_NUMERIC="C"
 setopt NOBEEP
 
 # History setup
