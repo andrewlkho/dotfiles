@@ -19,6 +19,7 @@ Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'scy/vim-remind'
+Bundle 'tmhedberg/SimpylFold'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-markdown'
 filetype plugin indent on
