@@ -4,3 +4,5 @@ gnupg.symlink/secring.gpg
 gnupg.symlink/random_seed
 gnupg.symlink/trustdb.gpg
 gnupg.symlink/private-keys-v1.d/
+gnupg.symlink/pubring.kbx
+gnupg.symlink/tofu.db
