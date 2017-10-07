@@ -3,13 +3,13 @@ IgnoreUnknown UseKeychain
 Host strongspace
     HostName andrewlkho.strongspace.com
 
-Host sebastian
-    HostName sebastian.andrewho.co.uk
-    ForwardAgent yes
-
-Host sebastian-ipv4
+# Fallback to IPv4 gateway if no IPv6 connectivity
+Match originalhost sebastian !exec "ping6 -nqc 1 sebastian.andrewho.co.uk"
     HostName ssh.sebastian.hostedpi.com
     Port 5138
+
+Host sebastian
+    HostName sebastian.andrewho.co.uk
     ForwardAgent yes
 
 Host nfsn
