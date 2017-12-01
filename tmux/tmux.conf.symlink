@@ -43,7 +43,6 @@ set-option -g status-left-length 27
 set-option -g status-left " [#([ -n $SSH_TTY ] && echo 'ssh ')#(whoami)@#(hostname -s)]"
 set-option -g status-right " %a %Y-%m-%d "
 set-option -g status-right-length 16
-set-option -g status-utf8 on
 set-window-option -g window-status-format "#I: #W  "
 set-window-option -g window-status-current-format "#I: #W  "
 
