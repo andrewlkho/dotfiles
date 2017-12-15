@@ -1,2 +1,2 @@
-ssh.symlink/id_rsa*
+ssh.symlink/id_ed25519
 ssh.symlink/known_hosts
