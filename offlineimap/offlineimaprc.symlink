@@ -1,5 +1,5 @@
 [general]
-accounts = fastmail
+accounts = fastmail, fastmail-notes, hermes
 ui = basic
 
 [mbnames]
@@ -28,6 +28,8 @@ nametrans = lambda f: re.sub('^Sent$', 'Sent Items', f)
 [Repository RemoteFastmail]
 type = IMAP
 remotehost = imap.fastmail.com
+ipv6 = True
+starttls = no
 ssl = yes
 remoteport = 993
 sslcacertfile = ~/.offlineimap/fastmail.crt
@@ -53,6 +55,7 @@ restoreatime = no
 [Repository RemoteFastmailNotes]
 type = IMAP
 remotehost = imap.fastmail.com
+ipv6 = True
 ssl = yes
 remoteport = 993
 sslcacertfile = ~/.offlineimap/fastmail.crt
@@ -78,6 +81,7 @@ nametrans = lambda f: re.sub('^Sent$', 'sent-mail', f)
 [Repository RemoteHermes]
 type = IMAP
 remotehost = imap.hermes.cam.ac.uk
+ipv6 = True
 ssl = yes
 remoteport = 993
 sslcacertfile = ~/.offlineimap/hermes.crt
