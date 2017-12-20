@@ -1,27 +1,9 @@
 set nocompatible
 
-" vundle
-filetype on  " for OS X (see http://andrewho.co.uk/weblog/vim-pathogen-with-mutt-and-git)
-filetype off
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-" GitHub repos
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'vim-airline/vim-airline'
-Bundle 'vim-airline/vim-airline-themes'
-Bundle 'bling/vim-bufferline'
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'davidoc/taskpaper.vim'
-Bundle 'ervandew/supertab'
-Bundle 'gmarik/vundle'
-Bundle 'ctrlpvim/ctrlp.vim'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-Bundle 'othree/html5.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'scy/vim-remind'
-Bundle 'tmhedberg/SimpylFold'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-markdown'
+" vim-pathogen
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
+execute pathogen#helptags()
 filetype plugin indent on
 
 " UI
