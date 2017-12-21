@@ -2,20 +2,31 @@ servers = (
   {
     address = "chat.freenode.net";
     chatnet = "freenode";
+    family = "inet6";
     port = "6697";
-    use_ssl = "yes";
-    ssl_cert = "~/.irssi/certs/freenode.pem";
+    use_tls = "yes";
+    tls_verify = "yes";
+    tls_cert = "~/.irssi/certs/freenode.pem";
   },
   {
     address = "textdriven.irc.slack.com";
     chatnet = "textdriven";
     port = "6667";
     password = "";
-    use_ssl = "yes";
+    use_tls = "yes";
+    tls_verify = "yes";
   }
 );
 
-chatnets = { freenode = { type = "IRC"; }; textdriven = { type = "IRC"; }; };
+chatnets = {
+  freenode = {
+    type = "IRC";
+    sasl_mechanism = "EXTERNAL";
+  };
+  textdriven = {
+    type = "IRC";
+  };
+};
 
 channels = (
   { name = "#general"; chatnet = "textdriven"; autojoin = "yes"; }
