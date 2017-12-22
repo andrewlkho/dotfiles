@@ -1,0 +1,14 @@
+# Start offlineimap in the background before mutt
+mutto() {
+    # Seed gpg-agent with passphrase
+    gpg --quiet --decrypt ~/.secret/fastmail.gpg >/dev/null
+
+    # Start offlineimap
+    offlineimap &
+
+    # Start mutt
+    mutt
+
+    # After mutt has exited, terminate offlineimap
+    pkill -SIGTERM offlineimap
+}

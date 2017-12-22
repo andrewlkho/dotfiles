@@ -17,6 +17,7 @@ folder-hook /INBOX$ 'set postponed = +$my_account/Drafts'
 folder-hook /INBOX$ 'set record = +$my_account/Sent'
 folder-hook +fastmail/INBOX 'set smtp_url = smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465'
 folder-hook +hermes/INBOX 'set smtp_url = smtp://$my_hermes_user:$my_hermes_pass@smtp.hermes.cam.ac.uk:587'
+mailboxes +fastmail/INBOX +hermes/INBOX
 
 # behaviour
 set nobeep

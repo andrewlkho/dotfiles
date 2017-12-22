@@ -1,6 +1,8 @@
 [general]
 accounts = fastmail, fastmail-notes, hermes
-ui = basic
+ui = quiet
+pythonfile = ~/.offlineimap/get_gpg_passwd.py
+maxsyncaccounts = 3
 
 [mbnames]
 enabled = yes
@@ -17,6 +19,7 @@ footer = "\n"
 localrepository = LocalFastmail
 remoterepository = RemoteFastmail
 status_backend = sqlite
+autorefresh = 5
 
 [Repository LocalFastmail]
 type = Maildir
@@ -34,6 +37,7 @@ ssl = yes
 remoteport = 993
 sslcacertfile = ~/.offlineimap/fastmail.crt
 remoteuser = andrewlkho@fastmail.fm
+remotepasseval = get_gpg_passwd("fastmail")
 nametrans = lambda f: re.sub('Sent Items', 'Sent', f)
 folderfilter = lambda f: f not in ['Junk Mail', 'Trash', 'Archive', 'EduSpam'] \
     and not re.search('^Notes', f)
@@ -45,6 +49,7 @@ folderfilter = lambda f: f not in ['Junk Mail', 'Trash', 'Archive', 'EduSpam'] \
 localrepository = LocalFastmailNotes
 remoterepository = RemoteFastmailNotes
 status_backend = sqlite
+autorefresh = 5
 
 [Repository LocalFastmailNotes]
 type = Maildir
@@ -60,6 +65,7 @@ ssl = yes
 remoteport = 993
 sslcacertfile = ~/.offlineimap/fastmail.crt
 remoteuser = andrewlkho@fastmail.fm
+remotepasseval = get_gpg_passwd("fastmail")
 folderfilter = lambda f: re.search('^Notes', f)
 readonly = True
 
@@ -70,6 +76,7 @@ readonly = True
 localrepository = LocalHermes
 remoterepository = RemoteHermes
 status_backend = sqlite
+autorefresh = 5
 
 [Repository LocalHermes]
 type = Maildir
@@ -86,5 +93,6 @@ ssl = yes
 remoteport = 993
 sslcacertfile = ~/.offlineimap/hermes.crt
 remoteuser = alkh2
+remotepasseval = get_gpg_passwd("hermes")
 nametrans = lambda f: re.sub('sent-mail', 'Sent', f)
 folderfilter = lambda f: f not in ['spam', 'Trash']
