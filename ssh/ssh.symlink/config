@@ -19,6 +19,10 @@ Host nfsn
 Host *.onion
     ProxyCommand netcat -x localhost:9050 -X 5 %h %p
 
+Host srcf
+    HostName shell.srcf.net
+    User alkh2
+
 Host *
     Protocol 2
     CheckHostIP no
