@@ -8,3 +8,5 @@ let R_assign = 0
 
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
+
+set colorcolumn=81
