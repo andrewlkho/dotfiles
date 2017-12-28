@@ -15,7 +15,14 @@ servers = (
     password = "";
     use_tls = "yes";
     tls_verify = "yes";
-  }
+  },
+  {
+    address = "irc.srcf.net";
+    chatnet = "srcf";
+    port = "6697";
+    use_tls = "yes";
+    tls_verify = "yes";
+  },
 );
 
 chatnets = {
@@ -25,6 +32,10 @@ chatnets = {
   };
   textdriven = {
     type = "IRC";
+  };
+  srcf = {
+    type = "IRC";
+    nick = "alkh2";
   };
 };
 
