@@ -123,3 +123,7 @@ vmap <leader>\ gc
 " Automatically start and stop R console if editing an R file
 autocmd FileType r if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
 autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+
+" Only update git-gutter signs when I read or write a buffer
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
