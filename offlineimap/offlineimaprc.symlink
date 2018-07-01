@@ -1,5 +1,5 @@
 [general]
-accounts = fastmail, fastmail-notes, hermes
+accounts = fastmail, hermes
 ui = quiet
 pythonfile = ~/.offlineimap/get_gpg_passwd.py
 maxsyncaccounts = 3
@@ -41,33 +41,6 @@ remotepasseval = get_gpg_passwd("fastmail")
 nametrans = lambda f: re.sub('Sent Items', 'Sent', f)
 folderfilter = lambda f: f not in ['Junk Mail', 'Trash', 'Archive', 'EduSpam'] \
     and not re.search('^Notes', f)
-
-
-# fastmail-notes ###############################################################
-
-[Account fastmail-notes]
-localrepository = LocalFastmailNotes
-remoterepository = RemoteFastmailNotes
-status_backend = sqlite
-autorefresh = 5
-
-[Repository LocalFastmailNotes]
-type = Maildir
-localfolders = ~/mail/fastmail-notes
-sep = .
-restoreatime = no
-
-[Repository RemoteFastmailNotes]
-type = IMAP
-remotehost = imap.fastmail.com
-ipv6 = True
-ssl = yes
-remoteport = 993
-sslcacertfile = ~/.offlineimap/fastmail.crt
-remoteuser = andrewlkho@fastmail.fm
-remotepasseval = get_gpg_passwd("fastmail")
-folderfilter = lambda f: re.search('^Notes', f)
-readonly = True
 
 
 # hermes #######################################################################
