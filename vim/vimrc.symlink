@@ -110,12 +110,8 @@ let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_style_error_symbol = ">"
 let g:syntastic_style_warning_symbol = ">"
 
-" CtrlP
-let g:ctrlp_match_window = 'top,order:ttb'
-let g:ctrlp_custom_ignore = {
-    \ 'dir': '\v[\/]\.(git|hg|svn)$',
-    \ 'file': '\v\.(pyc|gpg\~?)$'
-    \ }
+" fzf
+nnoremap <c-p> :Files<CR>
 
 " comment in visual mode
 vmap <leader>\ gc
