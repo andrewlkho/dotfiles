@@ -1,0 +1,24 @@
+set noautochpos
+mark h ~
+mark d ~/Desktop
+mark t ~/Dropbox/Tarandy
+mark a ~/Documents/andrewonntserver
+mark u ~/Documents/unison
+
+set trashdir=$HOME/.Trash
+set confirm=permdelete
+
+" Only enter should open I file (I press l too often accidentally)
+filetype * true
+command open open %c
+nnoremap <cr> :open<cr>
+
+command ql qlmanage -p %c
+nnoremap <space> :ql<cr>
+
+set ignorecase
+
+colorscheme andrewlkho-solarized-dark
+
+command! fzf :execute 'goto "'.system('find ${HOME} -path ${HOME}/Library -prune -o -print | fzf --height 10 2>/dev/tty ').'"%IU' | redraw
+nnoremap <c-f> :fzf<cr>

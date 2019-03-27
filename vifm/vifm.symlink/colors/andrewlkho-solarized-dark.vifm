@@ -1,0 +1,14 @@
+" Solarized dark installed in Terminal.app
+
+highlight clear
+
+highlight Win cterm=none ctermbg=8 ctermfg=12
+highlight Directory cterm=none ctermbg=8 ctermfg=6
+highlight Executable cterm=none ctermbg=8 ctermfg=12
+highlight CurrLine cterm=none ctermbg=3 ctermfg=8
+
+highlight Border ctermbg=0
+highlight TopLine cterm=none ctermbg=0 ctermfg=12
+highlight TopLineSel cterm=none ctermbg=0 ctermfg=12
+highlight StatusLine cterm=none ctermbg=0 ctermfg=12
+highlight CmdLine cterm=none ctermbg=0 ctermfg=12
