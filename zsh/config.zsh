@@ -8,7 +8,8 @@ path=( ${HOME}/bin(N)
      )
 
 export EDITOR='vim'
-export PAGER='less'
+export PAGER='less -i'
+export MANPGER='less -i'
 export LANG=$( locale -a | grep -i 'en_gb.utf-\?8' )
 export LC_COLLATE="C" LC_NUMERIC="C"
 setopt NOBEEP
