@@ -56,6 +56,3 @@ set-window-option -g clock-mode-colour brightcyan # base1
 
 # miscellaneous
 bind-key -n C-l send-keys -R \; send-keys C-l \; clear-history
-
-# `tmux attach-session` should start a new session if one does not already exist
-new-session

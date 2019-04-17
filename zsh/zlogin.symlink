@@ -1,1 +1,7 @@
-tmux attach-session -d && logout
+# If a client is already connected to a session (e.g. I am opening a second
+# Terminal.app tab) then just drop into a shell.
+# If not, then attach to a running sesion if one exists, otherwise create
+# a new session.
+if [[ ! -n $( tmux list-clients -t andrewlkho 2>/dev/null ) ]]; then
+    tmux new-session -A -s andrewlkho && logout
+fi
