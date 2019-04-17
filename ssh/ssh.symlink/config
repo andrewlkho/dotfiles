@@ -23,6 +23,13 @@ Host srcf
     HostName shell.srcf.net
     User alkh2
 
+# If on home WiFi use local IP address
+Match originalhost data exec "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/^ *SSID/ { print substr($0, index($0, $2)) }' | grep '^SKY82A02$'"
+    HostName 192.168.1.10
+
+Host data
+    HostName data.andrewho.co.uk
+
 Host *
     Protocol 2
     CheckHostIP no
