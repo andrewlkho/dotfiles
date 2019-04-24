@@ -1,5 +1,0 @@
-h1. Vim syntax for remind
-
-These are "Vim":http://www.vim.org/ syntax definitions for "remind":http://www.roaringpenguin.com/products/remind scripts.
-
-They have been created by "Davide Alberani":http://www.mimante.net/ and converted into a Git repository and a "pathogen-compatible":http://github.com/tpope/vim-pathogen bundle by "Tim Weber":http://scytale.name/.

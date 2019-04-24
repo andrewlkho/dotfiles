@@ -1,4 +1,0 @@
-# This empty directory needs to be created for vim backup/swap files
-# (vim won't create it on its own)
-*
-!.gitignore
