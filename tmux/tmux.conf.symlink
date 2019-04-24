@@ -19,8 +19,10 @@ bind-key -r L resize-pane -R 5
 # options
 set-option -s escape-time 0
 set-option -g default-command "/bin/zsh -i" # don't run .zlogin with each new window
+set-option -g display-time 2000
 set-option -g default-terminal "screen-256color"
 set-option -g history-limit 10000
+set-option -g renumber-windows on
 set-option -g status-keys vi
 set-window-option -g aggressive-resize on
 set-window-option -g automatic-rename off
@@ -31,28 +33,25 @@ set-window-option -g monitor-silence 0
 
 # statusline
 set-option -g status-justify centre
-set-option -g status-left-length 27
-set-option -g status-left " [#([ -n $SSH_TTY ] && echo 'ssh ')#(whoami)@#(hostname -s)]"
-set-option -g status-right " %a %Y-%m-%d "
-set-option -g status-right-length 16
-set-window-option -g window-status-format "#I: #W  "
-set-window-option -g window-status-current-format "#I: #W  "
+set-option -g status-interval 5
+set-option -g status-left " [#{host_short}] "
+set-option -g status-left-length 16
+set-option -g status-right " %a %Y-%m-%d %H:%M "
+set-option -g status-right-length 22
+set-window-option -g window-status-format " #I: #W "
+set-window-option -g window-status-current-format " #I: #W "
 
 # colours - this assumes that we have set Terminal.app to use the ANSI 16
-# colour palette: https://github.com/tomislav/osx-terminal.app-colors-solarized
-set-option -g status-bg black # base02
-set-option -g status-fg yellow # yellow
-set-window-option -g window-status-bg default
-set-window-option -g window-status-fg brightgreen # base01
-set-window-option -g window-status-current-bg default
-set-window-option -g window-status-current-fg yellow # yellow
-set-option -g pane-border-fg black # base02
-set-option -g pane-active-border-fg brightgreen # base01
-set-option -g message-bg yellow # yellow
-set-option -g message-fg black # base02
-set-option -g display-panes-colour cyan # cyan
-set-option -g display-panes-active-colour green # green
-set-window-option -g clock-mode-colour brightcyan # base1
+# gruvbox colour palette
+set-option -g status-style "bg=#3C3836,fg=yellow"
+set-option -g window-status-style "bg=default,fg=white"
+set-option -g window-status-current-style "bg=#3C3836,fg=yellow"
+set-option -g message-style "bg=#3C3836,fg=brightwhite"
+
+set-window-option -g pane-border-style "bg=default,fg=#3C3836"
+set-window-option -g pane-active-border-style "bg=default,fg=green"
+set-window-option -g clock-mode-colour cyan
 
 # miscellaneous
 bind-key -n C-l send-keys -R \; send-keys C-l \; clear-history
+bind-key @ choose-window 'join-pane -h -s "%%"'
