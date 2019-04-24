@@ -33,11 +33,10 @@ set-window-option -g monitor-silence 0
 
 # statusline
 set-option -g status-justify centre
-set-option -g status-interval 5
 set-option -g status-left " [#{host_short}] "
 set-option -g status-left-length 16
-set-option -g status-right " %a %Y-%m-%d %H:%M "
-set-option -g status-right-length 22
+set-option -g status-right " %a %Y-%m-%d "
+set-option -g status-right-length 16
 set-window-option -g window-status-format " #I: #W "
 set-window-option -g window-status-current-format " #I: #W "
 
