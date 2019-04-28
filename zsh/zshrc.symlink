@@ -5,7 +5,7 @@ export ZSH=$HOME/git/dotfiles.git
 # be sourced first (otherwise path gets overwritten).
 for config_file ($ZSH/zsh/*.zsh) source $config_file
 for config_file in $ZSH/**/*.zsh(.N); do
-    [[ ! ${config_file} =~ "^${ZSH}/(vim/vim.symlink/undodir|zsh)/" ]] && source ${config_file}
+    [[ ! ${config_file} =~ "^${ZSH}/(vim/vim.symlink/sessions/undo|zsh)/" ]] && source ${config_file}
 done
 
 # Initialise autocomplete here (after function definitions) then reload completions
