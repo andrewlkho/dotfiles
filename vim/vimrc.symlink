@@ -60,6 +60,7 @@ nnoremap <leader>p :setlocal paste! paste?<CR>
 nnoremap <leader>i :setlocal list! list?<CR>
 
 " visual appearance
+syntax enable
 colorscheme gruvbox
 set background=dark
 set cursorline
