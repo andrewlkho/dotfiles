@@ -10,6 +10,7 @@ filetype plugin indent on
 set autoindent
 set backspace=indent,eol,start
 set colorcolumn=81
+set lazyredraw
 set list
 set listchars=tab:>-,trail:-,eol:¬
 set number
