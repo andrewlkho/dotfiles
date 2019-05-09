@@ -8,6 +8,6 @@ if [[ -n $SSH_TTY ]]; then
     tmux new-session -A -s andrewlkho && logout
 else
     if [[ ! -n $( tmux -L portal list-clients 2>/dev/null ) ]]; then
-        tmux -f ~/.tmux-portal.conf -L portal new-session -A && logout
+        tmux -f ~/.tmux-portal.conf -L portal new-session -A -s portal && logout
     fi
 fi
