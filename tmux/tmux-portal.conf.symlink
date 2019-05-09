@@ -1,0 +1,26 @@
+set-option -g prefix None
+set-option -g key-table portal
+bind-key -T portal F11 command-prompt
+bind-key -T portal F12 next-window
+
+set-option -g default-terminal 'screen-256color'
+set-option -g terminal-overrides ',*256col*:Tc'
+set-option -g history-limit 0
+set-option -g renumber-windows on
+set-option -g status-keys vi
+set-window-option -g aggressive-resize on
+set-window-option -g automatic-rename off
+set-window-option -g monitor-activity off
+set-window-option -g monitor-silence 0
+
+set-option -g status-position top
+set-option -g status-justify centre
+set-option -g status-left ""
+set-option -g status-left-length 0
+set-option -g status-right ""
+set-option -g status-right-length 0
+set-window-option -g window-status-format "  #W  "
+set-window-option -g window-status-current-format "  #W  "
+
+set-option -g status-style "bg=#3C3836,fg=#BDAE93"
+set-window-option -g window-status-current-style "bg=#BDAE93,fg=#3C3836"
