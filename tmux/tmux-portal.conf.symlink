@@ -17,7 +17,8 @@ set-option -g status-position top
 set-option -g status-justify centre
 set-option -g status-left ""
 set-option -g status-left-length 0
-set-option -g status-right ""
+# battery requires https://github.com/Goles/Battery
+set-option -g status-right "#(~/bin/battery -t -g '#BDAE93' -m '#BDAE93'-w red) "
 set-option -g status-right-length 0
 set-window-option -g window-status-format "  #W  "
 set-window-option -g window-status-current-format "  #W  "
