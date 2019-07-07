@@ -1,13 +1,3 @@
-# If I am on a remote terminal then attach to a running session if one exists,
-# otherwise create a new session.
-# If, however, I am not on a remote terminal then only open a new/existing
-# tmux session if one is not already connected to (i.e. just drop into a
-# shell if this is a second Terminal.app tab)
-
 if [[ -n $SSH_TTY ]]; then
     tmux new-session -A -s andrewlkho && logout
-else
-    if [[ ! -n $( tmux -L portal list-clients 2>/dev/null ) ]]; then
-        tmux -f ~/.tmux-portal.conf -L portal new-session -A -s portal && logout
-    fi
 fi

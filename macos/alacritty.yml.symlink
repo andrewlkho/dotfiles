@@ -366,6 +366,28 @@ live_config_reload: true
 #  args:
 #    - --login
 
+shell:
+    program: /usr/local/bin/tmux
+    args:
+        - -f
+        - /Users/andrewlkho/.tmux-portal.conf
+        - -L
+        - portal
+        - new-session
+        - -A
+        - -n
+        - foobar-three
+        - -s
+        - portal
+        - /usr/local/bin/tmux -L default new-session -A -s foobar-three
+#         - /usr/local/bin/tmux
+#         - -L
+#         - default
+#         - new-session
+#         - -A
+#         - -s
+#         - foobar-three
+
 # Windows 10 ConPTY backend (Windows only)
 #
 # This will enable better color support and may resolve other issues,
