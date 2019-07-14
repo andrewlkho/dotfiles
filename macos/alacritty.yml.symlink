@@ -380,13 +380,6 @@ shell:
         - -s
         - portal
         - /usr/local/bin/tmux -L default new-session -A -s foobar-three
-#         - /usr/local/bin/tmux
-#         - -L
-#         - default
-#         - new-session
-#         - -A
-#         - -s
-#         - foobar-three
 
 # Windows 10 ConPTY backend (Windows only)
 #
@@ -537,6 +530,8 @@ key_bindings:
   #- { key: Q,      mods: Command, action: Quit             }
   #- { key: W,      mods: Command, action: Quit             }
 
+  - { key: LBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["-L", "portal", "previous-window"] }}
+  - { key: RBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["-L", "portal", "next-window"] }}
   - { key: Paste,                   action: Paste                            }
   - { key: Copy,                    action: Copy                             }
   - { key: L,        mods: Control, action: ClearLogNotice                   }

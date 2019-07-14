@@ -1,7 +1,6 @@
 set-option -g prefix None
 set-option -g key-table portal
-bind-key -T portal F11 command-prompt
-bind-key -T portal F12 next-window
+bind-key -T portal F12 command-prompt
 
 set-option -g default-terminal 'screen-256color'
 set-option -g terminal-overrides ',*256col*:Tc'
