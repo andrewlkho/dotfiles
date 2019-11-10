@@ -24,3 +24,5 @@ set-window-option -g window-status-current-format "  #W  "
 
 set-option -g status-style "bg=#3C3836,fg=#BDAE93"
 set-window-option -g window-status-current-style "bg=#BDAE93,fg=#3C3836"
+
+set-environment -g ENV "${HOME}/.kshrc"
