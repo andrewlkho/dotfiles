@@ -1,0 +1,52 @@
+export EDITOR="vim"
+
+export HISTCONTROL="ignorespace"
+export HISTFILE="${HOME}/.ksh_history"
+export HISTSIZE=10000
+
+# PATH
+PATH=""
+for TESTPATH in \
+    "${HOME}/bin" \
+    /Library/TeX/texbin \
+    /usr/local/bin /usr/local/sbin \
+    /usr/bin /usr/sbin \
+    /bin /sbin
+do
+    [ -d "${TESTPATH}" ] &&PATH="${PATH:+${PATH}:}${TESTPATH}"
+done
+
+alias ls='ls -lp'
+[ -a "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport" ] && alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
+[ -a "/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py" ] && alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+set -o vi
+set -o vi-tabcomplete
+
+
+function _prompt_arrow
+{
+    if [ $? -eq 0 ]; then
+        print '\033[38;2;152;151;26m❯\033[0m'
+    else
+        print '\033[38;2;204;36;29m❯\033[0m'
+    fi
+}
+
+function _prompt_jobs
+{
+    if [ $( jobs | wc -l ) -gt 0 ]; then
+        # print -n '\033[38;2;146;131;116m'
+        print -n '\033[38;2;215;153;33m'
+        print -n "[$( jobs -p | wc -l | tr -d '[:blank:]' )] "
+    fi
+}
+
+function _prompt_venv
+{
+    print -n '\033[38;2;146;131;116m'
+    print -n "${VIRTUAL_ENV:+${VIRTUAL_ENV##*/} }"
+}
+
+export PS1='\n$( _prompt_jobs )\033[38;2;69;133;136m\w\n$( _prompt_venv )$( _prompt_arrow ) '
+export PS2='\033[38;2;146;131;116m... \033[38;2;177;98;134m❯\033[0m '
