@@ -18,8 +18,7 @@ bind-key -r L resize-pane -R 5
 
 # options
 set-option -s escape-time 0
-# set-option -g default-command "/bin/zsh -i" # don't run .zlogin with each new window
-set-option -g default-command "/usr/local/bin/oksh -i"
+set-option -g default-command "/bin/zsh -i" # don't run .zlogin with each new window
 set-option -g display-time 2000
 set-option -g default-terminal "screen-256color"
 set-option -g terminal-overrides ",*256col*:Tc"
@@ -56,5 +55,3 @@ set-window-option -g clock-mode-colour cyan
 # miscellaneous
 bind-key -n C-l send-keys -R \; send-keys C-l \; clear-history
 bind-key @ choose-window 'join-pane -h -s "%%"'
-
-set-environment -g ENV "${HOME}/.kshrc"
