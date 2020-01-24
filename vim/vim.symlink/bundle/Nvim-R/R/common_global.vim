@@ -58,29 +58,21 @@ function RWarningMsg(wmsg)
     echohl None
 endfunction
 
-if has("win32")
-    let s:nvv = "0.2.1"
-else
-    let s:nvv = "0.2.0"
-endif
-
 if has("nvim")
-    if !has("nvim-" . s:nvv)
-        call RWarningMsg("Nvim-R requires Neovim >= " . s:nvv . ".")
+    if !has("nvim-0.2.1")
+        call RWarningMsg("Nvim-R requires Neovim >= 0.2.1.")
         let g:rplugin.failed = 1
         finish
     endif
-elseif v:version < "800"
-    call RWarningMsg("Nvim-R requires either Neovim >= " . s:nvv . " or Vim >= 8.0.")
+elseif v:version < "801"
+    call RWarningMsg("Nvim-R requires either Neovim >= 0.2.1 or Vim >= 8.1.")
     let g:rplugin.failed = 1
     finish
 elseif !has("channel") || !has("job")
-    call RWarningMsg("Nvim-R requires either Neovim >= " . s:nvv . " or Vim >= 8.0.\nIf using Vim, it must have been compiled with both +channel and +job features.\n")
+    call RWarningMsg("Nvim-R requires either Neovim >= 0.2.1 or Vim >= 8.1.\nIf using Vim, it must have been compiled with both +channel and +job features.\n")
     let g:rplugin.failed = 1
     finish
 endif
-
-unlet s:nvv
 
 function ReplaceUnderS()
     if &filetype != "r" && b:IsInRCode(0) == 0
@@ -615,7 +607,7 @@ function CheckNvimcomVersion()
                 let g:rplugin.debug_info['CMD_INSTALL'] = system(g:rplugin.Rcmd . " CMD INSTALL --no-multiarch nvimcom_" . s:required_nvimcom . ".tar.gz")
                 call UnSetRtoolsPath()
             else
-                let g:rplugin.debug_info['CMD_INSTALL'] = system(g:rplugin.Rcmd . " CMD INSTALL nvimcom_" . s:required_nvimcom . ".tar.gz")
+                let g:rplugin.debug_info['CMD_INSTALL'] = system(g:rplugin.Rcmd . " CMD INSTALL --no-lock nvimcom_" . s:required_nvimcom . ".tar.gz")
             endif
             if v:shell_error
                 if filereadable(expand("~/.R/Makevars"))
@@ -1098,7 +1090,9 @@ function StartObjBrowser()
         endif
         sil set filetype=rbrowser
         let g:rplugin.ob_winnr = win_getid()
-        let g:rplugin.ob_buf = nvim_win_get_buf(g:rplugin.ob_winnr)
+        if exists("*nvim_win_get_buf")
+            let g:rplugin.ob_buf = nvim_win_get_buf(g:rplugin.ob_winnr)
+        endif
 
         " Inheritance of some local variables
         let b:objbrtitle = g:tmp_objbrtitle
@@ -1285,7 +1279,7 @@ function GetROutput(outf)
     redraw
 endfunction
 
-function RViewDF(oname)
+function RViewDF(oname, ...)
     if exists('g:R_csv_app')
         if g:R_csv_app =~# '^terminal:'
             let csv_app = split(g:R_csv_app, ':')[1]
@@ -1313,8 +1307,9 @@ function RViewDF(oname)
         endif
         return
     endif
+    let location = get(a:, 1, "tabnew")
     echo 'Opening "' . a:oname . '.csv"'
-    silent exe 'tabnew ' . a:oname . '.csv'
+    silent exe location . ' ' . a:oname . '.csv'
     silent 1,$d
     silent exe 'read ' . substitute(g:rplugin.tmpdir, ' ', '\\ ', 'g') . '/Rinsert'
     silent 1d
@@ -1383,6 +1378,18 @@ function RSourceLines(...)
 
     let ok = g:SendCmdToR(rcmd)
     return ok
+endfunction
+
+" Send motion to R
+function SendMotionToR(type)
+    let lstart = line("'[")
+    let lend = line("']")
+    if lstart == lend
+        call SendLineToR("stay", lstart)
+    else
+        let lines = getline(lstart, lend)
+        call RSourceLines(lines, "", "block")
+    endif
 endfunction
 
 " Send file to R
@@ -1519,6 +1526,12 @@ function SendFunctionToR(e, m)
     endif
 endfunction
 
+" Send all lines above to R
+function SendAboveLinesToR()
+    let lines = getline(1, line(".") - 1)
+    call RSourceLines(lines, "")
+endfunction
+
 " Send selection to R
 function SendSelectionToR(...)
     let ispy = 0
@@ -1601,7 +1614,9 @@ function SendSelectionToR(...)
     if a:2 == "down"
         call GoDown()
     else
-        normal! gv
+        if a:0 < 3 || (a:0 == 3 && a:3 != "normal")
+            normal! gv
+        endif
     endif
 endfunction
 
@@ -1676,7 +1691,7 @@ function SendFHChunkToR()
     let curbuf = getline(1, "$")
     let idx = 0
     while idx < here
-        if curbuf[idx] =~ begchk
+        if curbuf[idx] =~ begchk && curbuf[idx] !~ '\<eval\s*=\s*F'
             " Child R chunk
             if curbuf[idx] =~ chdchk
                 " First run everything up to child chunk and reset buffer
@@ -1728,8 +1743,9 @@ function RParenDiff(str)
 endfunction
 
 " Send current line to R.
-function SendLineToR(godown)
-    let line = getline(".")
+function SendLineToR(godown, ...)
+    let lnum = get(a:, 1, ".")
+    let line = getline(lnum)
     if strlen(line) == 0
         if a:godown =~ "down"
             call GoDown()
@@ -1934,6 +1950,9 @@ function ClearRInfo()
     call delete(g:rplugin.tmpdir . "/liblist_" . $NVIMR_ID)
     call delete(g:rplugin.tmpdir . "/libnames_" . $NVIMR_ID)
     call delete(g:rplugin.tmpdir . "/GlobalEnvList_" . $NVIMR_ID)
+    for fn in s:del_list
+        call delete(fn)
+    endfor
     let g:SendCmdToR = function('SendCmdToR_fake')
     let s:R_pid = 0
     let g:rplugin.nvimcom_port = 0
@@ -2656,16 +2675,27 @@ function RAction(rcmd, ...)
             if exists("g:R_df_viewer")
                 call g:SendCmdToR(printf(g:R_df_viewer, rkeyword))
             else
+                if a:0 == 1 && a:1 =~ '^,'
+                    let argmnts = a:1
+                elseif a:0 == 2 && a:2 =~ '^,'
+                    let argmnts = a:2
+                else
+                    let argmnts = ''
+                endif
                 echo "Wait..."
                 call delete(g:rplugin.tmpdir . "/Rinsert")
                 call AddForDeletion(g:rplugin.tmpdir . "/Rinsert")
                 if rkeyword =~ '::'
-                    call SendToNvimcom("\x08" . $NVIMR_ID . 'nvimcom:::nvim_viewdf(' . rkeyword . ')')
+                    call SendToNvimcom("\x08" . $NVIMR_ID .
+                                \'nvimcom:::nvim_viewdf(' . rkeyword . argmnts . ')')
                 else
                     if has("win32") && &encoding == "utf-8"
-                        call SendToNvimcom("\x08" . $NVIMR_ID . 'nvimcom:::nvim_viewdf("' . rkeyword . '", fenc="UTF-8")')
+                        call SendToNvimcom("\x08" . $NVIMR_ID .
+                                    \'nvimcom:::nvim_viewdf("' . rkeyword . '"' . argmnts .
+                                    \', fenc="UTF-8"' . ')')
                     else
-                        call SendToNvimcom("\x08" . $NVIMR_ID . 'nvimcom:::nvim_viewdf("' . rkeyword . '")')
+                        call SendToNvimcom("\x08" . $NVIMR_ID .
+                                    \'nvimcom:::nvim_viewdf("' . rkeyword . '"' . argmnts . ')')
                     endif
                 endif
             endif
@@ -2792,6 +2822,9 @@ function RControlMaps()
     call RCreateMaps("ni", '<Plug>RObjectNames',  'rn', ':call RAction("nvim.names")')
     call RCreateMaps("ni", '<Plug>RObjectStr',    'rt', ':call RAction("str")')
     call RCreateMaps("ni", '<Plug>RViewDF',       'rv', ':call RAction("viewdf")')
+    call RCreateMaps("ni", '<Plug>RViewDF',       'vs', ':call RAction("viewdf", ", location=''split''")')
+    call RCreateMaps("ni", '<Plug>RViewDF',       'vv', ':call RAction("viewdf", ", location=''vsplit''")')
+    call RCreateMaps("ni", '<Plug>RViewDF',       'vh', ':call RAction("viewdf", ", location=''above 7split'', nrows=6")')
     call RCreateMaps("ni", '<Plug>RDputObj',      'td', ':call RAction("dputtab")')
     call RCreateMaps("ni", '<Plug>RPrintObj',     'tp', ':call RAction("printtab")')
 
@@ -2799,6 +2832,9 @@ function RControlMaps()
     call RCreateMaps("v", '<Plug>RObjectNames',  'rn', ':call RAction("nvim.names", "v")')
     call RCreateMaps("v", '<Plug>RObjectStr',    'rt', ':call RAction("str", "v")')
     call RCreateMaps("v", '<Plug>RViewDF',       'rv', ':call RAction("viewdf", "v")')
+    call RCreateMaps("v", '<Plug>RViewDF',       'vs', ':call RAction("viewdf", "v", ", location=''split''")')
+    call RCreateMaps("v", '<Plug>RViewDF',       'vv', ':call RAction("viewdf", "v", ", location=''vsplit''")')
+    call RCreateMaps("v", '<Plug>RViewDF',       'vh', ':call RAction("viewdf", "v", ", location=''above 7split'', nrows=6")')
     call RCreateMaps("v", '<Plug>RDputObj',      'td', ':call RAction("dputtab", "v")')
     call RCreateMaps("v", '<Plug>RPrintObj',     'tp', ':call RAction("printtab", "v")')
 
@@ -2848,6 +2884,9 @@ function RCreateMaps(type, plug, combo, target)
     if a:type =~ '0'
         let tg = a:target . '<CR>0'
         let il = 'i'
+    elseif a:type =~ '\.'
+        let tg = a:target
+        let il = 'a'
     else
         let tg = a:target . '<CR>'
         let il = 'a'
@@ -2946,6 +2985,11 @@ function RCreateSendMaps()
 
     " Selection
     "-------------------------------------
+    call RCreateMaps("n", '<Plug>RSendSelection',   'ss', ':call SendSelectionToR("silent", "stay", "normal")')
+    call RCreateMaps("n", '<Plug>RESendSelection',  'se', ':call SendSelectionToR("echo", "stay", "normal")')
+    call RCreateMaps("n", '<Plug>RDSendSelection',  'sd', ':call SendSelectionToR("silent", "down", "normal")')
+    call RCreateMaps("n", '<Plug>REDSendSelection', 'sa', ':call SendSelectionToR("echo", "down", "normal")')
+
     call RCreateMaps("v", '<Plug>RSendSelection',   'ss', ':call SendSelectionToR("silent", "stay")')
     call RCreateMaps("v", '<Plug>RESendSelection',  'se', ':call SendSelectionToR("echo", "stay")')
     call RCreateMaps("v", '<Plug>RDSendSelection',  'sd', ':call SendSelectionToR("silent", "down")')
@@ -2970,10 +3014,14 @@ function RCreateSendMaps()
     call RCreateMaps('ni0', '<Plug>RDSendLineAndInsertOutput', 'o', ':call SendLineToRAndInsertOutput()')
     call RCreateMaps('v', '<Plug>RDSendLineAndInsertOutput', 'o', ':call RWarningMsg("This command does not work over a selection of lines.")')
     call RCreateMaps('i', '<Plug>RSendLAndOpenNewOne', 'q', ':call SendLineToR("newline")')
+    call RCreateMaps("ni.", '<Plug>RSendMotion', 'm', ':set opfunc=SendMotionToR<CR>g@')
     call RCreateMaps('n', '<Plug>RNLeftPart', 'r<left>', ':call RSendPartOfLine("left", 0)')
     call RCreateMaps('n', '<Plug>RNRightPart', 'r<right>', ':call RSendPartOfLine("right", 0)')
     call RCreateMaps('i', '<Plug>RILeftPart', 'r<left>', 'l:call RSendPartOfLine("left", 1)')
     call RCreateMaps('i', '<Plug>RIRightPart', 'r<right>', 'l:call RSendPartOfLine("right", 1)')
+    if &filetype == "r"
+        call RCreateMaps("n", '<Plug>RSendAboveLines',  'su', ':call SendAboveLinesToR()')
+    endif
 endfunction
 
 function RBufEnter()
@@ -3614,9 +3662,9 @@ endif
 
 " Make the file name of files to be sourced
 if exists("g:R_remote_tmpdir")
-	let s:Rsource_read = g:R_remote_tmpdir . "/Rsource-" . getpid()
+    let s:Rsource_read = g:R_remote_tmpdir . "/Rsource-" . getpid()
 else
-	let s:Rsource_read = g:rplugin.tmpdir . "/Rsource-" . getpid()
+    let s:Rsource_read = g:rplugin.tmpdir . "/Rsource-" . getpid()
 endif
 let s:Rsource_write = g:rplugin.tmpdir . "/Rsource-" . getpid()
 
@@ -3672,7 +3720,11 @@ let g:R_ls_env_tol        = get(g:, "R_ls_env_tol",       500)
 let g:R_args_in_stline    = get(g:, "R_args_in_stline",     0)
 let g:R_bracketed_paste   = get(g:, "R_bracketed_paste",    0)
 let g:R_sttline_fmt       = get(g:, "R_sttline_fmt", "%fun(%args)")
-if !exists(":terminal")
+if exists(":terminal") != 2
+    let g:R_in_buffer = 0
+endif
+if !has("nvim") && !exists("*term_start")
+    " exists(':terminal') return 2 even when Vim does not have the +terminal feature
     let g:R_in_buffer = 0
 endif
 

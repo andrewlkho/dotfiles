@@ -66,6 +66,9 @@ function RControlMenu()
     call RCreateMenuItem("nvi", 'Command.Names\ (cur)', '<Plug>RObjectNames', 'rn', ':call RAction("nvim.names")')
     call RCreateMenuItem("nvi", 'Command.Structure\ (cur)', '<Plug>RObjectStr', 'rt', ':call RAction("str")')
     call RCreateMenuItem("nvi", 'Command.View\ data\.frame\ (cur)', '<Plug>RViewDF', 'rv', ':call RAction("viewdf")')
+    call RCreateMenuItem("nvi", 'Command.View\ data\.frame\ (cur)\ in\ horizontal\ split', '<Plug>RViewDF', 'vs', ':call RAction("viewdf", ", location=''split''")')
+    call RCreateMenuItem("nvi", 'Command.View\ data\.frame\ (cur)\ in\ vertical\ split', '<Plug>RViewDF', 'vv', ':call RAction("viewdf", ", location=''vsplit''")')
+    call RCreateMenuItem("nvi", 'Command.View\ head(data\.frame)\ (cur)\ in\ horizontal\ split', '<Plug>RViewDF', 'vh', ':call RAction("viewdf", ", location=''above 7split'', nrows=6")')
     call RCreateMenuItem("nvi", 'Command.Run\ dput(cur)\ and\ show\ output\ in\ new\ tab', '<Plug>RDputObj', 'td', ':call RAction("dputtab")')
     call RCreateMenuItem("nvi", 'Command.Run\ print(cur)\ and\ show\ output\ in\ new\ tab', '<Plug>RPrintObj', 'tp', ':call RAction("printtab")')
     "-------------------------------
@@ -153,6 +156,9 @@ function MakeRMenu()
     call RCreateMenuItem("n", 'Send.Right\ part\ of\ line\ (cur)', '<Plug>RNRightPart', 'r<Right>', ':call RSendPartOfLine("right", 0)')
     call RCreateMenuItem("i", 'Send.Left\ part\ of\ line\ (cur)', '<Plug>RILeftPart', 'r<Left>', 'l:call RSendPartOfLine("left", 1)')
     call RCreateMenuItem("i", 'Send.Right\ part\ of\ line\ (cur)', '<Plug>RIRightPart', 'r<Right>', 'l:call RSendPartOfLine("right", 1)')
+    if &filetype == "r"
+        call RCreateMenuItem("ni", 'Send.Line \(above\ ones)', '<Plug>RSendAboveLines', 'su', ':call SendAboveLinesToR()')
+    endif
 
     "----------------------------------------------------------------------------
     " Control
@@ -167,22 +173,23 @@ function MakeRMenu()
     if &filetype == "rnoweb" || g:R_never_unmake_menu
         menu R.Command.-Sep5- <nul>
         call RCreateMenuItem("nvi", 'Command.Sweave\ (cur\ file)', '<Plug>RSweave', 'sw', ':call RWeave("nobib", 0, 0)')
-        call RCreateMenuItem("nvi", 'Command.Sweave\ and\ PDF\ (cur\ file)', '<Plug>RMakePDF', 'sp', ':call RMakePDF("nobib", 0)')
-        call RCreateMenuItem("nvi", 'Command.Sweave,\ BibTeX\ and\ PDF\ (cur\ file)', '<Plug>RBibTeX', 'sb', ':call RMakePDF("bibtex", 0)')
+        call RCreateMenuItem("nvi", 'Command.Sweave\ and\ PDF\ (cur\ file)', '<Plug>RMakePDF', 'sp', ':call RWeave("nobib", 0, 1)')
+        call RCreateMenuItem("nvi", 'Command.Sweave,\ BibTeX\ and\ PDF\ (cur\ file)', '<Plug>RBibTeX', 'sb', ':call RWeave("bibtex", 0, 1)')
     endif
     menu R.Command.-Sep6- <nul>
     if &filetype == "rnoweb"
         call RCreateMenuItem("nvi", 'Command.Knit\ (cur\ file)', '<Plug>RKnit', 'kn', ':call RWeave("nobib", 1, 0)')
-        call RCreateMenuItem("nvi", 'Command.Knit,\ BibTeX\ and\ PDF\ (cur\ file)', '<Plug>RBibTeXK', 'kb', ':call RMakePDFK("bibtex", 1)')
+        call RCreateMenuItem("nvi", 'Command.Knit\ and\ PDF\ (cur\ file)', '<Plug>RMakePDFK', 'kp', ':call RWeave("nobib", 1, 1)')
+        call RCreateMenuItem("nvi", 'Command.Knit,\ BibTeX\ and\ PDF\ (cur\ file)', '<Plug>RBibTeXK', 'kb', ':call RWeave("bibtex", 1, 1)')
     else
         call RCreateMenuItem("nvi", 'Command.Knit\ (cur\ file)', '<Plug>RKnit', 'kn', ':call RKnit()')
+        call RCreateMenuItem("nvi", 'Command.Knit\ and\ PDF\ (cur\ file)', '<Plug>RMakePDFK', 'kp', ':call RMakeRmd("pdf_document")')
+        call RCreateMenuItem("nvi", 'Command.Knit\ and\ Beamer\ PDF\ (cur\ file)', '<Plug>RMakePDFKb', 'kl', ':call RMakeRmd("beamer_presentation")')
+        call RCreateMenuItem("nvi", 'Command.Knit\ and\ HTML\ (cur\ file)', '<Plug>RMakeHTML', 'kh', ':call RMakeRmd("html_document")')
+        call RCreateMenuItem("nvi", 'Command.Knit\ and\ ODT\ (cur\ file)', '<Plug>RMakeODT', 'ko', ':call RMakeRmd("odt_document")')
+        call RCreateMenuItem("nvi", 'Command.Knit\ and\ Word\ Document\ (cur\ file)', '<Plug>RMakeWord', 'kw', ':call RMakeRmd("word_document")')
+        call RCreateMenuItem("nvi", 'Command.Markdown\ render\ (cur\ file)', '<Plug>RMakeRmd', 'kr', ':call RMakeRmd("default")')
     endif
-    call RCreateMenuItem("nvi", 'Command.Knit\ and\ PDF\ (cur\ file)', '<Plug>RMakePDFK', 'kp', ':call RMakeRmd("pdf_document")')
-    call RCreateMenuItem("nvi", 'Command.Knit\ and\ Beamer\ PDF\ (cur\ file)', '<Plug>RMakePDFKb', 'kl', ':call RMakeRmd("beamer_presentation")')
-    call RCreateMenuItem("nvi", 'Command.Knit\ and\ HTML\ (cur\ file)', '<Plug>RMakeHTML', 'kh', ':call RMakeRmd("html_document")')
-    call RCreateMenuItem("nvi", 'Command.Knit\ and\ ODT\ (cur\ file)', '<Plug>RMakeODT', 'ko', ':call RMakeRmd("odt_document")')
-    call RCreateMenuItem("nvi", 'Command.Knit\ and\ Word\ Document\ (cur\ file)', '<Plug>RMakeWord', 'kw', ':call RMakeRmd("word_document")')
-    call RCreateMenuItem("nvi", 'Command.Markdown\ render\ (cur\ file)', '<Plug>RMakeRmd', 'kr', ':call RMakeRmd("default")')
     if &filetype == "r" || g:R_never_unmake_menu
         call RCreateMenuItem("nvi", 'Command.Spin\ (cur\ file)', '<Plug>RSpin', 'ks', ':call RSpin()')
     endif
