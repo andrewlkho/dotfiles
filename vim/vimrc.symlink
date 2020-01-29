@@ -98,4 +98,7 @@ let g:slime_no_mappings = 1
 nmap <leader>sl :%SlimeSend<CR>
 xmap <leader>sl <Plug>SlimeRegionSend
 
+" vim-pandoc-syntax
+let g:pandoc#syntax#conceal#use = 0
+
 vmap <leader>\ gc
