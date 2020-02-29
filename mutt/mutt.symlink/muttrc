@@ -21,6 +21,7 @@ mailboxes = +mythic-beasts/INBOX +tarandy/INBOX +imperial/INBOX
 
 # behaviour
 set beep = no
+set confirmappend = no
 set delete = yes
 set fast_reply = yes
 set include = yes
