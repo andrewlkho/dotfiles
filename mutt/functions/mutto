@@ -1,7 +1,7 @@
 # Start offlineimap in the background before mutt
 mutto() {
     # Seed gpg-agent with passphrase
-    gpg --quiet --decrypt ~/.secret/fastmail.gpg >/dev/null
+    gpg --quiet --decrypt ~/.secrets.gpg > /dev/null
 
     # Start offlineimap
     offlineimap &

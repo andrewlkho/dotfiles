@@ -1,71 +1,102 @@
-bind generic \cA first-entry
-bind generic \cE last-entry
-bind generic \cF next-page
-bind generic \cB previous-page
-bind generic N search-opposite
+bind editor <space> noop  # needed to switch to folder name with space in it
 
-bind index \cF next-page
-bind index \cB previous-page
-bind index \cA first-entry
-bind index \cE last-entry
-bind index \cU toggle-new
-bind index q exit
-bind index G sync-mailbox
-macro index a "<limit>all\n"
-macro index l "<limit>!~G "
+# switching between e-mail addresses ###########################################
 
-bind pager \cE bottom
-bind pager \cU mark-as-new
-bind pager <down> next-line
-bind pager <up> previous-line
-bind pager N search-reverse
-bind pager \cA top
-bind pager \cF next-page
-bind pager \cB previous-page
-
-macro compose a "<attach-file>?"
-bind compose d detach-file
-bind compose A edit-description
-
-macro attach s "<save-entry>~/unison/<enter>y"
-
-folder-hook /INBOX$ 'macro index,pager c "<change-folder>+$my_account/<tab><tab>"'
-folder-hook /INBOX$ 'macro index,pager C "<copy-message>+$my_account/<tab><tab>"'
-folder-hook /INBOX$ 'macro index,pager ! "<change-folder>+$my_account/INBOX<enter>"'
-folder-hook /INBOX$ 'macro index,pager < "<change-folder>+$my_account/Sent<enter>"'
-
-# Switching between accounts/mailboxes
-macro index ,a0 "\
-<sync-mailbox>\
-:set my_account = fastmail<enter>\
-:macro index x ,a1<enter>\
-<change-folder>+fastmail/INBOX<enter>\
-"
-macro index ,a1 "\
-<sync-mailbox>\
-:set my_account = hermes<enter>\
-:macro index x ,a0<enter>\
-<change-folder>+hermes/INBOX<enter>\
-"
-macro index x ,a1
-
-macro index $ "<shell-escape>pkill -SIGUSR1 offlineimap<enter>"
-
-
-# Switching between e-mail addresses
 macro compose ,f0 "\
-:set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter>\
-<edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>\
+:set smtp_authenticators = "login"<enter>\
+:set smtp_url = \"smtp://$my_icloud_user:$my_icloud_pass@smtp.mail.me.com:587\"<enter>\
+<edit-from><kill-line>Andrew Ho <andrewlkho@icloud.com><enter>\
 :macro compose x ,f1<enter>\
 "
+
 macro compose ,f1 "\
-:set smtp_url=smtps://$my_doctors_user:$my_doctors_pass@mail1.doctors.org.uk:465<enter>\
-<edit-from><kill-line>Andrew Ho <andrewlkho@doctors.org.uk><enter>\
+:unset smtp_authenticators<enter>\
+:set smtp_url = \"smtp://$my_mythicbeasts_user:$my_mythicbeasts_pass@smtp-auth.mythic-beasts.com:587\"<enter>\
+<edit-from><kill-line>Andrew Ho <andrewlkho@cantab.net><enter>\
 :macro compose x ,f2<enter>\
 "
+
 macro compose ,f2 "\
-:set smtp_url=smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465<enter>\
-<edit-from><kill-line>Andrew Ho <andrewlkho@cantab.net><enter>\
+:set smtp_url = \"smtps://$my_doctors_user:$my_doctors_pass@mail1.doctors.org.uk:465\"<enter>\
+<edit-from><kill-line>Andrew Ho <andrewlkho@doctors.org.uk><enter>\
+:macro compose x ,f3<enter>\
+"
+
+macro compose ,f3 "\
+:set smtp_url = \"smtp://$my_mythicbeasts_user:$my_mythicbeasts_pass@smtp-auth.mythic-beasts.com:587\"<enter>\
+<edit-from><kill-line>Andrew Ho <andrewho@andrewho.co.uk><enter>\
 :macro compose x ,f0<enter>\
 "
-macro compose x ,f1
+
+folder-hook . 'bind compose x noop'
+folder-hook mythic-beasts/ 'macro compose x ,f0'
+
+
+# switching between accounts ###################################################
+
+macro index ,x0 "\
+<sync-mailbox>\
+:set spoolfile = +tarandy/INBOX<enter>\
+:set postponed = +tarandy/[Gmail].Drafts<enter>\
+:set record = \"+tarandy/[Gmail].Sent Mail\"<enter>\
+:set from = 'Tarandy Ho-Lee <tarandy133@gmail.com>'<enter>\
+:set smtp_url = 'smtp://tarandy133@gmail.com@smtp.gmail.com:587'<enter>\
+:set smtp_authenticators=\"oauthbearer\"<enter>\
+:set smtp_oauth_refresh_command=\"~/.mutt/oauth2.py --quiet \
+    --user=tarandy133@gmail.com --client_id=$my_tarandy_clientid \
+    --client_secret=$my_tarandy_clientsecret \
+    --refresh_token=$my_tarandy_refreshtoken\"<enter>\
+:macro index x ,x1<enter>\
+<change-folder>+tarandy/INBOX<enter>\
+"
+
+macro index ,x1 "\
+<sync-mailbox>\
+:set spoolfile = +imperial/INBOX<enter>\
+:set postponed = +imperial/Drafts<enter>\
+:set record = \"+imperial/Sent Items\"<enter>\
+:set from = 'Andrew Ho <andrew.ho08@imperial.ac.uk>'<enter>\
+:set smtp_url = \"smtp://alh08:$my_imperial_pass@smtp.cc.ic.ac.uk:587\"<enter>\
+:unset smtp_authenticators<enter>\
+:macro index x ,x2<enter>\
+<change-folder>+imperial/INBOX<enter>\
+"
+
+macro index ,x2 "\
+<sync-mailbox>\
+:set spoolfile = +mythic-beasts/INBOX<enter>\
+:set postponed = +mythic-beasts/Drafts<enter>\
+:set record = +mythic-beasts/Sent<enter>\
+:set from = 'Andrew Ho <andrewho@andrewho.co.uk>'<enter>\
+:set smtp_url = \"smtp://$my_mythicbeasts_user:$my_mythicbeasts_pass@smtp-auth.mythic-beasts.com:587\"<enter>\
+:macro index x ,x0<enter>\
+<change-folder>+mythic-beasts/INBOX<enter>\
+"
+
+macro index x ,x0
+
+
+# other ########################################################################
+
+folder-hook /INBOX$ 'macro index,pager ! "<change-folder>$spoolfile<enter>"'
+folder-hook /INBOX$ 'macro index,pager < "<change-folder>$record<enter>"'
+folder-hook /INBOX$ 'macro index,pager c "<change-folder>$spoolfile<kill-word><tab><tab>"'
+
+folder-hook /INBOX$ 'macro index,pager C "<copy-message>$spoolfile<kill-word><tab><tab>"'
+bind generic,index \cA first-entry
+bind generic,index \cE last-entry
+bind generic,index,pager \cF next-page
+bind generic,index,pager \cB previous-page
+bind generic,index N search-opposite
+bind pager N search-reverse
+
+bind index \cU toggle-new
+bind pager \cU mark-as-new
+bind index G sync-mailbox
+
+macro compose a "<attach-file>~/<tab><tab>"
+bind compose d detach-file
+bind compose A edit-description
+macro attach s "<save-entry>~/Desktop<enter>y<enter>"
+
+macro index $ "<shell-escape>pkill -SIGUSR1 offlineimap<enter>"

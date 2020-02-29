@@ -1,3 +1,1 @@
-text/html;              w3m -I %{charset} -dump %s; copiousoutput; nametemplate=%s.html
-application/msword;     antiword %s; copiousoutput; nametemplate=%s.doc
-application/vnd.openxmlformats-officedocument.wordprocessingml.document; antiwordxp.rb %s; copiousoutput; nametemplate=%s.docx
+text/html; w3m -I %{charset} -dump %s; copiousoutput; nametemplate=%s.html

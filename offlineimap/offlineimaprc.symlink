@@ -1,71 +1,73 @@
 [general]
-accounts = fastmail, hermes
-ui = quiet
-pythonfile = ~/.offlineimap/get_gpg_passwd.py
+accounts = mythic-beasts, tarandy, imperial
 maxsyncaccounts = 3
+ui = quiet
+pythonfile = ~/.offlineimap/get_secret.py
 
-[mbnames]
-enabled = yes
-filename = ~/.mutt/offlineimap
-header = "mailboxes "
-peritem = "+%(accountname)s/%(foldername)s"
-sep = " "
-footer = "\n"
-
-
-# fastmail #####################################################################
-
-[Account fastmail]
-localrepository = LocalFastmail
-remoterepository = RemoteFastmail
-status_backend = sqlite
+[DEFAULT]
+sslcacertfile = /usr/local/etc/openssl@1.1/cert.pem
 autorefresh = 5
 
-[Repository LocalFastmail]
+
+# mythic-beasts ################################################################
+
+[Account mythic-beasts]
+localrepository = mythic-beasts-local
+remoterepository = mythic-beasts-remote
+
+[Repository mythic-beasts-local]
 type = Maildir
-localfolders = ~/mail/fastmail
-sep = .
-restoreatime = no
-nametrans = lambda f: re.sub('^Sent$', 'Sent Items', f)
+localfolders = ~/mail/mythic-beasts
+nametrans = lambda f: f if f == "INBOX" else "INBOX." + f
 
-[Repository RemoteFastmail]
+[Repository mythic-beasts-remote]
 type = IMAP
-remotehost = imap.fastmail.com
-ipv6 = True
-starttls = no
-ssl = yes
+remotehost = ocelot.mythic-beasts.com
 remoteport = 993
-sslcacertfile = ~/.offlineimap/fastmail.crt
-remoteuser = andrewlkho@fastmail.fm
-remotepasseval = get_gpg_passwd("fastmail")
-nametrans = lambda f: re.sub('Sent Items', 'Sent', f)
-folderfilter = lambda f: f not in ['Junk Mail', 'Trash', 'Archive', 'EduSpam'] \
-    and not re.search('^Notes', f)
+ssl = yes
+remoteusereval = get_secret("mythic-beasts", "user")
+remotepasseval = get_secret("mythic-beasts", "pass")
+folderfilter = lambda f: f[0:5] == "INBOX"
+nametrans = lambda f: re.sub(r"^INBOX\.", "", f)
 
 
-# hermes #######################################################################
+# tarandy ######################################################################
 
-[Account hermes]
-localrepository = LocalHermes
-remoterepository = RemoteHermes
-status_backend = sqlite
-autorefresh = 5
+[Account tarandy]
+localrepository = tarandy-local
+remoterepository = tarandy-remote
 
-[Repository LocalHermes]
+[Repository tarandy-local]
+type = GmailMaildir
+localfolders = ~/mail/tarandy
+
+[Repository tarandy-remote]
+type = Gmail
+remoteusereval = get_secret("tarandy", "user")
+oauth2_client_id_eval = get_secret("tarandy", "oauth2_client_id")
+oauth2_client_secret_eval = get_secret("tarandy", "oauth2_client_secret")
+oauth2_request_url = https://accounts.google.com/o/oauth2/token
+oauth2_refresh_token_eval = get_secret("tarandy", "oauth2_refresh_token")
+
+
+# imperial #####################################################################
+
+[Account imperial]
+localrepository = imperial-local
+remoterepository = imperial-remote
+
+[Repository imperial-local]
 type = Maildir
-localfolders = ~/mail/hermes
-sep = .
-restoreatime = no
-nametrans = lambda f: re.sub('^Sent$', 'sent-mail', f)
+localfolders = ~/mail/imperial
 
-[Repository RemoteHermes]
+[Repository imperial-remote]
 type = IMAP
-remotehost = imap.hermes.cam.ac.uk
-ipv6 = True
-ssl = yes
+remotehost = outlook.office365.com
 remoteport = 993
-sslcacertfile = ~/.offlineimap/hermes.crt
-remoteuser = alkh2
-remotepasseval = get_gpg_passwd("hermes")
-nametrans = lambda f: re.sub('sent-mail', 'Sent', f)
-folderfilter = lambda f: f not in ['spam', 'Trash']
+ssl = yes
+remoteusereval = get_secret("imperial", "user")
+remotepasseval = get_secret("imperial", "pass")
+folderfilter = lambda f: f not in [
+    "Conversation History", "Tasks", "Contacts", "Journal", "Notes", "Outbox",
+    "Calendar", "Calendar/Birthdays", "Calendar/United Kingdom holidays",
+    "Junk Email"]

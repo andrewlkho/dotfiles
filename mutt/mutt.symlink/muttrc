@@ -1,108 +1,72 @@
 # When mutt starts up, decrypt passwords
-set my_fastmail_user = "andrewlkho@fastmail.fm"
-set my_fastmail_pass = `gpg --quiet --decrypt ~/.secret/fastmail.gpg`
-set my_doctors_user = "andrewlkho"
-set my_doctors_pass = `gpg --quiet --decrypt ~/.secret/doctors.gpg`
-set my_hermes_user = "alkh2"
-set my_hermes_pass = `gpg --quiet --decrypt ~/.secret/hermes.gpg`
+set my_mythicbeasts_user = "`gpg --batch -q -d ~/.secrets.gpg | grep '^mythic-beasts:user:' | cut -d ':' -f 3`"
+set my_mythicbeasts_pass = "`gpg --batch -q -d ~/.secrets.gpg | grep '^mythic-beasts:pass:' | cut -d ':' -f 3`"
+set my_tarandy_clientid = "`gpg --batch -q -d ~/.secrets.gpg | grep '^tarandy:oauth2_client_id:' | cut -d ':' -f 3`"
+set my_tarandy_clientsecret = "`gpg --batch -q -d ~/.secrets.gpg | grep '^tarandy:oauth2_client_secret:' | cut -d ':' -f 3`"
+set my_tarandy_refreshtoken = "`gpg --batch -q -d ~/.secrets.gpg | grep '^tarandy:oauth2_refresh_token:' | cut -d ':' -f 3`"
+set my_imperial_pass = "`gpg --batch -q -d ~/.secrets.gpg | grep '^imperial:pass:' | cut -d ':' -f 3`"
+set my_icloud_user = "`gpg --batch -q -d ~/.secrets.gpg | grep '^icloud:user:' | cut -d ':' -f 3`"
+set my_icloud_pass = "`gpg --batch -q -d ~/.secrets.gpg | grep '^icloud:pass:' | cut -d ':' -f 3`"
+set my_doctors_user = "`gpg --batch -q -d ~/.secrets.gpg | grep '^doctors:user:' | cut -d ':' -f 3`"
+set my_doctors_pass = "`gpg --batch -q -d ~/.secrets.gpg | grep '^doctors:pass:' | cut -d ':' -f 3`"
 
-# mailboxes
 set mbox_type = Maildir
-set folder = ~/mail
-set spoolfile = +fastmail/INBOX
-source ~/.mutt/offlineimap
-set my_account = fastmail
-folder-hook /INBOX$ 'set spoolfile = +$my_account/INBOX'
-folder-hook /INBOX$ 'set postponed = +$my_account/Drafts'
-folder-hook /INBOX$ 'set record = +$my_account/Sent'
-folder-hook +fastmail/INBOX 'set smtp_url = smtps://$my_fastmail_user:$my_fastmail_pass@smtp.fastmail.com:465'
-folder-hook +hermes/INBOX 'set smtp_url = smtp://$my_hermes_user:$my_hermes_pass@smtp.hermes.cam.ac.uk:587'
-mailboxes +fastmail/INBOX +hermes/INBOX
+set folder = "~/mail"
+set spoolfile = +mythic-beasts/INBOX
+set postponed = +mythic-beasts/Drafts
+set record = +mythic-beasts/Sent
+set smtp_url = "smtp://$my_mythicbeasts_user:$my_mythicbeasts_pass@smtp-auth.mythic-beasts.com:587"
+set from = "Andrew Ho <andrewho@andrewho.co.uk>"
+mailboxes = +mythic-beasts/INBOX +tarandy/INBOX +imperial/INBOX
 
 # behaviour
-set nobeep
-set bounce = no
-set nocheck_new
-set noconfirmappend
+set beep = no
 set delete = yes
 set fast_reply = yes
-set ignore_list_reply_to
 set include = yes
-set nomark_old
-set move = no
+set mark_old = no
 set recall = no
-set nowait_key
+set wait_key = no
 set read_inc = 500
+set sleep_time = 0
+set header_cache = ~/.mutt/cache
+
+set text_flowed = yes
+set editor = "vim -c 'set wrap tw=76 fo=toqwal12 nonumber spell ft=markdown' +1"
+set query_command = "~/bin/icloud-addressbook-query.py '%s'"
+set mailcap_path = ~/.mutt/mailcap
+auto_view = text/html
 
 # display
 set attribution = "%n <%a> wrote [%{%Y-%m-%d %H:%M %z}]:"
 set forward_format = "Fwd: %s"
-set nohelp
-set hide_limited
-set index_format = "%4C (%Z) %[%Y-%m-%d %H:%M] %25.25F : %?M?(%M) ?%s "
-set nomenu_move_off
-set menu_scroll
-set pager_format = "-%S- [%C/%m] %n (%c) %s"
-set pager_stop
-set reverse_alias
-set smart_wrap
+set help = no
+set pager_stop = yes
 set markers = no
 set wrap = 80
 set strict_threads = yes
-set sort = reverse-threads ; set sort_aux = last-date-received
-set status_format = "-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?d?  Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?l? %l?]---(%s/%S)-%>-"
-set text_flowed
-
-# printing
-set print = yes
-set print_command = "muttprint --printer - | ps2pdf - ~/unison/e-mail.pdf"
-
-# miscellaneous
-alternates 'andrewho(\+.+)?@andrewho\.co\.uk'
-alternates andrewlkho@cantab.net
-alternates andrewho.ho08@imperial.ac.uk
-alternates andrewlkho@doctors.org.uk
-alternates alkh2@cam.ac.uk
-set reverse_name
-set reverse_realname = no
-set realname = "Andrew Ho"
-alternative_order text/enriched text/plain text/html
+set sort = reverse-threads
+set sort_aux = last-date-received
+alternative_order text/plain text/enriched text/html
+unhdr_order *
 hdr_order Date: From: Reply-To: To: Cc: Subject:
-set alias_file = ~/.mutt/aliases
-set editor = "vim -c 'set wrap tw=76 fo=toqwal12 nonumber spell ft=markdown' +1"
-folder-hook +fastmail/INBOX 'set from = "Andrew Ho <andrewho@andrewho.co.uk>"'
-folder-hook +hermes/INBOX 'set from = "Andrew Ho <alkh2@cam.ac.uk>"'
-set mailcap_path = ~/.mutt/mailcap
-set query_command= "KHARD_CONFIG=~/.khard.conf khard email --parsable %s"
-set sleep_time = 0
-set header_cache = ~/.mutt/header_cache
 folder-hook . 'exec collapse-all'
+set index_format = "%4C (%Z) %[%Y-%m-%d %H:%M] %25.25F : %?M?(%M) ?%s "
+set pager_format = " Message: %C/%m %> Attachments: %X "
+set status_chars = " *%A"
+set status_format = " Mutt: %f%?r?%r? %>  [Msgs:%?M?%M/?%m%?n? New:%n?%?d?  Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?] "
 
-# gpg
-my_hdr OpenPGP: id=AF72A573\; url=https://andrewho.co.uk/files/AF72A573.asc
-#set crypt_autosign = yes
-set pgp_clearsign_command = "gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_decode_command = "gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
-set pgp_decrypt_command = "gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
-set pgp_encrypt_only_command = "pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0xAF72A573 -- -r %r -- %f"
-set pgp_encrypt_sign_command = "pgpewrap gpg %?p?--passphrase-fd 0? --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0xAF72A573 -- -r %r -- %f"
-set pgp_export_command = "gpg --no-verbose --export --armor %r"
-set pgp_good_sign = "^gpg: Good signature from"
-set pgp_import_command = "gpg --no-verbose --import %f"
-set pgp_list_pubring_command = "gpg --no-verbose --batch --quiet --with-colons --list-keys %r"
-set pgp_list_secring_command = "gpg --no-verbose --batch --quiet --with-colons --list-secret-keys %r"
-set pgp_sign_as = 0xAF72A573
-set pgp_sign_command = "gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --detach-sign --textmode %?a?-u %a? %f"
-set pgp_timeout = 1800
-set pgp_verify_command = "gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
-set pgp_verify_key_command = "gpg --verbose --batch --fingerprint --check-sigs %r"
-auto_view = application/x-pgp-message text/html
+# identities
+alternates andrewho@andrewho.co.uk
+alternates andrewlkho@icloud.com
+alternates andrewlkho@cantab.net
+alternates andrewlkho@doctors.org.uk
+alternates tarandy133@gmail.com
+alternates andrew.ho08@imperial.ac.uk
+set realname = "Andrew Ho"
 
-# ignores
 ignore *
 unignore From: To: Date: Subject: Cc: Reply-To:
 
-# source...
-source ~/.mutt/aliases
 source ~/.mutt/keybindings
 source ~/.mutt/colours

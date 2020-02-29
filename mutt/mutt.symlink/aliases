@@ -1,5 +1,0 @@
-lists '.+@lists\.cam\.ac\.uk'
-
-subscribe remind-fans@lists.roaringpenguin.com
-
-source ~/.secret/mutt-aliases
