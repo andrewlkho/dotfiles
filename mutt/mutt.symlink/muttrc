@@ -26,6 +26,8 @@ set delete = yes
 set fast_reply = yes
 set include = yes
 set mark_old = no
+set menu_context = 5
+set menu_scroll
 set recall = no
 set wait_key = no
 set read_inc = 500
