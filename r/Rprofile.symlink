@@ -1,0 +1,10 @@
+# Stop R from calling XQuartz to display menus
+options("menu.graphics" = FALSE)
+
+# View a dataframe in visidata
+vd <- function(d) {
+  filename <- tempfile(fileext = ".csv")
+  write.csv(d, filename)
+  system(paste0("vd ", filename))
+  invisible(file.remove(filename))
+}
