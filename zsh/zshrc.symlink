@@ -12,3 +12,5 @@ done
 autoload -U compinit
 compinit
 for config_file ($ZSH/**/completion.zsh(.N)) source $config_file
+
+eval "$(direnv hook zsh)"
