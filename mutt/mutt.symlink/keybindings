@@ -28,49 +28,66 @@ macro compose ,f3 "\
 :macro compose x ,f0<enter>\
 "
 
-folder-hook . 'bind compose x noop'
-folder-hook mythic-beasts/ 'macro compose x ,f0'
+macro compose x ,f0
 
 
 # switching between accounts ###################################################
 
 macro index ,x0 "\
 <sync-mailbox>\
-:set spoolfile = +tarandy/INBOX<enter>\
-:set postponed = +tarandy/[Gmail].Drafts<enter>\
-:set record = \"+tarandy/[Gmail].Sent Mail\"<enter>\
-:set from = 'Tarandy Ho-Lee <tarandy133@gmail.com>'<enter>\
-:set smtp_url = 'smtp://tarandy133@gmail.com@smtp.gmail.com:587'<enter>\
-:set smtp_authenticators=\"oauthbearer\"<enter>\
-:set smtp_oauth_refresh_command=\"~/.mutt/oauth2.py --quiet \
+:set folder = imaps://imap.gmail.com:993<enter>\
+:set imap_user = tarandy133@gmail.com<enter>\
+:set imap_authenticators = \"oauthbearer\"<enter>\
+:set imap_oauth_refresh_command = \"~/.mutt/oauth2.py --quiet \
     --user=tarandy133@gmail.com --client_id=$my_tarandy_clientid \
     --client_secret=$my_tarandy_clientsecret \
     --refresh_token=$my_tarandy_refreshtoken\"<enter>\
+:set spoolfile = +INBOX<enter>\
+:set postponed = +[Gmail].Drafts<enter>\
+:set record = \"+[Gmail].Sent Mail\"<enter>\
+:set from = 'Tarandy Ho-Lee <tarandy133@gmail.com>'<enter>\
+:set smtp_url = 'smtp://tarandy133@gmail.com@smtp.gmail.com:587'<enter>\
+:set smtp_authenticators = \"oauthbearer\"<enter>\
+:set smtp_oauth_refresh_command = \"~/.mutt/oauth2.py --quiet \
+    --user=tarandy133@gmail.com --client_id=$my_tarandy_clientid \
+    --client_secret=$my_tarandy_clientsecret \
+    --refresh_token=$my_tarandy_refreshtoken\"<enter>\
+:bind compose x noop<enter>\
 :macro index x ,x1<enter>\
-<change-folder>+tarandy/INBOX<enter>\
+<change-folder>+INBOX<enter>\
 "
+#:macro index A \"<copy-message>+[Gmail].All Mail<enter>\"<enter>\
 
 macro index ,x1 "\
 <sync-mailbox>\
-:set spoolfile = +imperial/INBOX<enter>\
-:set postponed = +imperial/Drafts<enter>\
-:set record = \"+imperial/Sent Items\"<enter>\
+:set folder = imaps://outlook.office365.com:993<enter>\
+:set imap_user = $my_imperial_user<enter>\
+:unset imap_authenticators<enter>\
+:set imap_pass = $my_imperial_pass<enter>\
+:set spoolfile = +INBOX<enter>\
+:set postponed = +Drafts<enter>\
+:set record = \"+Sent Items\"<enter>\
 :set from = 'Andrew Ho <andrew.ho08@imperial.ac.uk>'<enter>\
 :set smtp_url = \"smtp://alh08:$my_imperial_pass@smtp.cc.ic.ac.uk:587\"<enter>\
 :unset smtp_authenticators<enter>\
+:bind index A noop<enter>\
 :macro index x ,x2<enter>\
-<change-folder>+imperial/INBOX<enter>\
+<change-folder>+INBOX<enter>\
 "
 
 macro index ,x2 "\
 <sync-mailbox>\
-:set spoolfile = +mythic-beasts/INBOX<enter>\
-:set postponed = +mythic-beasts/Drafts<enter>\
-:set record = +mythic-beasts/Sent<enter>\
+:set folder = imaps://ocelot.mythic-beasts.com:993/INBOX<enter>\
+:set imap_user = $my_mythicbeasts_user<enter>\
+:set imap_pass = $my_mythicbeasts_pass<enter>\
+:set spoolfile = +<enter>\
+:set record = +Sent<enter>\
+:set postponed = +Drafts<enter>\
 :set from = 'Andrew Ho <andrewho@andrewho.co.uk>'<enter>\
 :set smtp_url = \"smtp://$my_mythicbeasts_user:$my_mythicbeasts_pass@smtp-auth.mythic-beasts.com:587\"<enter>\
+:macro compose x ,f0<enter>\
 :macro index x ,x0<enter>\
-<change-folder>+mythic-beasts/INBOX<enter>\
+<change-folder>+<enter>\
 "
 
 macro index x ,x0
@@ -78,11 +95,11 @@ macro index x ,x0
 
 # other ########################################################################
 
-folder-hook /INBOX$ 'macro index,pager ! "<change-folder>$spoolfile<enter>"'
-folder-hook /INBOX$ 'macro index,pager < "<change-folder>$record<enter>"'
-folder-hook /INBOX$ 'macro index,pager c "<change-folder>$spoolfile<kill-word><tab><tab>"'
+folder-hook . 'macro index,pager ! "<change-folder>$spoolfile<enter>"'
+folder-hook . 'macro index,pager < "<change-folder>$record<enter>"'
+macro index,pager c "<change-folder>+<tab><tab><tab>"
+macro index,pager C "<copy-message>+<tab><tab><tab>"
 
-folder-hook /INBOX$ 'macro index,pager C "<copy-message>$spoolfile<kill-word><tab><tab>"'
 bind generic,index \cA first-entry
 bind generic,index \cE last-entry
 bind generic,index,pager \cF next-page
@@ -98,5 +115,3 @@ macro compose a "<attach-file>~/<tab><tab>"
 bind compose d detach-file
 bind compose A edit-description
 macro attach s "<save-entry>~/Desktop<enter>y<enter>"
-
-macro index $ "<shell-escape>pkill -SIGUSR1 offlineimap<enter>"

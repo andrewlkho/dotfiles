@@ -1,12 +1,11 @@
 [general]
 accounts = mythic-beasts, tarandy, imperial
 maxsyncaccounts = 3
-ui = quiet
+ui = basic
 pythonfile = ~/.offlineimap/get_secret.py
 
 [DEFAULT]
 sslcacertfile = /usr/local/etc/openssl@1.1/cert.pem
-autorefresh = 5
 
 
 # mythic-beasts ################################################################
