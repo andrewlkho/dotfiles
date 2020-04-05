@@ -1,2 +1,0 @@
-# It really irritates me that some hosts set clear in /etc/zlogout
-function clear { : }
