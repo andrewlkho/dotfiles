@@ -8,10 +8,6 @@ Match originalhost sebastian !exec "ping6 -nqc 1 sebastian.andrewho.co.uk"
     HostName ssh.sebastian.hostedpi.com
     Port 5138
 
-Host sebastian
-    HostName sebastian.andrewho.co.uk
-    ForwardAgent yes
-
 Host nfsn
     HostName ssh.phx.nearlyfreespeech.net
     User andrewlkho_andrewho
@@ -29,6 +25,9 @@ Match originalhost data exec "/System/Library/PrivateFrameworks/Apple80211.frame
 
 Host data
     HostName data.andrewho.co.uk
+
+Host ocelot
+    HostName ocelot.mythic-beasts.com
 
 Host *
     Protocol 2
