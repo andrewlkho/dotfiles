@@ -12,3 +12,10 @@ export SAVEHIST=10000
 # vim mode
 bindkey -v
 bindkey '^r' history-incremental-search-backward
+
+# directory stack
+export DIRSTACKSIZE=20
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_MINUS
+setopt PUSHD_SILENT
