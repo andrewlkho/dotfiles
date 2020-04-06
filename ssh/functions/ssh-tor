@@ -1,8 +1,0 @@
-# SSH through Tor
-ssh-tor () {
-    if [[ -z `lsof -Plnt -i TCP:9150 -s TCP:LISTEN` ]]; then
-        echo "TCP port 9150 is not listening: is the Tor Browser Bundle running?"
-    else
-        ssh -o ProxyCommand='nc -x 127.0.0.1:9150 %h %p' -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password,keyboard-interactive,publickey $*
-    fi
-}
