@@ -32,6 +32,12 @@ class Gruvbox(ColorScheme):
                     fg = black
             if context.main_column and context.marked:
                 fg = red
+            if context.inactive_pane:
+                bg = black
+                fg = white
+                if context.selected:
+                    bg = white
+                    fg = black
         
         elif context.in_titlebar:
             if context.directory:
