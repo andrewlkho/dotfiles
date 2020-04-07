@@ -18,3 +18,4 @@ export EDITOR="vim"
 export LANG=$( locale -a | grep -i 'en_gb.utf-*8' )
 export MANPAGER="less -i"
 export PAGER="less -i"
+export LESSHISTFILE="-"
