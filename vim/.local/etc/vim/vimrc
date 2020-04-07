@@ -1,0 +1,94 @@
+set nocompatible
+
+" vim-pathogen
+source $XDG_CONFIG_HOME/vim/bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect("$XDG_CONFIG_HOME/vim/bundle/{}")
+filetype plugin indent on
+
+" alternative paths
+set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after
+
+" UI
+set autoindent
+set backspace=indent,eol,start
+set colorcolumn=80
+set lazyredraw
+set listchars=tab:>-,trail:-,eol:¬
+set number
+set scrolloff=5
+set splitbelow
+set splitright
+
+" session files, and infinite undo
+set undofile
+set undodir=$XDG_CACHE_HOME/vim/undo//
+set nobackup
+set writebackup
+set backupdir=$XDG_CACHE_HOME/vim/backup//
+set directory=$XDG_CACHE_HOME/vim/swap//
+set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+
+" indentation is 4 spaces, don't use tabs (but if present display as 4 spaces)
+set expandtab
+set softtabstop=4
+set shiftwidth=4
+set tabstop=4
+
+" searching
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+nmap <leader>q :nohlsearch<CR>
+
+" utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+
+" buffers
+set hidden
+nmap <leader>` :bnext<CR>
+nmap <leader>1 :buffer 1<CR>
+nmap <leader>2 :buffer 2<CR>
+nmap <leader>3 :buffer 3<CR>
+nmap <leader>4 :buffer 4<CR>
+nmap <leader>5 :buffer 5<CR>
+nmap <leader>6 :buffer 6<CR>
+nmap <leader>7 :buffer 7<CR>
+nmap <leader>8 :buffer 8<CR>
+nmap <leader>9 :buffer 9<CR>
+
+" toggles
+nnoremap <leader>p :setlocal paste! paste?<CR>
+nnoremap <leader>i :setlocal list! list?<CR>
+
+" visual appearance
+syntax enable
+colorscheme gruvbox
+set background=dark
+set cursorline
+let g:airline_theme='gruvbox'
+let g:airline#extensions#tabline#enabled = 1
+
+" fzf
+nnoremap <c-p> :FZF<CR>
+
+" ale
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_sign_warning = '▲'
+let g:ale_sign_error = '✗'
+let g:ale_set_highlights = 0
+
+" vim-gitgutter: run on save (see also .vim/after/plugin/gitgutter.vim) and
+" change default symbol (hat tip: https://statico.github.io/vim3.html)
+autocmd BufWritePost * GitGutter
+let g:gitgutter_sign_added = '∙'
+let g:gitgutter_sign_modified = '∙'
+let g:gitgutter_sign_removed = '∙'
+let g:gitgutter_sign_modified_removed = '∙'
+if v:version < 800
+    let g:gitgutter_async=0
+endif
+
+" vim-commentary
+vmap <leader>\ gc
