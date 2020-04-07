@@ -9,7 +9,7 @@ class fzf(Command):
     Find a file or directory using fzf
     """
     def execute(self):
-        command = "find ${HOME} -path ${HOME}/Library -prune -o -print | fzf --height 10"
+        command = "find ${HOME} -path ${HOME}/Library -prune -o -print | fzf"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
         if fzf.returncode == 0:
