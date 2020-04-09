@@ -13,7 +13,6 @@
 [alias]
     st = "status -sb"
     lg = "log --color -n 20 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
-    wtf = "!git-wtf"
 
 [user]
     email = andrewho@andrewho.co.uk
