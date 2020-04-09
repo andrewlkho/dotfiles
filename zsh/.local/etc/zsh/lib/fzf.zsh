@@ -1,5 +1,5 @@
 if hash fzf &>/dev/null; then
-    export FZF_DEFAULT_OPTS="--layout=reverse --border=sharp"
+    export FZF_DEFAULT_OPTS="--layout=reverse --border"
     export FZF_CTRL_T_COMMAND="command find -L \"${HOME}\" -mindepth 1 \
         \\( -path '*/\\.*' \
             -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \
