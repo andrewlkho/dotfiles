@@ -1,6 +1,7 @@
 alias ls='ls -lF'
 alias less='less -i'
 alias d='dirs -v'
+alias dg='dirs -v | grep -i'
 
 if [[ $(uname -s) == 'Darwin' ]]; then
     path=(/Library/TeX/texbin(N) $path)
