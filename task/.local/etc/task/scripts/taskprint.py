@@ -49,6 +49,20 @@ def tasklist_sort(tl):
     tl = [task for task in tl if task["status"] != "waiting"]
     waiting.sort(key=lambda task: task["wait"])
 
+    # Take out tasks which are blocked (to be stacked on to the end later)
+    blocked_ids = [
+        task["id"]
+        for task in tl
+        if ("depends" in task and
+            not set(task["depends"].split(",")).isdisjoint(
+                [t["uuid"] for t in tl if t["status"] == "pending" or
+                 t["status"] == "waiting"]
+            ))
+    ]
+    blocked = [task for task in tl if task["id"] in blocked_ids]
+    tl = [task for task in tl if task["id"] not in blocked_ids]
+    blocked.sort(key=lambda task: task["id"])
+
     # Take out tasks which are scheduled for the future (to be stacked on to the
     # end later)
     scheduled_future = [task for task in tl
@@ -80,8 +94,12 @@ def tasklist_sort(tl):
     # Next: future scheduled tasks
     tl_sorted.extend(scheduled_future)
 
-    # Last: add the waiting tasks on to the end
+    # Next: add the waiting tasks on to the end
     tl_sorted.extend(waiting)
+
+    # Next: blocked tasks
+    tl_sorted.extend(blocked)
+
 
     return tl_sorted
 
@@ -161,11 +179,21 @@ def main():
     if not tasklist:
         sys.exit("No matches")
 
+    blocked_ids = [
+        task["id"]
+        for task in tasklist
+        if ("depends" in task and
+            not set(task["depends"].split(",")).isdisjoint(
+                [t["uuid"] for t in tasklist if t["status"] == "pending" or
+                 t["status"] == "waiting"]
+            ))
+    ]
+
     tasklist_formatted = []
     for task in tasklist:
         task_formatted = {}
 
-        if task["status"] == "waiting":
+        if task["status"] == "waiting" or task["id"] in blocked_ids:
             task_formatted["id"] = colour(task["id"], 245)
         else:
             task_formatted["id"] = colour(task["id"], 172)
@@ -175,12 +203,12 @@ def main():
             flags = flags + "¶"
         if "depends" in task:
             flags = flags + "⊂"
-        if task["status"] == "waiting":
+        if task["status"] == "waiting" or task["id"] in blocked_ids:
             task_formatted["flags"] = colour(flags, 245)
         else:
             task_formatted["flags"] = flags
 
-        if task["status"] == "waiting":
+        if task["status"] == "waiting" or task["id"] in blocked_ids:
             task_formatted["description"] = colour(task["description"], 245)
         elif "due" in task and ts_is_past(task["due"]):
             task_formatted["description"] = colour(task["description"], 167)
@@ -196,7 +224,10 @@ def main():
             task_formatted["wait"] = ""
 
         if ("scheduled" in task and
-                (task["status"] == "waiting" or ts_is_past(task["scheduled"]))):
+                (task["status"] == "waiting" or
+                 ts_is_past(task["scheduled"]) or
+                 task["id"] in blocked_ids
+                 )):
             task_formatted["scheduled"] = colour(
                 "s:{}".format(datef(task["scheduled"])),
                 245
@@ -209,7 +240,8 @@ def main():
         else:
             task_formatted["scheduled"] = ""
 
-        if "due" in task and task["status"] == "waiting":
+        if ("due" in task and
+                (task["status"] == "waiting" or task["id"] in blocked_ids)):
             task_formatted["due"] = colour(
                 "d:{}".format(datef(task["due"])),
                 245
@@ -227,7 +259,8 @@ def main():
         else:
             task_formatted["due"] = ""
 
-        if "tags" in task and task["status"] == "waiting":
+        if ("tags" in task and
+                (task["status"] == "waiting" or task["id"] in blocked_ids)):
             task_formatted["tags"] = colour(
                 " ".join(["+" + tag for tag in task["tags"]]),
                 245
