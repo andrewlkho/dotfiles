@@ -16,4 +16,5 @@ if hash fzf &>/dev/null; then
         -o -type d -print 2> /dev/null"
 
     source "${ZDOTDIR}/lib/fzf-keybindings"
+    source "${ZDOTDIR}/lib/fzf-completion"
 fi
