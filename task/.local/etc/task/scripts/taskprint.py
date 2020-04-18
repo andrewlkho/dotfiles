@@ -6,6 +6,28 @@ import re
 import sys
 
 
+def bst_start(year):
+    """(UTC) 01:00 on the last Sunday in March for a given year
+
+    Returns a naive datetime which is actually in UTC.
+    """
+    x = datetime.datetime(year, 3, 31, 1, 0, 0)
+    while x.weekday() != 6:
+        x = x - datetime.timedelta(days=1)
+    return x
+
+
+def bst_end(year):
+    """(UTC) 01:00 on the last Sunday in October for a given year
+
+    Returns a naive datetime which is actually in UTC.
+    """
+    x = datetime.datetime(year, 10, 31, 1, 0, 0)
+    while x.weekday() != 6:
+        x = x - datetime.timedelta(days=1)
+    return x
+
+
 def ts_is_past(ts):
     """Determine if a taskwarrior timestamp string is in the past"""
     ts_utc = datetime.datetime.strptime(ts, "%Y%m%dT%H%M%SZ")
@@ -101,20 +123,26 @@ def colour(text, num):
 
 def datef(ts):
     """Turn a Taskwarrior timestamp into natural language date representation"""
-    ts_utc = datetime.datetime.strptime(ts, "%Y%m%dT%H%M%SZ").date()
-    today_utc = datetime.datetime.utcnow().date()
-    ts_local = datetime.date.today() + (ts_utc - today_utc)
-
-    if ts_utc < today_utc:
-        output = ts_local.strftime("%Y-%m-%d")
-    elif ts_utc == today_utc:
-        output = "today"
-    elif (ts_utc - today_utc).days == 1:
-        output = "tomorrow"
-    elif (ts_utc - today_utc).days <= 6:
-        output = ts_local.strftime("%a")
+    ts_utc = datetime.datetime.strptime(ts, "%Y%m%dT%H%M%SZ")
+    if (ts_utc > bst_start(ts_utc.year) and
+            ts_utc < bst_end(ts_utc.year)):
+        ts_local = ts_utc + datetime.timedelta(hours=1)
     else:
-        output = ts_local.strftime("%Y-%m-%d")
+        ts_local = ts_utc
+
+    ts_date = ts_local.date()
+    today_date = datetime.date.today()
+
+    if ts_date < today_date:
+        output = ts_date.strftime("%Y-%m-%d")
+    elif ts_date == today_date:
+        output = "today"
+    elif (ts_date - today_date).days == 1:
+        output = "tomorrow"
+    elif (ts_date - today_date).days <= 6:
+        output = ts_date.strftime("%a")
+    else:
+        output = ts_date.strftime("%Y-%m-%d")
 
     return output
 
