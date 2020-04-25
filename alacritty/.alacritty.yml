@@ -81,7 +81,7 @@ font:
     style: Regular
   bold:
     family: Anonymous Pro
-    style: Bold
+    style: Regular
   italic:
     family: Anonymous Pro
     style: Italic
