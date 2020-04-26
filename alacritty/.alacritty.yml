@@ -77,7 +77,7 @@ font:
     #   - (Windows) Consolas
     #family: monospace
   normal:
-    family: Anonymice Nerd Font Mono
+    family: Anonymous Pro
     style: Regular
   bold:
     family: Anonymous Pro
