@@ -27,6 +27,7 @@ set writebackup
 set backupdir=$XDG_CACHE_HOME/vim/backup//
 set directory=$XDG_CACHE_HOME/vim/swap//
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+let g:netrw_dirhistmax=0 " Don't create .netrwhist
 
 " indentation is 4 spaces, don't use tabs (but if present display as 4 spaces)
 set expandtab
