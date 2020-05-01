@@ -46,18 +46,21 @@ nmap <leader>q :nohlsearch<CR>
 set encoding=utf-8
 set fileencoding=utf-8
 
-" buffers
+" buffers and netrw / vim-vinegar
 set hidden
-nmap <leader>` :bnext<CR>
-nmap <leader>1 :buffer 1<CR>
-nmap <leader>2 :buffer 2<CR>
-nmap <leader>3 :buffer 3<CR>
-nmap <leader>4 :buffer 4<CR>
-nmap <leader>5 :buffer 5<CR>
-nmap <leader>6 :buffer 6<CR>
-nmap <leader>7 :buffer 7<CR>
-nmap <leader>8 :buffer 8<CR>
-nmap <leader>9 :buffer 9<CR>
+let g:netrw_fastbrowse = 0  " don't pollute buffers list (at expense of speed)
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+nmap ]b :bnext<CR>
+nmap [b :bprevious <CR>
+nmap <leader>1 :bfirst<CR>
+nmap <leader>2 :bfirst<CR>:bnext<CR>
+nmap <leader>3 :bfirst<CR>:bnext 2<CR>
+nmap <leader>4 :bfirst<CR>:bnext 3<CR>
+nmap <leader>5 :bfirst<CR>:bnext 4<CR>
+nmap <leader>6 :bfirst<CR>:bnext 5<CR>
+nmap <leader>7 :bfirst<CR>:bnext 6<CR>
+nmap <leader>8 :bfirst<CR>:bnext 7<CR>
+nmap <leader>9 :bfirst<CR>:bnext 8<CR>
 
 " toggles
 nnoremap <leader>p :setlocal paste! paste?<CR>
