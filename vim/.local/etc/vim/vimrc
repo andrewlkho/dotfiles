@@ -48,8 +48,6 @@ set fileencoding=utf-8
 
 " buffers and netrw / vim-vinegar
 set hidden
-let g:netrw_fastbrowse = 0  " don't pollute buffers list (at expense of speed)
-let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 nmap ]b :bnext<CR>
 nmap [b :bprevious <CR>
 nmap <leader>1 :bfirst<CR>
@@ -74,9 +72,6 @@ set cursorline
 let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 
-" fzf
-nnoremap <c-p> :FZF<CR>
-
 " ale
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_sign_warning = '▲'
@@ -96,3 +91,33 @@ endif
 
 " vim-commentary
 vmap <leader>\ gc
+
+" vimfiler
+" let g:loaded_netrwPlugin = 1
+nnoremap <leader>t :VimFilerExplorer -toggle -no-quit<CR>
+nnoremap <leader>w :VimFilerCreate -explorer -buffer-name=notes -force-quit ~/Dropbox/Notes<CR>
+let g:vimfiler_no_default_key_mappings=1
+let g:vimfiler_tree_leaf_icon = ''
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_marked_file_icon = '∙'
+let g:vimfiler_tree_indentation = 2
+autocmd FileType vimfiler call s:vimfilerinit()
+function! s:vimfilerinit()
+    setlocal nonumber
+    nmap <buffer> gg <Plug>(vimfiler_cursor_top)
+    nmap <buffer> G <Plug>(vimfiler_cursor_top)<Plug>(vimfiler_loop_cursor_up)
+    nmap <buffer> <space> <Plug>(vimfiler_toggle_mark_current_line)
+    nmap <buffer> l <Plug>(vimfiler_expand_tree)
+    nmap <buffer> <enter> <Plug>(vimfiler_edit_file)
+    nmap <buffer> h <Plug>(vimfiler_smart_h)
+    nmap <buffer> . <Plug>(vimfiler_toggle_visible_ignore_files)
+    nmap <buffer> q <Plug>(vimfiler_exit)
+    nmap <buffer> <C-l> <Plug>(vimfiler_redraw_screen)
+endfunction
+
+if isdirectory($HOME . "/Dropbox/Notes/Scratchpad")
+    " let fn = $HOME . "/Dropbox/Notes/Scratchpad/" . strftime("%Y-%m-%d %H.%M.%S.md")
+    " nmap <expr> <leader>s ":edit " . expand(fn) . "<CR>"
+    nmap <expr> <leader>s ":edit " . $HOME . "/Dropbox/Notes/Scratchpad/" . expand(strftime("%Y-%m-%d %H.%M.%S.md")) . "<CR>"
+endif
