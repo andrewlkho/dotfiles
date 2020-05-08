@@ -121,7 +121,5 @@ function! s:vimfilerinit()
 endfunction
 
 if isdirectory($HOME . "/Dropbox/Notes/Scratchpad")
-    " let fn = $HOME . "/Dropbox/Notes/Scratchpad/" . strftime("%Y-%m-%d %H.%M.%S.md")
-    " nmap <expr> <leader>s ":edit " . expand(fn) . "<CR>"
     nmap <expr> <leader>s ":edit " . $HOME . "/Dropbox/Notes/Scratchpad/" . expand(strftime("%Y-%m-%d %H.%M.%S.md")) . "<CR>"
 endif
