@@ -66,6 +66,9 @@ nnoremap <leader>i :setlocal list! list?<CR>
 
 " visual appearance
 syntax enable
+set termguicolors
+let &t_8f = "[38:2:%lu:%lu:%lum"
+let &t_8b = "[48:2:%lu:%lu:%lum"
 colorscheme gruvbox
 set background=dark
 set cursorline
