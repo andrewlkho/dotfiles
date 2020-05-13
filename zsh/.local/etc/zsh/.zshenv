@@ -1,10 +1,12 @@
 typeset -U path
 path=(
     ${HOME}/.local/bin
+    /Library/TeX/texbin
     /usr/local/{,s}bin
     /usr/{,s}bin
     /{,s}bin
 )
+
 path=($^path(N))
 
 typeset -U fpath

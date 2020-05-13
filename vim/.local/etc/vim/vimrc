@@ -123,3 +123,9 @@ endfunction
 if isdirectory($HOME . "/Dropbox/Notes/Scratchpad")
     nmap <expr> <leader>s ":edit " . $HOME . "/Dropbox/Notes/Scratchpad/" . expand(strftime("%Y-%m-%d %H.%M.%S.md")) . "<CR>"
 endif
+
+" blank *.tex files are still latex, not plaintex
+let g:tex_flavor = "latex"
+let g:vimtex_compiler_latexmk = {'continuous': 0}
+let g:vimtex_quickfix_mode = 1
+let g:vimtex_mappings_enabled = 0
