@@ -72,8 +72,36 @@ let &t_8b = "[48:2:%lu:%lu:%lum"
 colorscheme gruvbox
 set background=dark
 set cursorline
-let g:airline_theme='gruvbox'
-let g:airline#extensions#tabline#enabled = 1
+
+set laststatus=2
+set showtabline=2
+set noshowmode
+let g:lightline = {
+    \ 'colorscheme': 'gruvboxcustom',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'readonly', 'filename' ] ]
+    \ },
+    \ 'tabline': {
+    \   'left': [ ['buffers'] ],
+    \   'right': []
+    \ },
+    \ 'component_function': {
+    \   'filename': 'LightlineFilename'
+    \ },
+    \ 'component_expand': {
+    \   'buffers': 'lightline#bufferline#buffers'
+    \ },
+    \ 'component_type': {
+    \   'buffers': 'tabsel'
+    \ }
+    \ }
+let g:lightline#bufferline#modified = '∙'
+function! LightlineFilename()
+    let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+    let modified = &modified ? '∙' : ''
+    return filename . modified
+endfunction
 
 " ale
 let g:ale_lint_on_text_changed = 'never'
