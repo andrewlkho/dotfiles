@@ -27,7 +27,6 @@ set writebackup
 set backupdir=$XDG_CACHE_HOME/vim/backup//
 set directory=$XDG_CACHE_HOME/vim/swap//
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
-let g:netrw_dirhistmax=0 " Don't create .netrwhist
 
 " indentation is 4 spaces, don't use tabs (but if present display as 4 spaces)
 set expandtab
@@ -46,7 +45,7 @@ nmap <leader>q :nohlsearch<CR>
 set encoding=utf-8
 set fileencoding=utf-8
 
-" buffers and netrw / vim-vinegar
+" buffers
 set hidden
 nmap ]b :bnext<CR>
 nmap [b :bprevious <CR>
@@ -59,6 +58,16 @@ nmap <leader>6 :bfirst<CR>:bnext 5<CR>
 nmap <leader>7 :bfirst<CR>:bnext 6<CR>
 nmap <leader>8 :bfirst<CR>:bnext 7<CR>
 nmap <leader>9 :bfirst<CR>:bnext 8<CR>
+
+" netrw
+let g:netrw_dirhistmax = 0 " Don't create .netrwhist
+let g:netrw_liststyle = 1
+let g:netrw_banner = 0
+nnoremap <leader>t :edit .<CR>
+if isdirectory($HOME . "/Dropbox/Notes")
+    nnoremap <expr> <leader>w ":edit " . $HOME . "/Dropbox/Notes<CR>"
+    nnoremap <expr> <leader>s ":edit " . $HOME . "/Dropbox/Notes/Scratchpad/" . expand(strftime("%Y-%m-%d %H.%M.%S.md")) . "<CR>"
+endif
 
 " toggles
 nnoremap <leader>p :setlocal paste! paste?<CR>
@@ -132,34 +141,6 @@ endif
 
 " vim-commentary
 vmap <leader>\ gc
-
-" vimfiler
-" let g:loaded_netrwPlugin = 1
-nnoremap <leader>t :VimFilerExplorer -toggle -no-quit<CR>
-nnoremap <leader>w :VimFilerCreate -explorer -buffer-name=notes -force-quit ~/Dropbox/Notes<CR>
-let g:vimfiler_no_default_key_mappings=1
-let g:vimfiler_tree_leaf_icon = ''
-let g:vimfiler_tree_opened_icon = '▾'
-let g:vimfiler_tree_closed_icon = '▸'
-let g:vimfiler_marked_file_icon = '∙'
-let g:vimfiler_tree_indentation = 2
-autocmd FileType vimfiler call s:vimfilerinit()
-function! s:vimfilerinit()
-    setlocal nonumber
-    nmap <buffer> gg <Plug>(vimfiler_cursor_top)
-    nmap <buffer> G <Plug>(vimfiler_cursor_top)<Plug>(vimfiler_loop_cursor_up)
-    nmap <buffer> <space> <Plug>(vimfiler_toggle_mark_current_line)
-    nmap <buffer> l <Plug>(vimfiler_expand_tree)
-    nmap <buffer> <enter> <Plug>(vimfiler_edit_file)
-    nmap <buffer> h <Plug>(vimfiler_smart_h)
-    nmap <buffer> . <Plug>(vimfiler_toggle_visible_ignore_files)
-    nmap <buffer> q <Plug>(vimfiler_exit)
-    nmap <buffer> <C-l> <Plug>(vimfiler_redraw_screen)
-endfunction
-
-if isdirectory($HOME . "/Dropbox/Notes/Scratchpad")
-    nmap <expr> <leader>s ":edit " . $HOME . "/Dropbox/Notes/Scratchpad/" . expand(strftime("%Y-%m-%d %H.%M.%S.md")) . "<CR>"
-endif
 
 " blank *.tex files are still latex, not plaintex
 let g:tex_flavor = "latex"
