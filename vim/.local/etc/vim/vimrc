@@ -52,6 +52,9 @@ set expandtab
 set softtabstop=4
 set shiftwidth=4
 set tabstop=4
+" keep selection when indenting
+vnoremap < <gv
+vnoremap > >gv
 
 " searching
 set incsearch
