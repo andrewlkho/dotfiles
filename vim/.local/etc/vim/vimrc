@@ -80,7 +80,10 @@ let g:lightline = {
     \ 'colorscheme': 'gruvboxcustom',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'readonly', 'filename' ] ]
+    \             [ 'readonly', 'filename' ] ],
+    \   'right': [ [ 'lineinfo' ], [ 'percent' ],
+    \              [ 'linter_warnings', 'linter_errors' ],
+    \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
     \ },
     \ 'tabline': {
     \   'left': [ ['buffers'] ],
@@ -90,13 +93,19 @@ let g:lightline = {
     \   'filename': 'LightlineFilename'
     \ },
     \ 'component_expand': {
-    \   'buffers': 'lightline#bufferline#buffers'
+    \   'buffers': 'lightline#bufferline#buffers',
+    \   'linter_warnings': 'lightline#ale#warnings',
+    \   'linter_errors': 'lightline#ale#errors'
     \ },
     \ 'component_type': {
-    \   'buffers': 'tabsel'
+    \   'buffers': 'tabsel',
+    \   'linter_warnings': 'warning',
+    \   'linter_errors': 'error'
     \ }
     \ }
 let g:lightline#bufferline#modified = '∙'
+let g:lightline#ale#indicator_warnings = '▲ '
+let g:lightline#ale#indicator_errors = '✗ '
 function! LightlineFilename()
     let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
     let modified = &modified ? '∙' : ''
