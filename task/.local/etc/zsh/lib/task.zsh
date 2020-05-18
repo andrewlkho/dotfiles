@@ -4,6 +4,8 @@ tls() {
     task "$@" \( status:pending or status:waiting \) export |
         "${XDG_CONFIG_HOME}/task/scripts/taskprint.py"
 }
+# Autocomplete tls as task
+compdef _task tls
 
 alias tt='task rc.verbose=nothing \
     "(scheduled.before:tomorrow or due.before:tomorrow or +today) and \
