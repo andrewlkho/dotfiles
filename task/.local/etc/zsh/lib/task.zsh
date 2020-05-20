@@ -14,7 +14,8 @@ alias tt='task rc.verbose=nothing \
 _fzf_complete_task() {
     if [[ "$@" =~ "task *$" ]]; then
         _fzf_complete --ansi --no-hscroll --color='fg+:#EBDBB2' -- "$@" < <(
-            task rc.verbose=nothing status:pending or status:waiting export |
+            task rc.verbose=nothing rc.hooks=off status:pending or \
+                status:waiting export |
                 "${XDG_CONFIG_HOME}/task/scripts/oneline.py"
             )
     else
