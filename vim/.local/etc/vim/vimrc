@@ -64,6 +64,10 @@ set ignorecase
 set smartcase
 nmap <leader>q :nohlsearch<CR>
 
+" file searching: recursive and use wildmenu
+set path+=**
+set wildmenu
+
 " utf-8
 set encoding=utf-8
 set fileencoding=utf-8
