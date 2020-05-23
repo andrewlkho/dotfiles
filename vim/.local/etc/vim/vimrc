@@ -175,3 +175,9 @@ let g:tex_flavor = "latex"
 let g:vimtex_compiler_latexmk = {'continuous': 0}
 let g:vimtex_quickfix_mode = 1
 let g:vimtex_mappings_enabled = 0
+
+autocmd FileType tex highlight clear texBoldStyle
+autocmd FileType tex highlight clear texItalStyle
+autocmd FileType tex highlight clear texEmphStyle
+autocmd FileType tex highlight clear texBoldItalStyle
+autocmd FileType tex highlight clear texItalBoldStyle
