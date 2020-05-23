@@ -83,6 +83,7 @@ nmap <leader>8 :bfirst<CR>:bnext 7<CR>
 nmap <leader>9 :bfirst<CR>:bnext 8<CR>
 
 " netrw
+let g:netrw_fastbrowse = 0 " Always close netrw buffers
 let g:netrw_dirhistmax = 0 " Don't create .netrwhist
 let g:netrw_liststyle = 1
 let g:netrw_banner = 0
