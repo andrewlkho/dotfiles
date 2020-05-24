@@ -36,6 +36,9 @@ autocmd! User GoyoLeave call <SID>goyo_leave()
 " fixes https://github.com/reedes/vim-pencil/issues/76
 let g:pencil#cursorwrap = 0
 call pencil#init({'wrap': 'soft', 'textwidth': 100, 'conceallevel': 0})
+" need to initialise lightline otherwise goyo throws an error when trying
+" to disable: https://github.com/junegunn/goyo.vim/issues/207
+call lightline#init()
 call goyo#execute(0, '100x100%')
 
 nmap <buffer> <leader>ll <plug>(vimtex-compile)

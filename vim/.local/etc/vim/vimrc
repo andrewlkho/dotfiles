@@ -22,9 +22,9 @@ Plug 'jalvesaq/Nvim-R'
 
 " latex
 Plug 'lervag/vimtex'
-Plug 'junegunn/goyo.vim', { 'for': 'tex' }
-Plug 'NLKNguyen/papercolor-theme', { 'for': 'tex' }
-Plug 'reedes/vim-pencil', { 'for': 'tex' }
+Plug 'junegunn/goyo.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'reedes/vim-pencil'
 call plug#end()
 set runtimepath+=$XDG_CONFIG_HOME/vim/after
 
