@@ -1,0 +1,120 @@
+set nocompatible
+
+call plug#begin("~/.vim/bundle")
+" general
+Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
+call plug#end()
+
+" UI
+set autoindent
+set backspace=indent,eol,start
+set colorcolumn=80
+set lazyredraw
+set listchars=tab:>-,trail:-,eol:¬
+set number
+set scrolloff=5
+set splitbelow
+set splitright
+
+" session files, and infinite undo
+set undofile
+set undodir=~/.vim/session/undo//
+set nobackup
+set writebackup
+set backupdir=~/.vim/session/backup//
+set directory=~/.vim/session/swap//
+set viminfo+=n~/.vim/session/viminfo
+
+" indentation is 4 spaces, don't use tabs (but if present display as 4 spaces)
+set expandtab
+set softtabstop=4
+set shiftwidth=4
+set tabstop=4
+" keep selection when indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" searching
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+nmap <leader>q :nohlsearch<CR>
+
+" file searching: recursive and use wildmenu
+set path+=**
+set wildmenu
+
+" utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+
+" buffers
+set hidden
+nmap ]b :bnext<CR>
+nmap [b :bprevious <CR>
+nmap <leader>1 :bfirst<CR>
+nmap <leader>2 :bfirst<CR>:bnext<CR>
+nmap <leader>3 :bfirst<CR>:bnext 2<CR>
+nmap <leader>4 :bfirst<CR>:bnext 3<CR>
+nmap <leader>5 :bfirst<CR>:bnext 4<CR>
+nmap <leader>6 :bfirst<CR>:bnext 5<CR>
+nmap <leader>7 :bfirst<CR>:bnext 6<CR>
+nmap <leader>8 :bfirst<CR>:bnext 7<CR>
+nmap <leader>9 :bfirst<CR>:bnext 8<CR>
+
+" netrw
+let g:netrw_fastbrowse = 0 " Always close netrw buffers
+let g:netrw_dirhistmax = 0 " Don't create .netrwhist
+let g:netrw_liststyle = 1
+let g:netrw_banner = 0
+nnoremap <leader>t :edit .<CR>
+
+" toggles
+nnoremap <leader>p :setlocal paste! paste?<CR>
+nnoremap <leader>i :setlocal list! list?<CR>
+
+" visual appearance
+syntax enable
+colorscheme gruvbox
+set background=dark
+set cursorline
+
+set laststatus=2
+set showtabline=2
+set noshowmode
+let g:lightline = {
+    \ 'colorscheme': 'gruvboxcustom',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'readonly', 'filename' ] ]
+    \ },
+    \ 'tabline': {
+    \   'left': [ ['buffers'] ],
+    \   'right': []
+    \ },
+    \ 'component_function': {
+    \   'filename': 'LightlineFilename'
+    \ },
+    \ 'component_expand': {
+    \   'buffers': 'lightline#bufferline#buffers'
+    \ },
+    \ 'component_type': {
+    \   'buffers': 'tabsel'
+    \ }
+    \ }
+let g:lightline#bufferline#modified = '∙'
+let g:lightline#ale#indicator_warnings = '▲ '
+let g:lightline#ale#indicator_errors = '✗ '
+function! LightlineFilename()
+    let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+    let modified = &modified ? '∙' : ''
+    return filename . modified
+endfunction
+
+" vim-commentary
+vmap <leader>\ gc
