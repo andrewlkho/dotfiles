@@ -27,3 +27,4 @@ export PS1="\n$(tput setaf 4)\w\n\`if [ \$? = 0 ]; then echo \"$(tput setaf 2)\"
 
 set -o vi
 alias ls="ls -lp"
+bind -m vi-insert "\C-l":clear-screen
