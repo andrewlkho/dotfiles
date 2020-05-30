@@ -47,4 +47,4 @@ nmap <buffer> <leader>lc <plug>(vimtex-clean)
 nmap <buffer> <leader>lw :VimtexCountWords<CR>
 
 nnoremap ,doc :-1read $XDG_CONFIG_HOME/vim/snippets/doc.tex<CR>Gdd2k
-nnoremap ,letter :-1read $XDG_CONFIG_HOME/vim/snippets/letter.tex<CR>Gdd15k:put =strftime('%A %e %B %Y')<CR>V=gg/REPLACEME<CR>
+nnoremap ,letter :-1read $XDG_CONFIG_HOME/vim/snippets/letter.tex<CR>Gdd14k:put =strftime('%A %e %B %Y')<CR>V=gg/REPLACEME<CR>
