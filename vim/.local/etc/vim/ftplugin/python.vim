@@ -10,3 +10,5 @@ set expandtab
 set softtabstop=4
 set shiftwidth=4
 set tabstop=4
+
+nnoremap ,main :-1read $XDG_CONFIG_HOME/vim/snippets/main.py<CR>Gdd4k
