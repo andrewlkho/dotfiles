@@ -1,6 +1,6 @@
-set nocompatible
-
-set runtimepath+=$XDG_CONFIG_HOME/vim
+set runtimepath=$XDG_CONFIG_HOME/vim
+set runtimepath+=$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
 call plug#begin($XDG_CONFIG_HOME . "/vim/bundle")
 " general
 Plug 'morhetz/gruvbox'
@@ -28,7 +28,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'reedes/vim-pencil'
 call plug#end()
-set runtimepath+=$XDG_CONFIG_HOME/vim/after
 
 " UI
 set autoindent
