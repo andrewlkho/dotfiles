@@ -35,6 +35,7 @@ set colorcolumn=80
 set lazyredraw
 set listchars=tab:>-,trail:-,eol:¬
 set number
+set relativenumber
 set scrolloff=5
 set splitbelow
 set splitright
