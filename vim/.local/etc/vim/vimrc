@@ -12,10 +12,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'tpope/vim-eunuch'
+Plug 'lifepillar/vim-mucomplete'
 
 " python
 Plug 'tmhedberg/SimpylFold'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'davidhalter/jedi-vim'
 
 " r
 Plug 'jalvesaq/Nvim-R'
@@ -69,6 +71,14 @@ nmap <leader>q :nohlsearch<CR>
 " file searching: recursive and use wildmenu
 set path+=**
 set wildmenu
+
+" completion
+set completeopt-=preview
+set completeopt+=longest,menuone
+set shortmess+=c
+" jedi configuration cannot be in an ftplugin
+let g:jedi#popup_on_dot = 0
+let g:jedi#show_call_signatures = 0
 
 " utf-8
 set encoding=utf-8
