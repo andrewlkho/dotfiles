@@ -1,45 +1,33 @@
+colorscheme onehalflight
 setlocal background=light
-colorscheme PaperColor
-set nocursorline
+setlocal nocursorline
+setlocal colorcolumn=
+setlocal norelativenumber
 
-function! s:goyo_enter()
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-
-  " fix border around goyo window
-  highlight VertSplit cterm=NONE
-  highlight StatusLine cterm=NONE
-  highlight StatusLineNC cterm=NONE
-  
-  " subdued linting
-  highlight AleErrorSign ctermfg=252
-  highlight AleWarningSign ctermfg=252
-  highlight AleInfoSign ctermfg=252
-endfunction
-
-function! s:goyo_leave()
-  " Quit Vim if this is the only remaining buffer
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
+" Soft wrap at window width or 100 (includes gutter etc), whichever is greater
+setlocal wrap
+setlocal linebreak
+setlocal display+=lastline
+function! SoftWrap()
+    if (&columns > 100)
+        setlocal columns=100
     endif
-  endif
 endfunction
+augroup tex
+    autocmd! VimResized,BufEnter <buffer>
+    autocmd VimResized,BufEnter <buffer> call SoftWrap()
+augroup END
 
-autocmd! User GoyoEnter call <SID>goyo_enter()
-autocmd! User GoyoLeave call <SID>goyo_leave()
+" Mute the user interface
+highlight! link ALEErrorSign LineNr
+highlight! link ALEInfoSign LineNr
+highlight! link ALEWarningSign LineNr
+call lightline#disable()
+setlocal showtabline=0
+setlocal laststatus=0
 
-" fixes https://github.com/reedes/vim-pencil/issues/76
-let g:pencil#cursorwrap = 0
-call pencil#init({'wrap': 'soft', 'textwidth': 100, 'conceallevel': 0})
-" need to initialise lightline otherwise goyo throws an error when trying
-" to disable: https://github.com/junegunn/goyo.vim/issues/207
-call lightline#init()
-call goyo#execute(0, '100x100%')
+nnoremap j gj
+nnoremap k gk
 
 nmap <buffer> <leader>ll <plug>(vimtex-compile)
 nmap <buffer> <leader>lv <plug>(vimtex-view)
