@@ -8,9 +8,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'dense-analysis/ale'
-Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
-Plug 'mengelbrecht/lightline-bufferline'
 Plug 'tpope/vim-eunuch'
 Plug 'lifepillar/vim-mucomplete'
 
@@ -94,6 +91,7 @@ nmap <leader>6 :bfirst<CR>:bnext 5<CR>
 nmap <leader>7 :bfirst<CR>:bnext 6<CR>
 nmap <leader>8 :bfirst<CR>:bnext 7<CR>
 nmap <leader>9 :bfirst<CR>:bnext 8<CR>
+nmap <C-T> :ls<CR>:buffer<space>
 
 " netrw
 let g:netrw_fastbrowse = 0 " Always close netrw buffers
@@ -119,44 +117,81 @@ colorscheme gruvbox
 set background=dark
 set cursorline
 
+" statusline
 set laststatus=2
-set showtabline=2
 set noshowmode
-let g:lightline = {
-    \ 'colorscheme': 'gruvboxcustom',
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'readonly', 'filename' ] ],
-    \   'right': [ [ 'lineinfo' ], [ 'percent' ],
-    \              [ 'linter_warnings', 'linter_errors' ],
-    \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-    \ },
-    \ 'tabline': {
-    \   'left': [ ['buffers'] ],
-    \   'right': []
-    \ },
-    \ 'component_function': {
-    \   'filename': 'LightlineFilename'
-    \ },
-    \ 'component_expand': {
-    \   'buffers': 'lightline#bufferline#buffers',
-    \   'linter_warnings': 'lightline#ale#warnings',
-    \   'linter_errors': 'lightline#ale#errors'
-    \ },
-    \ 'component_type': {
-    \   'buffers': 'tabsel',
-    \   'linter_warnings': 'warning',
-    \   'linter_errors': 'error'
-    \ }
-    \ }
-let g:lightline#bufferline#modified = '∙'
-let g:lightline#ale#indicator_warnings = '▲ '
-let g:lightline#ale#indicator_errors = '✗ '
-function! LightlineFilename()
-    let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
-    let modified = &modified ? '∙' : ''
-    return filename . modified
+let g:mode_map={
+            \ 'n' : 'NORMAL',
+            \ 'i' : 'INSERT',
+            \ 'R' : 'REPLACE',
+            \ 'v' : 'VISUAL',
+            \ 'V' : 'V-LINE',
+            \ "\<C-v>" : 'V-BLOCK',
+            \ 'c' : 'COMMAND',
+            \ 's' : 'SELECT',
+            \ 'S': 'S-LINE',
+            \ "\<C-s>" : 'S-BLOCK',
+            \ 'r' : 'PROMPT',
+            \ '!' : 'SHELL',
+            \ 't' : 'TERMINAL'
+            \}
+let g:mode_colour={
+            \ 'n' : 'blue',
+            \ 'i' : 'aqua',
+            \ 'R' : 'red',
+            \ 'v' : 'yellow',
+            \ 'V' : 'yellow',
+            \ "\<C-v>" : 'yellow',
+            \ 'c' : 'fg4',
+            \ 's' : 'fg4',
+            \ 'S': 'fg4',
+            \ "\<C-s>" : 'fg4',
+            \ 'r' : 'fg4',
+            \ '!' : 'fg4',
+            \ 't' : 'fg4'
+            \}
+highlight StatusLineBlue ctermfg=235 guifg=#282828 ctermbg=109 guibg=#83a598 
+highlight StatusLineAqua ctermfg=235 guifg=#282828 ctermbg=108 guibg=#8ec07c
+highlight StatusLineRed ctermfg=235 guifg=#282828 ctermbg=167 guibg=#fb4934
+highlight StatusLineYellow ctermfg=235 guifg=#282828 ctermbg=208 guibg=#fe8019
+highlight StatusLineFg4 ctermfg=235 guifg=#282828 ctermbg=246 guibg=#a89984
+highlight StatusLinePurple ctermfg=235 guifg=#282828 ctermbg=175 guibg=#d3869b
+highlight StatusLineGroup0 ctermfg=246 guifg=#a89984 ctermbg=237 guibg=#3c3836
+highlight StatusLineGroup1 ctermfg=246 guifg=#a89984 ctermbg=239 guibg=#504945
+highlight StatusLineGroup1Red ctermfg=167 guifg=#fb4934 ctermbg=239 guibg=#504945
+highlight StatusLineGroup1Yellow ctermfg=214 guifg=#fabd2f ctermbg=239 guibg=#504945
+highlight StatusLineAleWarnings ctermfg=239 guifg=#504945 ctermbg=214 guibg=#fabd2f
+highlight link StatusLineNC StatusLineGroup0
+function! SetStatusLineActive()
+    setlocal statusline=
+    setlocal statusline+=%#StatusLineBlue#%{(g:mode_colour[mode()]=='blue')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLineAqua#%{(g:mode_colour[mode()]=='aqua')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLineRed#%{(g:mode_colour[mode()]=='red')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLineYellow#%{(g:mode_colour[mode()]=='yellow')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLineFg4#%{(g:mode_colour[mode()]=='fg4')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLinePurple#%{(&paste)?'\ \ PASTE\ ':''}
+    setlocal statusline+=%#StatusLineGroup1#\ %t
+    setlocal statusline+=%#StatusLineGroup1Yellow#%{&readonly?'\ !!':''}
+    setlocal statusline+=%#StatusLineGroup1Red#%{&modified?'∙':''}%#StatusLineGroup1#\ 
+    setlocal statusline+=%#StatusLineGroup0#
+    setlocal statusline+=%=
+    setlocal statusline+=%{&fileformat}\ \|
+    setlocal statusline+=\ %{&fileencoding?&fileencoding:&encoding}\ \|
+    setlocal statusline+=\ %{&filetype!=''?&filetype:'-'}\ 
+    setlocal statusline+=%#StatusLineGroup1#%4v:%-4l≡%4L\ 
 endfunction
+function! SetStatusLineInactive()
+    setlocal statusline=
+    setlocal statusline+=%#StatusLineNC#
+    setlocal statusline=\ %t
+    setlocal statusline+=%{&readonly?'\ !!':''}
+    setlocal statusline+=%#StatusLineGroup1Red#%{&modified?'∙':''}%#StatusLineNC#\ 
+endfunction
+augroup status
+    autocmd!
+    autocmd VimEnter,BufEnter,WinEnter * call SetStatusLineActive()
+    autocmd BufLeave,WinLeave * call SetStatusLineInactive()
+augroup END
 
 " ale
 let g:ale_lint_on_text_changed = 'never'
