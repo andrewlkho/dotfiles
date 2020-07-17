@@ -1,0 +1,30 @@
+# This assumes that colours are set up as per alacritty.yml (which is set to
+# gruvbox colour scheme)
+
+color index color15 color0 "~A"
+color index color11 color0 "~N | ~O"
+color index color11 color0 "~v~(~N)"
+color index color9 color0 "~D"
+color index color14 color0 "~T"
+color index color13 color0 "~F"
+
+color hdrdefault color15 color0
+color header color11 color0 "^(Subject)"
+
+color error color9 color0
+color normal color15 color0
+color quoted color7 color0
+
+# Use a different colour for notmuch-results to remind me that we are in a
+# virtual read-only folder
+folder-hook . 'color indicator color0 color3'
+folder-hook notmuch-results 'color indicator color0 color12'
+folder-hook . 'color status color0 color3'
+folder-hook notmuch-results 'color status color0 color12'
+
+color sidebar_indicator color11 color0
+color sidebar_highlight color0 color3
+color sidebar_flagged color15 color0
+color sidebar_new color15 color0
+
+# vim: filetype=muttrc

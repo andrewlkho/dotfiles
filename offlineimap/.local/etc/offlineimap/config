@@ -1,11 +1,14 @@
 [general]
-accounts = mythic-beasts, tarandy, imperial
+accounts = mythic-beasts,tarandy,imperial
 maxsyncaccounts = 3
 ui = basic
-pythonfile = ~/.offlineimap/get_secret.py
+pythonfile = $XDG_CONFIG_HOME/offlineimap/get_secret.py
+metadata = $XDG_DATA_HOME/offlineimap
 
 [DEFAULT]
 sslcacertfile = /usr/local/etc/openssl@1.1/cert.pem
+autorefresh = 5
+postsynchook = notmuch new
 
 
 # mythic-beasts ################################################################
@@ -26,7 +29,7 @@ remoteport = 993
 ssl = yes
 remoteusereval = get_secret("mythic-beasts", "user")
 remotepasseval = get_secret("mythic-beasts", "pass")
-folderfilter = lambda f: f[0:5] == "INBOX"
+folderfilter = lambda f: f[0:5] == "INBOX" and f[6:] not in ["Archive", "Archives"]
 nametrans = lambda f: re.sub(r"^INBOX\.", "", f)
 
 

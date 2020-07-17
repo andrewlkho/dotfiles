@@ -5,7 +5,7 @@ import subprocess
 
 
 def get_secret(account, item):
-    f = os.path.expanduser("~/.secrets.gpg")
+    f = os.path.expandvars("${XDG_CONFIG_HOME}/offlineimap/secrets.gpg")
     try:
         args = ["gpg", "--batch", "--quiet", "--decrypt", f]
         stdout = subprocess.check_output(args)

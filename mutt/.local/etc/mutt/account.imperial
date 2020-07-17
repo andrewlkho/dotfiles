@@ -1,0 +1,24 @@
+set folder = ~/mail/imperial
+set spoolfile = +INBOX
+set record = "+Sent Items"
+set postponed = +Drafts
+set trash = "+Deleted Items"
+
+set from = "Andrew Ho <andrew.ho08@imperial.ac.uk>"
+set smtp_url = "smtp://alh08:$my_imperial_pass@smtp.cc.ic.ac.uk:587"
+unset smtp_authenticators
+
+unmailboxes *
+mailboxes `find ~/mail/imperial -depth 1 -type d -exec basename {} \; |\
+    sort | nl -v 2 -s '  ' -w 2 | grep 'INBOX' |\
+    sed -e 's/^\( *[0-9]*\) *\(.*\)$/-label "\1  \2" "+\2"/' | tr '\n' ' '`
+mailboxes `find ~/mail/imperial -depth 1 -type d -exec basename {} \; |\
+    sort | nl -v 2 -s '  ' -w 2 | grep 'Drafts\|Sent Items' |\
+    sed -e 's/^\( *[0-9]*\) *\(.*\)$/-label "\1  \2" "+\2"/' | tr '\n' ' '`
+mailboxes " "
+mailboxes `find ~/mail/imperial -depth 1 -type d -exec basename {} \; |\
+    sort | nl -v 2 -s '  ' -w 2 | grep -v 'INBOX\|Drafts\|Sent Items' |\
+    sed -e 's/^\( *[0-9]*\) *\(.*\)$/-label "\1  \2" "+\2"/' -e 's/[a-zA-Z]\{1,\}\./    /g' | tr '\n' ' '`
+
+
+# vim: filetype=muttrc
