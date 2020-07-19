@@ -15,12 +15,6 @@ bind generic,index,pager \cB previous-page
 bind generic,index N search-opposite
 bind pager N search-reverse
 
-bind index,pager J sidebar-next
-bind index,pager K sidebar-prev
-bind index,pager <space> sidebar-open
-bind index <up> previous-entry
-bind index <down> next-entry
-
 bind index \cU toggle-new
 bind pager \cU mark-as-new
 bind index G sync-mailbox
