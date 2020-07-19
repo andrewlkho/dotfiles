@@ -51,4 +51,9 @@ macro compose ,f3 "\
 folder-hook . "bind compose x noop"
 folder-hook /mythic-beasts/ "macro compose x ,f0"
 
+folder-hook . "unhook send-hook"
+folder-hook /mythic-beasts/ "send-hook . 'unset smtp_authenticators'"
+folder-hook /mythic-beasts/ "send-hook . 'set smtp_url = \"smtp://$my_mythicbeasts_user:$my_mythicbeasts_pass@smtp-auth.mythic-beasts.com:587\"'"
+folder-hook /mythic-beasts/ "send-hook . 'set from = \"Andrew Ho <andrewho@andrewho.co.uk>\"'"
+
 # vim: filetype=muttrc
