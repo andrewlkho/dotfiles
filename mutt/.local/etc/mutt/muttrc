@@ -31,6 +31,9 @@ set send_charset = "utf-8"
 set query_command = "icloud-addressbook-query.py '%s'"
 auto_view = text/html
 
+set print_command = "if [ -a ${HOME}/Desktop/muttprint.pdf ]; then echo '~/Desktop/muttprint.pdf exists, aborting'; exit 1; else muttprint -p - -i off -P A4 -e local -E '%A %d %B %Y %H:%M %Z' | ps2pdf - ${HOME}/Desktop/muttprint.pdf; fi"
+set print_split
+
 # display
 set attribution = "%n <%a> wrote [%{%Y-%m-%d %H:%M %z}]:"
 set forward_format = "Fwd: %s"
