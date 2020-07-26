@@ -3,7 +3,7 @@ set runtimepath+=$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after
 set runtimepath+=$XDG_CONFIG_HOME/vim/after
 call plug#begin($XDG_CONFIG_HOME . "/vim/bundle")
 " general
-Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
@@ -113,7 +113,9 @@ syntax enable
 set termguicolors
 let &t_8f = "[38;2;%lu;%lu;%lum"
 let &t_8b = "[48;2;%lu;%lu;%lum"
-colorscheme gruvbox
+let g:nord_bold_vertical_split_line = 1
+set fillchars="vert: "
+colorscheme nord
 set background=dark
 set cursorline
 
@@ -136,40 +138,39 @@ let g:mode_map={
             \ 't' : 'TERMINAL'
             \}
 let g:mode_colour={
-            \ 'n' : 'blue',
-            \ 'i' : 'aqua',
-            \ 'R' : 'red',
-            \ 'v' : 'yellow',
-            \ 'V' : 'yellow',
-            \ "\<C-v>" : 'yellow',
-            \ 'c' : 'fg4',
-            \ 's' : 'fg4',
-            \ 'S': 'fg4',
-            \ "\<C-s>" : 'fg4',
-            \ 'r' : 'fg4',
-            \ '!' : 'fg4',
-            \ 't' : 'fg4'
+            \ 'n' : 'normal',
+            \ 'i' : 'insert',
+            \ 'R' : 'replace',
+            \ 'v' : 'visual',
+            \ 'V' : 'visual',
+            \ "\<C-v>" : 'visual',
+            \ 'c' : 'other',
+            \ 's' : 'other',
+            \ 'S': 'other',
+            \ "\<C-s>" : 'other',
+            \ 'r' : 'other',
+            \ '!' : 'other',
+            \ 't' : 'other'
             \}
-highlight StatusLineBlue ctermfg=235 guifg=#282828 ctermbg=109 guibg=#83a598 
-highlight StatusLineAqua ctermfg=235 guifg=#282828 ctermbg=108 guibg=#8ec07c
-highlight StatusLineRed ctermfg=235 guifg=#282828 ctermbg=167 guibg=#fb4934
-highlight StatusLineYellow ctermfg=235 guifg=#282828 ctermbg=208 guibg=#fe8019
-highlight StatusLineFg4 ctermfg=235 guifg=#282828 ctermbg=246 guibg=#a89984
-highlight StatusLinePurple ctermfg=235 guifg=#282828 ctermbg=175 guibg=#d3869b
-highlight StatusLineGroup0 ctermfg=246 guifg=#a89984 ctermbg=237 guibg=#3c3836
-highlight StatusLineGroup1 ctermfg=246 guifg=#a89984 ctermbg=239 guibg=#504945
-highlight StatusLineGroup1Red ctermfg=167 guifg=#fb4934 ctermbg=239 guibg=#504945
-highlight StatusLineGroup1Yellow ctermfg=214 guifg=#fabd2f ctermbg=239 guibg=#504945
-highlight StatusLineAleWarnings ctermfg=239 guifg=#504945 ctermbg=214 guibg=#fabd2f
+highlight StatusLineNormal ctermfg=0 guifg=#3B4252 ctermbg=6 guibg=#88C0D0
+highlight StatusLineInsert ctermfg=0 guifg=#3B4252 ctermbg=15 guibg=#ECEFF4
+highlight StatusLineReplace ctermfg=0 guifg=#3B4252 ctermbg=3 guibg=#EBCB8B
+highlight StatusLineVisual ctermfg=0 guifg=#3B4252 ctermbg=14 guibg=#8FBCBB
+highlight StatusLineOther ctermfg=7 guifg=#E5E9F0 ctermbg=NONE guibg=#2E3440
+highlight link StatusLinePaste StatuslineInsert
+highlight StatusLineGroup0 ctermfg=7 guifg=#E5E9F0 ctermbg=8 guibg=#4C566A
+highlight StatusLineGroup1 ctermfg=7 guifg=#E5E9F0 ctermbg=0 guibg=#3B4252
+highlight StatusLineGroup1Red ctermfg=1 guifg=#bf616a ctermbg=0 guibg=#3B4252
+highlight StatusLineGroup1Yellow ctermfg=3 guifg=#EBCB8B ctermbg=0 guibg=#3B4252
 highlight link StatusLineNC StatusLineGroup0
 function! SetStatusLineActive()
     setlocal statusline=
-    setlocal statusline+=%#StatusLineBlue#%{(g:mode_colour[mode()]=='blue')?'\ \ '.g:mode_map[mode()].'\ ':''}
-    setlocal statusline+=%#StatusLineAqua#%{(g:mode_colour[mode()]=='aqua')?'\ \ '.g:mode_map[mode()].'\ ':''}
-    setlocal statusline+=%#StatusLineRed#%{(g:mode_colour[mode()]=='red')?'\ \ '.g:mode_map[mode()].'\ ':''}
-    setlocal statusline+=%#StatusLineYellow#%{(g:mode_colour[mode()]=='yellow')?'\ \ '.g:mode_map[mode()].'\ ':''}
-    setlocal statusline+=%#StatusLineFg4#%{(g:mode_colour[mode()]=='fg4')?'\ \ '.g:mode_map[mode()].'\ ':''}
-    setlocal statusline+=%#StatusLinePurple#%{(&paste)?'\ \ PASTE\ ':''}
+    setlocal statusline+=%#StatusLineNormal#%{(g:mode_colour[mode()]=='normal')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLineInsert#%{(g:mode_colour[mode()]=='insert')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLineReplace#%{(g:mode_colour[mode()]=='replace')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLineVisual#%{(g:mode_colour[mode()]=='visual')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLineOther#%{(g:mode_colour[mode()]=='other')?'\ \ '.g:mode_map[mode()].'\ ':''}
+    setlocal statusline+=%#StatusLinePaste#%{(&paste)?'\ \ PASTE\ ':''}
     setlocal statusline+=%#StatusLineGroup1#\ %t
     setlocal statusline+=%#StatusLineGroup1Yellow#%{&readonly?'\ !!':''}
     setlocal statusline+=%#StatusLineGroup1Red#%{&modified?'∙':''}%#StatusLineGroup1#\ 
