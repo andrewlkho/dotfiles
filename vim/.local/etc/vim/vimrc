@@ -35,7 +35,6 @@ set relativenumber
 set scrolloff=5
 set splitbelow
 set splitright
-set helpheight=999 " make help bigger without having to chain only or C-W O
 
 " session files, and infinite undo
 set undofile
