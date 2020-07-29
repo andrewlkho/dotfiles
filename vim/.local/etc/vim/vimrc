@@ -119,8 +119,8 @@ set background=dark
 set cursorline
 
 " spelling
-set spellfile = ~/Documents/unison/spellfile.utf-8.add
-set spelllang = en_gb
+set spellfile=~/Documents/unison/spellfile.utf-8.add
+set spelllang=en_gb
 
 " statusline
 set laststatus=2
