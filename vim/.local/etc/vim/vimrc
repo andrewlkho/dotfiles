@@ -10,6 +10,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'dense-analysis/ale'
 Plug 'tpope/vim-eunuch'
 Plug 'lifepillar/vim-mucomplete'
+Plug 'justinmk/vim-dirvish'
 
 " python
 Plug 'tmhedberg/SimpylFold'
@@ -92,14 +93,11 @@ nmap <leader>8 :bfirst<CR>:bnext 7<CR>
 nmap <leader>9 :bfirst<CR>:bnext 8<CR>
 nmap <C-T> :ls<CR>:buffer<space>
 
-" netrw
-let g:netrw_fastbrowse = 0 " Always close netrw buffers
-let g:netrw_dirhistmax = 0 " Don't create .netrwhist
-let g:netrw_liststyle = 1
-let g:netrw_banner = 0
-nnoremap <leader>t :edit .<CR>
+" vim-dirvish
+let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
+nnoremap <leader>t :Dirvish<CR>
 if isdirectory($HOME . "/Dropbox/Notes")
-    nnoremap <expr> <leader>w ":edit " . $HOME . "/Dropbox/Notes<CR>"
+    nnoremap <expr> <leader>w ":Dirvish " . $HOME . "/Dropbox/Notes<CR>"
     nnoremap <expr> <leader>s ":edit " . $HOME . "/Dropbox/Notes/Scratchpad/" . expand(strftime("%Y-%m-%d %H.%M.%S.md")) . "<CR>"
 endif
 
