@@ -13,6 +13,11 @@ export SAVEHIST=10000
 bindkey -v
 bindkey '^r' history-incremental-search-backward
 
+# Edit command vim in vim with 'v' in vi-mode
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 # directory stack
 export DIRSTACKSIZE=20
 setopt AUTO_PUSHD
