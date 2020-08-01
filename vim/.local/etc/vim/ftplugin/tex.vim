@@ -22,7 +22,6 @@ augroup END
 highlight! link ALEErrorSign LineNr
 highlight! link ALEInfoSign LineNr
 highlight! link ALEWarningSign LineNr
-call lightline#disable()
 setlocal showtabline=0
 setlocal laststatus=0
 
