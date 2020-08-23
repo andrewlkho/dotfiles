@@ -21,7 +21,6 @@ Plug 'davidhalter/jedi-vim'
 Plug 'jalvesaq/Nvim-R'
 
 " latex
-Plug 'lervag/vimtex'
 Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 call plug#end()
 

@@ -25,13 +25,13 @@ highlight! link ALEWarningSign LineNr
 setlocal showtabline=0
 setlocal laststatus=0
 
-nnoremap j gj
-nnoremap k gk
+nmap <buffer> j gj
+nmap <buffer> k gk
 
-nmap <buffer> <leader>ll <plug>(vimtex-compile)
-nmap <buffer> <leader>lv <plug>(vimtex-view)
-nmap <buffer> <leader>lc <plug>(vimtex-clean)
-nmap <buffer> <leader>lw :VimtexCountWords<CR>
+setlocal makeprg=latexmk\ %
+nmap <buffer> <leader>ll :make<CR>
+nmap <buffer> <leader>lc :!latexmk -c %<CR>
+nmap <buffer> <leader>lw :!texcount %<CR>
 
-nnoremap ,doc :-1read $XDG_CONFIG_HOME/vim/snippets/doc.tex<CR>Gdd2k
-nnoremap ,letter :-1read $XDG_CONFIG_HOME/vim/snippets/letter.tex<CR>Gdd14k:put =strftime('%A %e %B %Y')<CR>V=gg/REPLACEME<CR>
+nnoremap <buffer> ,doc :-1read $XDG_CONFIG_HOME/vim/snippets/doc.tex<CR>Gdd2k
+nnoremap <buffer> ,letter :-1read $XDG_CONFIG_HOME/vim/snippets/letter.tex<CR>Gdd14k:put =strftime('%A %e %B %Y')<CR>V=gg/REPLACEME<CR>
