@@ -12,7 +12,7 @@ vmap <LocalLeader>rl <Plug>RSendSelection<Esc>
 nmap <LocalLeader>kh <Plug>RMakeHTML
 nmap <LocalLeader>kp <Plug>RMakePDFK
 
-set expandtab
-set softtabstop=2
-set shiftwidth=2
-set tabstop=2
+setlocal expandtab
+setlocal softtabstop=2
+setlocal shiftwidth=2
+setlocal tabstop=2
