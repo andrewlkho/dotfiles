@@ -210,9 +210,6 @@ vmap <leader>\ gc
 
 " blank *.tex files are still latex, not plaintex
 let g:tex_flavor = "latex"
-let g:vimtex_compiler_latexmk = {'continuous': 0}
-let g:vimtex_quickfix_mode = 1
-let g:vimtex_mappings_enabled = 0
 
 autocmd FileType tex highlight clear texBoldStyle
 autocmd FileType tex highlight clear texItalStyle
