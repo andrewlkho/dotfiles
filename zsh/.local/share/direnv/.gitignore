@@ -1,0 +1,3 @@
+# Make sure git recreates this directory
+*
+!.gitignore

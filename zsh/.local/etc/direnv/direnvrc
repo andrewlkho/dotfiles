@@ -2,7 +2,7 @@
 # https://github.com/direnv/direnv/wiki/Python#venv-stdlib-module
 #
 # Add the following to the project's .envrc:
-#     VIRTUALENV=".venv"
+#     export VIRTUAL_ENV=".venv"
 #     layout python-venv
 
 realpath() {
