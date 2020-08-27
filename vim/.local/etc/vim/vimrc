@@ -13,7 +13,7 @@ Plug 'justinmk/vim-dirvish'
 
 " python
 Plug 'tmhedberg/SimpylFold'
-Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'psf/black', { 'branch': 'stable' }
 
 " latex
 Plug 'sonph/onehalf', { 'rtp': 'vim/' }
