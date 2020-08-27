@@ -17,9 +17,6 @@ Plug 'tmhedberg/SimpylFold'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'davidhalter/jedi-vim'
 
-" r
-Plug 'jalvesaq/Nvim-R'
-
 " latex
 Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 call plug#end()

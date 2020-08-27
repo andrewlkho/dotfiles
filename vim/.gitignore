@@ -1,2 +1,3 @@
 .local/cache/vim/viminfo
+.local/cache/vim/repl-tmp
 .local/etc/vim/bundle
