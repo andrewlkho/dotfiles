@@ -86,6 +86,19 @@ nmap <C-T> :ls<CR>:buffer<space>
 
 " vim-dirvish
 let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
+function! RecentFiles()
+    enew
+    put =execute('oldfiles')
+    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+    set filetype=dirvish
+    g/^$/d
+    call setline(1, map(getline(1,'$'), {k,v -> substitute(v, '^[0-9]*: ', '', '')}))
+    call setline(1, map(getline(1,'$'), {k,v -> substitute(v, '^\~', expand('~'), '')}))
+    nmap <buffer> gq :bdelete<CR>
+    sort
+    1
+endfunction
+nmap <leader>o :call RecentFiles()<CR>
 
 " toggles
 nnoremap <leader>p :setlocal paste! paste?<CR>
