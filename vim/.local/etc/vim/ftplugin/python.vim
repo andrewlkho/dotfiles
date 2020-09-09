@@ -10,7 +10,6 @@ setlocal softtabstop=4
 setlocal shiftwidth=4
 setlocal tabstop=4
 
-setlocal colorcolumn=88
 nnoremap <buffer> <leader>gq :Black<CR>
 
 nnoremap <buffer> <leader>r :let cwd=expand("%:p:h")<CR>:vertical terminal ++norestore ++close<CR><C-W>:call term_sendkeys("", "cd '" . cwd . "'")<CR><CR>python && exit<CR>import os<CR>

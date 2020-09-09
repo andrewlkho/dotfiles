@@ -1,7 +1,6 @@
 colorscheme onehalflight
 setlocal background=light
 setlocal nocursorline
-setlocal colorcolumn=
 setlocal norelativenumber
 
 " Soft wrap at window width or 100 (includes gutter etc), whichever is greater

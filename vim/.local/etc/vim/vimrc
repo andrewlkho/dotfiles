@@ -22,7 +22,6 @@ call plug#end()
 " UI
 set autoindent
 set backspace=indent,eol,start
-set colorcolumn=80
 set lazyredraw
 set listchars=tab:>-,trail:-,eol:¬
 set number
