@@ -1,7 +1,3 @@
-let g:SimpylFold_docstring_preview = 1
-nnoremap <space> za
-setlocal foldlevel=99
-
 setlocal expandtab
 setlocal softtabstop=4
 setlocal shiftwidth=4
