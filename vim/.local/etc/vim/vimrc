@@ -72,15 +72,6 @@ set fileencoding=utf-8
 set hidden
 nmap ]b :bnext<CR>
 nmap [b :bprevious <CR>
-nmap <leader>1 :bfirst<CR>
-nmap <leader>2 :bfirst<CR>:bnext<CR>
-nmap <leader>3 :bfirst<CR>:bnext 2<CR>
-nmap <leader>4 :bfirst<CR>:bnext 3<CR>
-nmap <leader>5 :bfirst<CR>:bnext 4<CR>
-nmap <leader>6 :bfirst<CR>:bnext 5<CR>
-nmap <leader>7 :bfirst<CR>:bnext 6<CR>
-nmap <leader>8 :bfirst<CR>:bnext 7<CR>
-nmap <leader>9 :bfirst<CR>:bnext 8<CR>
 nmap <C-T> :ls<CR>:buffer<space>
 
 " vim-dirvish
