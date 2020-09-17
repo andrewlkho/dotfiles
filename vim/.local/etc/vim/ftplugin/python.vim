@@ -1,5 +1,5 @@
-let b:ale_linters = ['flake8']
-let b:ale_python_flake8_options = '--max-line-length 88 --extend-ignore=E203,W503'
+" let b:ale_linters = ['flake8']
+" let b:ale_python_flake8_options = '--max-line-length 88 --extend-ignore=E203,W503'
 
 let g:SimpylFold_docstring_preview = 1
 nnoremap <space> za
@@ -9,6 +9,13 @@ setlocal expandtab
 setlocal softtabstop=4
 setlocal shiftwidth=4
 setlocal tabstop=4
+
+setlocal makeprg=flake8
+setlocal errorformat=%f:%l:%c:\ %t%n\ %m
+augroup lint
+    autocmd! * <buffer>
+    autocmd BufWritePost <buffer> silent lmake! <afile> | silent redraw!
+augroup END
 
 nnoremap <buffer> <leader>gq :Black<CR>
 

@@ -7,7 +7,6 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
-Plug 'dense-analysis/ale'
 Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-dirvish'
 
@@ -148,11 +147,31 @@ highlight StatusLineReplace ctermfg=0 guifg=#3B4252 ctermbg=3 guibg=#EBCB8B
 highlight StatusLineVisual ctermfg=0 guifg=#3B4252 ctermbg=14 guibg=#8FBCBB
 highlight StatusLineOther ctermfg=7 guifg=#E5E9F0 ctermbg=NONE guibg=#2E3440
 highlight link StatusLinePaste StatuslineInsert
+highlight link StatusLineLint StatuslineReplace
 highlight StatusLineGroup0 ctermfg=7 guifg=#E5E9F0 ctermbg=8 guibg=#4C566A
 highlight StatusLineGroup1 ctermfg=7 guifg=#E5E9F0 ctermbg=0 guibg=#3B4252
 highlight StatusLineGroup1Red ctermfg=1 guifg=#bf616a ctermbg=0 guibg=#3B4252
 highlight StatusLineGroup1Yellow ctermfg=3 guifg=#EBCB8B ctermbg=0 guibg=#3B4252
 highlight link StatusLineNC StatusLineGroup0
+function! LinterStatus()
+    if &filetype == 'python'
+        let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && (v.type == 'E' || v.type == 'F')}))
+        let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'W'}))
+        let l:output = ''
+        if l:errors > 0
+            let l:output = l:output . '✗' . l:errors . ' '
+        endif
+        if l:warnings > 0
+            let l:output = l:output . '▲' . l:warnings . ' '
+        endif
+        if len(l:output) > 0
+            let l:output = ' ' . l:output
+        endif
+        return l:output
+    else
+        return ''
+    endif
+endfunction
 function! SetStatusLineActive()
     setlocal statusline=
     setlocal statusline+=%#StatusLineNormal#%{(g:mode_colour[mode()]=='normal')?'\ \ '.g:mode_map[mode()].'\ ':''}
@@ -169,6 +188,7 @@ function! SetStatusLineActive()
     setlocal statusline+=%{&fileformat}\ \|
     setlocal statusline+=\ %{&fileencoding?&fileencoding:&encoding}\ \|
     setlocal statusline+=\ %{&filetype!=''?&filetype:'-'}\ 
+    setlocal statusline+=%#StatusLineLint#%{LinterStatus()}
     setlocal statusline+=%#StatusLineGroup1#%4v:%-4l≡%4L\ 
 endfunction
 function! SetStatusLineInactive()
@@ -184,12 +204,11 @@ augroup status
     autocmd BufLeave,WinLeave * call SetStatusLineInactive()
 augroup END
 
-" ale
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 0
-let g:ale_sign_warning = '▲'
-let g:ale_sign_error = '✗'
-let g:ale_set_highlights = 0
+" location list
+nmap ]L :llast<CR>
+nmap [L :lfirst<CR>
+nmap ]l :lnext<CR>
+nmap [l :lprevious<CR>
 
 " vim-gitgutter: run on save (see also .vim/after/plugin/gitgutter.vim) and
 " change default symbol (hat tip: https://statico.github.io/vim3.html)
