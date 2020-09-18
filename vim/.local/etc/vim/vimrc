@@ -156,20 +156,24 @@ function! LinterStatus()
     if &filetype == 'python'
         let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && (v.type == 'E' || v.type == 'F')}))
         let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'W'}))
-        let l:output = ''
-        if l:errors > 0
-            let l:output = l:output . '✗' . l:errors . ' '
-        endif
-        if l:warnings > 0
-            let l:output = l:output . '▲' . l:warnings . ' '
-        endif
-        if len(l:output) > 0
-            let l:output = ' ' . l:output
-        endif
-        return l:output
+    elseif &filetype == 'bash'
+        let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'e'}))
+        let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'w'}))
     else
         return ''
     endif
+
+    let l:output = ''
+    if l:errors > 0
+        let l:output = l:output . '✗' . l:errors . ' '
+    endif
+    if l:warnings > 0
+        let l:output = l:output . '▲' . l:warnings . ' '
+    endif
+    if len(l:output) > 0
+        let l:output = ' ' . l:output
+    endif
+    return l:output
 endfunction
 function! SetStatusLineActive()
     setlocal statusline=
