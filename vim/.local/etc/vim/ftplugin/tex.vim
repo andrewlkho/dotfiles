@@ -27,7 +27,7 @@ setlocal laststatus=0
 nmap <buffer> j gj
 nmap <buffer> k gk
 
-setlocal makeprg=latexmk\ %
+setlocal makeprg=latexmk\ %:S
 nmap <buffer> <leader>ll :make<CR>
 nmap <buffer> <leader>lc :!latexmk -c %<CR>
 nmap <buffer> <leader>lw :!texcount %<CR>

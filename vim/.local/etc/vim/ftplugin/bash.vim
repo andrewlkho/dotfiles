@@ -1,4 +1,4 @@
-setlocal makeprg=shellcheck\ -f\ gcc\ -s\ bash\ -S\ warning
+setlocal makeprg=shellcheck\ -f\ gcc\ -s\ bash\ -S\ warning\ %:S
 setlocal errorformat=
     \%f:%l:%c:\ %trror:\ %m,
     \%f:%l:%c:\ %tarning:\ %m,
@@ -6,5 +6,5 @@ setlocal errorformat=
 
 augroup lint
     autocmd! * <buffer>
-    autocmd BufWritePost <buffer> silent lmake! <afile> | silent redraw!
+    autocmd BufWritePost <buffer> silent lmake! | silent redraw!
 augroup END

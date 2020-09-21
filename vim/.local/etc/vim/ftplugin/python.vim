@@ -7,11 +7,11 @@ setlocal foldmethod=indent
 setlocal foldnestmax=1
 setlocal foldlevel=99
 
-setlocal makeprg=flake8\ --max-line-length\ 88\ --extend-ignore=E203
+setlocal makeprg=flake8\ --max-line-length\ 88\ --extend-ignore=E203\ %:S
 setlocal errorformat=%f:%l:%c:\ %t%n\ %m
 augroup lint
     autocmd! * <buffer>
-    autocmd BufWritePost <buffer> silent lmake! <afile> | silent redraw!
+    autocmd BufWritePost <buffer> silent lmake! | silent redraw!
 augroup END
 
 nnoremap <buffer> <leader>gq :Black<CR>
