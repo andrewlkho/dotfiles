@@ -1,2 +1,3 @@
 $clean_ext = "synctex.gz";
 $pdf_mode = 1;
+$pdflatex = "pdflatex -file-line-error -interaction=nonstopmode %O %S"
