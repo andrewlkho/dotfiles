@@ -14,7 +14,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'psf/black', { 'branch': 'stable' }
 
 " latex
-Plug 'sonph/onehalf', { 'rtp': 'vim/' }
+Plug 'pbrisbin/vim-colors-off'
 call plug#end()
 
 " UI
@@ -231,8 +231,4 @@ vmap <leader>\ gc
 " blank *.tex files are still latex, not plaintex
 let g:tex_flavor = "latex"
 
-autocmd FileType tex highlight clear texBoldStyle
-autocmd FileType tex highlight clear texItalStyle
-autocmd FileType tex highlight clear texEmphStyle
-autocmd FileType tex highlight clear texBoldItalStyle
-autocmd FileType tex highlight clear texItalBoldStyle
+nnoremap <leader>m :silent make! \| silent redraw!<CR>

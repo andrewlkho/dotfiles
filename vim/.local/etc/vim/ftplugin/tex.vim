@@ -1,7 +1,9 @@
-colorscheme onehalflight
+colorscheme off
 setlocal background=light
-setlocal nocursorline
-setlocal norelativenumber
+syntax off
+setlocal cursorlineopt=number
+highlight CursorLineNr ctermfg=8 ctermbg=231 guifg=#424242 guibg=#FFFFFF
+highlight LineNr ctermfg=253 guifg=#DADADA
 
 " Soft wrap at window width or 100 (includes gutter etc), whichever is greater
 setlocal wrap
@@ -18,9 +20,7 @@ augroup tex
 augroup END
 
 " Mute the user interface
-highlight! link ALEErrorSign LineNr
-highlight! link ALEInfoSign LineNr
-highlight! link ALEWarningSign LineNr
+setlocal norelativenumber
 setlocal showtabline=0
 setlocal laststatus=0
 
