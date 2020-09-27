@@ -1,29 +1,44 @@
 set runtimepath=$XDG_CONFIG_HOME/vim
 set runtimepath+=$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after
 set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+
+" ---- Load plugins ------------------------------------------------------------
+
 call plug#begin($XDG_CONFIG_HOME . "/vim/bundle")
-" general
 Plug 'arcticicestudio/nord-vim'
+Plug 'pbrisbin/vim-colors-off'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-dirvish'
-
-" python
 Plug 'psf/black', { 'branch': 'stable' }
-
-" latex
-Plug 'pbrisbin/vim-colors-off'
 call plug#end()
+
+
+" ---- General options ---------------------------------------------------------
+
+" colours
+syntax enable
+set termguicolors
+let &t_8f = "[38;2;%lu;%lu;%lum"
+let &t_8b = "[48;2;%lu;%lu;%lum"
+let g:nord_bold_vertical_split_line = 1
+colorscheme nord
+set background=dark
 
 " UI
 set autoindent
 set backspace=indent,eol,start
+set cursorline
+set fillchars=vert:\ 
+set laststatus=2
 set lazyredraw
 set listchars=tab:>-,trail:-,eol:¬
 set number
 set relativenumber
+set noshowmode
 set scrolloff=5
 set splitbelow
 set splitright
@@ -42,16 +57,12 @@ set expandtab
 set softtabstop=4
 set shiftwidth=4
 set tabstop=4
-" keep selection when indenting
-vnoremap < <gv
-vnoremap > >gv
 
 " searching
 set incsearch
 set hlsearch
 set ignorecase
 set smartcase
-nmap <leader>q :nohlsearch<CR>
 
 " file searching: recursive and use wildmenu
 set path+=**
@@ -68,48 +79,17 @@ set fileencoding=utf-8
 
 " buffers
 set hidden
-nmap ]b :bnext<CR>
-nmap [b :bprevious <CR>
-nmap <C-T> :ls<CR>:buffer<space>
-
-" vim-dirvish
-let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
-function! RecentFiles()
-    enew
-    put =execute('oldfiles')
-    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-    set filetype=dirvish
-    g/^$/d
-    call setline(1, map(getline(1,'$'), {k,v -> substitute(v, '^[0-9]*: ', '', '')}))
-    call setline(1, map(getline(1,'$'), {k,v -> substitute(v, '^\~', expand('~'), '')}))
-    nmap <buffer> gq :bdelete<CR>
-    sort
-    1
-endfunction
-nmap <leader>o :call RecentFiles()<CR>
-
-" toggles
-nnoremap <leader>p :setlocal paste! paste?<CR>
-nnoremap <leader>i :setlocal list! list?<CR>
-
-" visual appearance
-syntax enable
-set termguicolors
-let &t_8f = "[38;2;%lu;%lu;%lum"
-let &t_8b = "[48;2;%lu;%lu;%lum"
-let g:nord_bold_vertical_split_line = 1
-set fillchars="vert: "
-colorscheme nord
-set background=dark
-set cursorline
 
 " spelling
 set spellfile=~/Documents/unison/spellfile.utf-8.add
 set spelllang=en_gb
 
-" statusline
-set laststatus=2
-set noshowmode
+" blank *.tex files are still latex, not plaintex
+let g:tex_flavor = "latex"
+
+
+" ---- Statusline --------------------------------------------------------------
+
 let g:mode_map={
             \ 'n' : 'NORMAL',
             \ 'i' : 'INSERT',
@@ -124,7 +104,8 @@ let g:mode_map={
             \ 'r' : 'PROMPT',
             \ '!' : 'SHELL',
             \ 't' : 'TERMINAL'
-            \}
+            \ }
+
 let g:mode_colour={
             \ 'n' : 'normal',
             \ 'i' : 'insert',
@@ -139,7 +120,8 @@ let g:mode_colour={
             \ 'r' : 'other',
             \ '!' : 'other',
             \ 't' : 'other'
-            \}
+            \ }
+
 highlight StatusLineNormal ctermfg=0 guifg=#3B4252 ctermbg=6 guibg=#88C0D0
 highlight StatusLineInsert ctermfg=0 guifg=#3B4252 ctermbg=15 guibg=#ECEFF4
 highlight StatusLineReplace ctermfg=0 guifg=#3B4252 ctermbg=3 guibg=#EBCB8B
@@ -152,6 +134,7 @@ highlight StatusLineGroup1 ctermfg=7 guifg=#E5E9F0 ctermbg=0 guibg=#3B4252
 highlight StatusLineGroup1Red ctermfg=1 guifg=#bf616a ctermbg=0 guibg=#3B4252
 highlight StatusLineGroup1Yellow ctermfg=3 guifg=#EBCB8B ctermbg=0 guibg=#3B4252
 highlight link StatusLineNC StatusLineGroup0
+
 function! LinterStatus()
     if &filetype == 'python'
         let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && (v.type == 'E' || v.type == 'F')}))
@@ -175,6 +158,7 @@ function! LinterStatus()
     endif
     return l:output
 endfunction
+
 function! SetStatusLineActive()
     setlocal statusline=
     setlocal statusline+=%#StatusLineNormal#%{(g:mode_colour[mode()]=='normal')?'\ \ '.g:mode_map[mode()].'\ ':''}
@@ -194,6 +178,7 @@ function! SetStatusLineActive()
     setlocal statusline+=%#StatusLineLint#%{LinterStatus()}
     setlocal statusline+=%#StatusLineGroup1#%4v:%-4l≡%4L\ 
 endfunction
+
 function! SetStatusLineInactive()
     setlocal statusline=
     setlocal statusline+=%#StatusLineNC#
@@ -201,17 +186,58 @@ function! SetStatusLineInactive()
     setlocal statusline+=%{&readonly?'\ !!':''}
     setlocal statusline+=%#StatusLineGroup1Red#%{&modified?'∙':''}%#StatusLineNC#\ 
 endfunction
+
 augroup status
     autocmd!
     autocmd VimEnter,BufEnter,WinEnter * call SetStatusLineActive()
     autocmd BufLeave,WinLeave * call SetStatusLineInactive()
 augroup END
 
-" location list
-nmap ]L :llast<CR>
+
+" ---- Custom mappings ---------------------------------------------------------
+
+nmap [b :bprevious<CR>
+nmap ]b :bnext<CR>
+
 nmap [L :lfirst<CR>
-nmap ]l :lnext<CR>
 nmap [l :lprevious<CR>
+nmap ]l :lnext<CR>
+nmap ]L :llast<CR>
+
+nmap [Q :cfirst<CR>
+nmap [q :cprevious<CR>
+nmap ]q :cnext<CR>
+nmap ]Q :clast<CR>
+
+nmap <C-T> :ls<CR>:buffer<space>
+nmap <leader>p :setlocal paste! paste?<CR>
+nmap <leader>i :setlocal list! list?<CR>
+nmap <leader>q :nohlsearch<CR>
+nmap <leader>m :silent make! \| silent redraw!<CR>
+
+" requires vim-commentary
+vmap <leader>\ gc
+
+" requires vim-dirvish
+function! RecentFiles()
+    enew
+    put =execute('oldfiles')
+    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+    set filetype=dirvish
+    g/^$/d
+    call setline(1, map(getline(1,'$'), {k,v -> substitute(v, '^[0-9]*: ', '', '')}))
+    call setline(1, map(getline(1,'$'), {k,v -> substitute(v, '^\~', expand('~'), '')}))
+    nmap <buffer> gq :bdelete<CR>
+    sort
+    1
+endfunction
+nmap <leader>o :call RecentFiles()<CR>
+
+
+" ---- Plugin-specific settings ------------------------------------------------
+
+" vim-dirvish
+let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
 
 " vim-gitgutter: run on save (see also .vim/after/plugin/gitgutter.vim) and
 " change default symbol (hat tip: https://statico.github.io/vim3.html)
@@ -224,11 +250,3 @@ let g:gitgutter_map_keys = 0
 if v:version < 800
     let g:gitgutter_async=0
 endif
-
-" vim-commentary
-vmap <leader>\ gc
-
-" blank *.tex files are still latex, not plaintex
-let g:tex_flavor = "latex"
-
-nnoremap <leader>m :silent make! \| silent redraw!<CR>
