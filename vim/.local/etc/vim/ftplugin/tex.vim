@@ -24,12 +24,12 @@ setlocal norelativenumber
 setlocal showtabline=0
 setlocal laststatus=0
 
-nmap <buffer> j gj
-nmap <buffer> k gk
+nnoremap <buffer> j gj
+nnoremap <buffer> k gk
 
-nmap <buffer> <leader>ll :make<CR>
-nmap <buffer> <leader>lc :!latexmk -c %<CR>
-nmap <buffer> <leader>lw :!texcount %<CR>
+nnoremap <buffer> <leader>ll :make<CR>
+nnoremap <buffer> <leader>lc :!latexmk -c %<CR>
+nnoremap <buffer> <leader>lw :!texcount %<CR>
 setlocal makeprg=latexmk\ %:S
 " https://github.com/lervag/vimtex/blob/98327bfe0e599bf580e61cfaa6216c8d4177b23d/compiler/latexmk.vim
 setlocal errorformat=%-P**%f

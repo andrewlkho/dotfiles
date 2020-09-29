@@ -14,6 +14,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-dirvish'
 Plug 'psf/black', { 'branch': 'stable' }
+Plug 'junegunn/fzf'
 call plug#end()
 
 
@@ -196,27 +197,27 @@ augroup END
 
 " ---- Custom mappings ---------------------------------------------------------
 
-nmap [b :bprevious<CR>
-nmap ]b :bnext<CR>
+nnoremap [b :bprevious<CR>
+nnoremap ]b :bnext<CR>
 
-nmap [L :lfirst<CR>
-nmap [l :lprevious<CR>
-nmap ]l :lnext<CR>
-nmap ]L :llast<CR>
+nnoremap [L :lfirst<CR>
+nnoremap [l :lprevious<CR>
+nnoremap ]l :lnext<CR>
+nnoremap ]L :llast<CR>
 
-nmap [Q :cfirst<CR>
-nmap [q :cprevious<CR>
-nmap ]q :cnext<CR>
-nmap ]Q :clast<CR>
+nnoremap [Q :cfirst<CR>
+nnoremap [q :cprevious<CR>
+nnoremap ]q :cnext<CR>
+nnoremap ]Q :clast<CR>
 
-nmap <C-T> :ls<CR>:buffer<space>
-nmap <leader>p :setlocal paste! paste?<CR>
-nmap <leader>i :setlocal list! list?<CR>
-nmap <leader>q :nohlsearch<CR>
-nmap <leader>m :silent make! \| silent redraw!<CR>
+nnoremap <C-T> :ls<CR>:buffer<space>
+nnoremap <leader>p :setlocal paste! paste?<CR>
+nnoremap <leader>i :setlocal list! list?<CR>
+nnoremap <leader>q :nohlsearch<CR>
+nnoremap <leader>m :silent make! \| silent redraw!<CR>
 
 " requires vim-commentary
-vmap <leader>\ gc
+vnoremap <leader>\ gc
 
 " requires vim-dirvish
 function! RecentFiles()
@@ -231,7 +232,7 @@ function! RecentFiles()
     sort
     1
 endfunction
-nmap <leader>o :call RecentFiles()<CR>
+nnoremap <leader>o :call RecentFiles()<CR>
 
 
 " ---- Plugin-specific settings ------------------------------------------------
