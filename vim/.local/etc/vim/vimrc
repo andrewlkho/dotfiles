@@ -216,6 +216,8 @@ nnoremap <leader>i :setlocal list! list?<CR>
 nnoremap <leader>q :nohlsearch<CR>
 nnoremap <leader>m :silent make! \| silent redraw!<CR>
 
+inoremap <C-Z> <C-\><C-O>:stop<CR>
+
 " requires vim-commentary
 vnoremap <leader>\ gc
 
