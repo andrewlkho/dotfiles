@@ -1,5 +1,5 @@
 if hash fzf &>/dev/null; then
-    export FZF_DEFAULT_OPTS="--layout=reverse --border --inline-info
+    export FZF_DEFAULT_OPTS="--layout=reverse --info=inline --marker='∙'
     --color=fg:#4C566A,bg:#2E3440,fg+:#D8DEE9,bg+:#2E3440,hl:#81A1C1,hl+:#81A1C1
     --color=gutter:#2E3440,info:#B48DAC,prompt:#A3BE8C,pointer:#B48DAC
     --color=marker:#A3BE8C"
