@@ -1,6 +1,9 @@
 if hash fzf &>/dev/null; then
-    export FZF_DEFAULT_OPTS="--layout=reverse --border --inline-info \
-        --color='hl:#D79921,fg+:#B8BB26,bg+:#282828,hl+:#FABD2F,info:#928374,pointer:#B8BB26'"
+    export FZF_DEFAULT_OPTS="--layout=reverse --border --inline-info
+    --color=fg:#4C566A,bg:#2E3440,fg+:#D8DEE9,bg+:#2E3440,hl:#81A1C1,hl+:#81A1C1
+    --color=gutter:#2E3440,info:#B48DAC,prompt:#A3BE8C,pointer:#B48DAC
+    --color=marker:#A3BE8C"
+
     export FZF_CTRL_T_COMMAND="command find -L \"${HOME}\" -mindepth 1 \
         \\( -path '*/\\.*' \
             -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \
