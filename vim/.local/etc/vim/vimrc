@@ -253,3 +253,6 @@ let g:gitgutter_map_keys = 0
 if v:version < 800
     let g:gitgutter_async=0
 endif
+
+" black
+let g:black_virtualenv = $XDG_CACHE_HOME . "/vim/black"
