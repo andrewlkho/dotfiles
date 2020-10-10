@@ -68,8 +68,12 @@ set ignorecase
 set smartcase
 
 " file searching: recursive and use wildmenu
-set path+=**
+set path=.,,
+if isdirectory($HOME . "/Dropbox/Notes")
+    set path+=$HOME/Dropbox/Notes
+endif
 set wildmenu
+set wildmode=longest:full,full
 
 " completion
 set completeopt-=preview
