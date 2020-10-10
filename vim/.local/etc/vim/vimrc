@@ -14,7 +14,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-dirvish'
 Plug 'psf/black', { 'branch': 'stable' }
-Plug 'junegunn/fzf'
+
+Plug 'junegunn/fzf', { 'for': 'tex' }
+Plug 'andrewlkho/vim-fzotf', { 'for': 'tex' }
 call plug#end()
 
 
@@ -256,3 +258,7 @@ endif
 
 " black
 let g:black_virtualenv = $XDG_CACHE_HOME . "/vim/black"
+
+" vim-fzotf
+let g:fzotf_zotdir = '~/Documents/andrewonntserver/Work/Zotero'
+let g:fzotf_options = '--multi --exact'
