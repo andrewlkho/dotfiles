@@ -10,7 +10,6 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'pbrisbin/vim-colors-off'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-dirvish'
 Plug 'psf/black', { 'branch': 'stable' }
@@ -242,6 +241,18 @@ function! RecentFiles()
     1
 endfunction
 nnoremap <leader>o :call RecentFiles()<CR>
+
+" diff the current file with the last committed version in a new tab page
+function! GitDiff()
+    tabedit %
+    vnew | setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+    silent! read !git show HEAD:'#'
+    0d_
+    diffthis
+    wincmd p
+    diffthis
+endfunction
+command! GitDiff call GitDiff()
 
 
 " ---- Plugin-specific settings ------------------------------------------------
