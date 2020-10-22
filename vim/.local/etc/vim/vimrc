@@ -41,8 +41,8 @@ set lazyredraw
 set listchars=tab:>-,trail:-,eol:¬
 set number
 set relativenumber
-set noshowmode
 set scrolloff=5
+set showtabline=0
 set splitbelow
 set splitright
 
