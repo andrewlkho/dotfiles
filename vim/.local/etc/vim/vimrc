@@ -246,7 +246,7 @@ nnoremap <leader>o :call RecentFiles()<CR>
 function! GitDiff()
     tabedit %
     vnew | setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-    silent! read !git show HEAD:'#'
+    silent! read !git show HEAD:'./#'
     0d_
     diffthis
     wincmd p
