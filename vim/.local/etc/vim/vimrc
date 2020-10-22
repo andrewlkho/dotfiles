@@ -260,18 +260,6 @@ command! GitDiff call GitDiff()
 " vim-dirvish
 let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
 
-" vim-gitgutter: run on save (see also .vim/after/plugin/gitgutter.vim) and
-" change default symbol (hat tip: https://statico.github.io/vim3.html)
-autocmd BufWritePost * GitGutter
-let g:gitgutter_sign_added = '∙'
-let g:gitgutter_sign_modified = '∙'
-let g:gitgutter_sign_removed = '∙'
-let g:gitgutter_sign_modified_removed = '∙'
-let g:gitgutter_map_keys = 0
-if v:version < 800
-    let g:gitgutter_async=0
-endif
-
 " black
 let g:black_virtualenv = $XDG_CACHE_HOME . "/vim/black"
 
