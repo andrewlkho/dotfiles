@@ -7,7 +7,6 @@ set runtimepath+=$XDG_CONFIG_HOME/vim/after
 
 call plug#begin($XDG_CONFIG_HOME . "/vim/bundle")
 Plug 'arcticicestudio/nord-vim'
-Plug 'pbrisbin/vim-colors-off'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'

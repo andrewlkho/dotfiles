@@ -1,13 +1,8 @@
-colorscheme off
-setlocal background=light
-syntax off
-setlocal cursorlineopt=number
-highlight CursorLineNr ctermfg=8 ctermbg=231 guifg=#424242 guibg=#FFFFFF
-highlight LineNr ctermfg=253 guifg=#DADADA
-
 setlocal textwidth=100
 
 " Mute the user interface
+syntax off
+setlocal cursorlineopt=number
 setlocal norelativenumber
 setlocal showtabline=0
 setlocal laststatus=0
