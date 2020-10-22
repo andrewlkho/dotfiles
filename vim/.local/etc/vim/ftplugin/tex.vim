@@ -5,19 +5,7 @@ setlocal cursorlineopt=number
 highlight CursorLineNr ctermfg=8 ctermbg=231 guifg=#424242 guibg=#FFFFFF
 highlight LineNr ctermfg=253 guifg=#DADADA
 
-" Soft wrap at window width or 100 (includes gutter etc), whichever is greater
-setlocal wrap
-setlocal linebreak
-setlocal display+=lastline
-function! SoftWrap()
-    if (&columns > 100)
-        setlocal columns=100
-    endif
-endfunction
-augroup tex
-    autocmd! VimResized,BufEnter <buffer>
-    autocmd VimResized,BufEnter <buffer> call SoftWrap()
-augroup END
+setlocal textwidth=100
 
 " Mute the user interface
 setlocal norelativenumber
