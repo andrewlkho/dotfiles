@@ -3,7 +3,6 @@ setlocal textwidth=100
 " Mute the user interface
 syntax off
 setlocal cursorlineopt=number
-setlocal norelativenumber
 setlocal showtabline=0
 setlocal laststatus=0
 
