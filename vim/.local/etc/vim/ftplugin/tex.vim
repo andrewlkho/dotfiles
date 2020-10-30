@@ -9,6 +9,9 @@ setlocal laststatus=0
 nnoremap <buffer> j gj
 nnoremap <buffer> k gk
 
+" shortcut to making environments: type itemize then press <C-B>
+inoremap <buffer> <C-B> <Esc>yypk$<C-V>jA}<Esc>^i\begin{<Esc>j^i\end{<Esc>O
+
 nnoremap <buffer> <leader>ll :make<CR>
 nnoremap <buffer> <leader>lc :!latexmk -c %<CR>
 nnoremap <buffer> <leader>lw :!texcount %<CR>
