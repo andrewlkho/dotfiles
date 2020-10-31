@@ -62,7 +62,6 @@ set tabstop=4
 
 " searching
 set incsearch
-set hlsearch
 set ignorecase
 set smartcase
 
@@ -218,7 +217,7 @@ nnoremap ]Q :clast<CR>
 nnoremap <C-T> :ls<CR>:buffer<space>
 nnoremap <leader>p :setlocal paste! paste?<CR>
 nnoremap <leader>i :setlocal list! list?<CR>
-nnoremap <leader>q :nohlsearch<CR>
+nnoremap <leader>q :setlocal hlsearch! hlsearch?<CR>
 nnoremap <leader>m :silent make! \| silent redraw!<CR>
 
 inoremap <C-Z> <C-\><C-O>:stop<CR>
