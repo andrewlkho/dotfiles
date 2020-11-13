@@ -53,7 +53,7 @@ window:
 
   # When true, alacritty starts maximized.
   #start_maximized: false
-  startup_mode: Fullscreen
+  startup_mode: Windowed
 
   # Allow terminal applications to change Alacritty's window title.
   dynamic_title: true
