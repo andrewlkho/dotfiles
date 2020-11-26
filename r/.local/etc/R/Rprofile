@@ -1,6 +1,9 @@
 # Stop R from calling XQuartz to display menus
 options("menu.graphics" = FALSE)
 
+# Default CRAN mirror
+options("repos" = c(CRAN = "https://cran.ma.imperial.ac.uk/"))
+
 # View a dataframe in visidata
 vd <- function(d) {
   filename <- tempfile(fileext = ".csv")
