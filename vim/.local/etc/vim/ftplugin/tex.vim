@@ -60,5 +60,3 @@ setlocal errorformat+=%-G%.%#
 
 nnoremap <buffer> ,doc :-1read $XDG_CONFIG_HOME/vim/snippets/doc.tex<CR>Gdd2k
 nnoremap <buffer> ,letter :-1read $XDG_CONFIG_HOME/vim/snippets/letter.tex<CR>Gdd14k:put =strftime('%A %e %B %Y')<CR>V=gg/REPLACEME<CR>
-
-imap <buffer> <C-F> <Plug>FZotF
