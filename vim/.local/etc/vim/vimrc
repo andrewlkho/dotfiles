@@ -273,6 +273,10 @@ command! GitDiff call GitDiff()
 " requires fzf and fzotf
 imap <buffer> <C-F> <Plug>FZotF
 
+" Zettelkasten: autoload/local.vim
+command! ZettelNew call local#ZettelNew()
+command! -nargs=* ZettelGrep call local#ZettelGrep("<args>")
+
 
 " ---- Plugin-specific settings ------------------------------------------------
 
