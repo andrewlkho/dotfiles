@@ -19,10 +19,10 @@ function! local#ZettelNew()
 endfunction
 
 function! local#ZettelQfFunc(info)
-    let items = getqflist({'id' : a:info.id, 'items' : 1}).items
+    let qfl = getqflist({"id" : a:info.id, "items" : 1}).items
     let l = []
-    for idx in range(a:info.start_idx - 1, a:info.end_idx - 1)
-        call add(l, fnamemodify(bufname(items[idx].bufnr), ':t:r') . '|' . items[idx].lnum . '|' . items[idx].text)
+    for i in range(a:info.start_idx - 1, a:info.end_idx - 1)
+        call add(l, bufname(qfl[i].bufnr)->fnamemodify(":t:r") . '|' . qfl[i].lnum . '|' . qfl[i].text)
     endfor
     return l
 endfunction
