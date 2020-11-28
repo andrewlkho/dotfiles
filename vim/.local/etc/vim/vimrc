@@ -244,20 +244,8 @@ nnoremap <C-T> :call Buffers()<CR>:buffer<space>
 " requires vim-commentary
 vmap <leader>\ gc
 
-" requires vim-dirvish
-function! RecentFiles()
-    enew
-    put =execute('oldfiles')
-    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-    set filetype=dirvish
-    g/^$/d
-    call setline(1, map(getline(1,'$'), {k,v -> substitute(v, '^[0-9]*: ', '', '')}))
-    call setline(1, map(getline(1,'$'), {k,v -> substitute(v, '^\~', expand('~'), '')}))
-    nmap <buffer> gq :bdelete<CR>
-    sort
-    1
-endfunction
-nnoremap <leader>o :call RecentFiles()<CR>
+" Customised version of :browse oldfiles
+command! Oldfiles call local#Oldfiles()
 
 " diff the current file with the last committed version in a new tab page
 function! GitDiff()
