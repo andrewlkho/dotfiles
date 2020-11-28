@@ -44,7 +44,7 @@ function! local#OldfilesQfFunc(info)
     let qfl = getqflist({"id": a:info.id, "items": 1}).items
     let l = []
     for i in range(a:info.start_idx - 1, a:info.end_idx - 1)
-        call add(l, bufname(qfl[i].bufnr)->fnamemodify(":p") . "|" . qfl[i].lnum . "|" . qfl[i].text)
+        call add(l, bufname(qfl[i].bufnr)->fnamemodify(":p:~") . "|" . qfl[i].lnum . "|" . qfl[i].text)
     endfor
     return l
 endfunction
