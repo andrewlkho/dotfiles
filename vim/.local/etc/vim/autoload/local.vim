@@ -19,25 +19,19 @@ function! local#ZettelNew()
 endfunction
 
 function! local#ZettelQfFunc(info)
-    let qfl = getqflist({"id" : a:info.id, "items" : 1}).items
+    let qfl = getqflist({"id": a:info.id, "items": 1}).items
     let l = []
     for i in range(a:info.start_idx - 1, a:info.end_idx - 1)
-        call add(l, bufname(qfl[i].bufnr)->fnamemodify(":t:r") . '|' . qfl[i].lnum . '|' . qfl[i].text)
+        call add(l, bufname(qfl[i].bufnr)->fnamemodify(":t:r") . "|" . qfl[i].lnum . "|" . qfl[i].text)
     endfor
     return l
 endfunction
 
 function! local#ZettelGrep(pattern)
-    let l:oldgrepprg = &grepprg
-    let l:oldgrepformat = &grepformat
-    let &grepprg="find ~/Dropbox/Notes/zettel -type f -exec grep -qsi '" . a:pattern . "' '{}' \\; -exec awk 'BEGIN{ORS=\"\"; printf \"\\%s:0:\", ARGV[1]} /^title:/{sub(\"^title: *\", \"\"); print} /^tags:/{sub(\"^tags: *\", \"    \"); print} END{print \"\\n\"}' '{}' \\;"
-    let &grepformat="%f:%l:%m"
-    set quickfixtextfunc=local#ZettelQfFunc
-    silent grep! | silent redraw!
+    let lines = systemlist("find ~/Dropbox/Notes/zettel -type f -exec grep -qsi '" . a:pattern . "' '{}' \\; -exec awk 'BEGIN{ORS=\"\"; printf \"\\%s:0:\", ARGV[1]} /^title:/{sub(\"^title: *\", \"\"); print} /^tags:/{sub(\"^tags: *\", \" \"); print} END{print \"\\n\"}' '{}' \\;")
+    call reverse(sort(lines))
+    call setqflist([], ' ', {"efm": "%f:%l:%m", "lines": lines, "quickfixtextfunc": "local#ZettelQfFunc"})
     copen
-    let &grepprg=l:oldgrepprg
-    let &grepformat=l:oldgrepformat
-    set quickfixtextfunc=
 endfunction
 
 function! local#OldfilesQfFunc(info)
