@@ -75,6 +75,7 @@ shell:
 key_bindings:
   - { key: LBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["-L", "portal", "previous-window"] }}
   - { key: RBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["-L", "portal", "next-window"] }}
+  - { key: Key3, mods: Alt, chars: "#" }
 
 
 # vim: expandtab:softtabstop=2:shiftwidth=2
