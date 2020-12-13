@@ -1,0 +1,6 @@
+export ENV="${HOME}/.kshrc"
+
+# .profile is only parsed for login shells
+if [[ -n "${SSH_TTY}" && ("$(hostname -s)" == "data" || "$(hostname -s)" == "archive") ]]; then
+    tmux -f "${HOME}/.local/etc/tmux/tmux.conf" new-session -A -s andrewlkho && exit
+fi

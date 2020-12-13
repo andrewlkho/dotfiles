@@ -1,0 +1,112 @@
+export XDG_CONFIG_HOME="${HOME}/.local/etc"
+export XDG_CACHE_HOME="${HOME}/.local/cache"
+export XDG_DATA_HOME="${HOME}/.local/share"
+
+# general settings
+export EDITOR="vim"
+export LANG="$(locale -a | grep -i 'en_gb\.utf-*8' | head -n 1)"
+export LESS="--ignore-case"
+export PAGER="less"
+export VISUAL="vim"
+
+# ksh settings
+HISTCONTROL="ignorespace"
+HISTFILE="${XDG_DATA_HOME}/ksh/history"
+HISTSIZE=10000
+HISTEDIT="${EDITOR}"
+FCEDIT="${EDITOR}"
+set -o vi
+
+# PATH
+for TESTPATH in \
+    "${HOME}/.local/bin" \
+    "${HOME}/bin" \
+    /Library/TeX/texbin \
+    /usr/local/{,s}bin \
+    /usr/{,s}bin \
+    /{,s}bin
+do
+    [ -d "${TESTPATH}" ] && NEWPATH="${NEWPATH:+${NEWPATH}:}${TESTPATH}"
+done
+# Add any entries that were already in PATH but aren't in NEWPATH
+PATH="$(print "${PATH}:${NEWPATH}:${NEWPATH}" | tr ':' '\n' | sort | uniq -u | tr '\n' ':')${NEWPATH}"
+PATH="${PATH#:}"
+unset TESTPATH NEWPATH
+export PATH
+
+
+# Prompt #######################################################################
+
+function _prompt_jobs
+{
+    if [ $( jobs | wc -l ) -gt 0 ]; then
+        print -n '\033[38;2;235;203;139m[!!]\033[0m '
+    fi
+}
+
+function _prompt_pwd
+{
+	# OpenBSD ksh doesn't do ${PWD/pattern/sub}
+	if [ "${PWD#${HOME}}" != "${PWD}" ]; then
+        PWDSHORT="~${PWD#${HOME}}"
+    else
+        PWDSHORT="${PWD}"
+    fi
+    printf '\033[38;2;129;161;193m%s\033[0m' "${PWDSHORT}"
+}
+
+function _prompt_venv
+{
+    printf '\033[38;2;76;86;106m%s\033[0m' "${VIRTUAL_ENV:+(venv) }"
+}
+
+function _prompt_arrow
+{
+    if [ $? -eq 0 ]; then
+        print '\033[38;2;163;190;140m❯\033[0m'
+    else
+        print '\033[38;2;191;97;106m❯\033[0m'
+    fi
+}
+
+PS1='
+$(_prompt_jobs)$(_prompt_pwd)
+$(_prompt_venv)$(_prompt_arrow) '
+PS2="$(printf '\033[38;2;76;86;106m... ❯\033[0m') "
+
+
+# Aliases ######################################################################
+
+alias ls="ls -lp"
+if [[ $(uname -s) == 'Darwin' ]]; then
+    alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
+    alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+fi
+
+
+# Package-specific #############################################################
+
+export VIMINIT="source ${XDG_CONFIG_HOME}/vim/vimrc"
+
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+if [ -n "$(whence fzf)" ]; then
+    export FZF_DEFAULT_COMMAND="find ${HOME}/Documents -name '.DS_Store' -prune -o -print"
+    export FZF_DEFAULT_OPTS="--layout=reverse --info=inline --marker='∙' --height=50%
+    --color=fg:#4C566A,bg:#2E3440,fg+:#D8DEE9,bg+:#2E3440,hl:#81A1C1,hl+:#81A1C1
+    --color=gutter:#2E3440,info:#B48DAC,prompt:#A3BE8C,pointer:#B48DAC
+    --color=marker:#A3BE8C --no-bold"
+fi
+
+if [ -n "$(whence brew)" ]; then
+    export HOMEBREW_NO_ANALYTICS=1
+    export HOMEBREW_NO_INSECURE_REDIRECT=1
+fi
+
+if [ -n "$(whence R)" ]; then
+    export R_PROFILE_USER="${XDG_CONFIG_HOME}/R/Rprofile"
+fi
+
+if [ -n "$(whence rcup)" ]; then
+    export RCRC="${XDG_CONFIG_HOME}/rcm/rcrc"
+fi

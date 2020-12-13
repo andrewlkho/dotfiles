@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ -L "${HOME}/.kshrc" ]; then
+    mkdir -p "${XDG_DATA_HOME}/ksh"
+fi
