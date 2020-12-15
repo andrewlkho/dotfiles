@@ -1,2 +1,0 @@
-text/html; cp %s $TMPDIR/mutt.html && open -a firefox $TMPDIR/mutt.html
-text/html; w3m -I %{charset} -dump %s; copiousoutput; nametemplate=%s.html

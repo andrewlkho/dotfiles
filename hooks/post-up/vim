@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ -L "${XDG_CONFIG_HOME}/vim/vimrc" ]; then
+    mkdir -p "${XDG_CACHE_HOME}/vim/{swap,undo,backup}"
+fi
