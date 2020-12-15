@@ -25,6 +25,11 @@ Match originalhost data exec "/System/Library/PrivateFrameworks/Apple80211.frame
 
 Host data
     HostName data.andrewho.co.uk
+    ForwardAgent yes
+
+Host archive
+    HostName archive.andrewho.co.uk
+    ForwardAgent yes
 
 Host ocelot
     HostName ocelot.mythic-beasts.com
