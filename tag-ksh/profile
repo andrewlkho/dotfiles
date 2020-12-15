@@ -11,5 +11,5 @@ if [[ -n "${SSH_TTY}" && ("$(hostname -s)" == "data" || "$(hostname -s)" == "arc
 		export SSH_AUTH_SOCK="${HOME}/.local/run/ssh/ssh-agent.sock"
     fi
 
-    tmux -f "${HOME}/.local/etc/tmux/tmux.conf" new-session -A -s andrewlkho && exit
+    tmux -u -f "${HOME}/.local/etc/tmux/tmux.conf" new-session -A -s andrewlkho && exit
 fi
