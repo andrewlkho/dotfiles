@@ -8,5 +8,7 @@ if [ -L "${XDG_CONFIG_HOME}/vim/vimrc" ]; then
     if [ -d "${XDG_CONFIG_HOME}/vim" -a ! -d "${XDG_CONFIG_HOME}/vim/bundle" ]; then
         echo "Installing vim plugins..."
         vim -E -s -u "${XDG_CONFIG_HOME}/vim/vimrc" +PlugInstall +qall
+        # Trigger black install
+        vim -E -s -u "${XDG_CONFIG_HOME}/vim/vimrc" +qall
     fi
 fi
