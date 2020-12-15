@@ -7,11 +7,17 @@ setlocal foldmethod=indent
 setlocal foldnestmax=1
 setlocal foldlevel=99
 
-setlocal makeprg=flake8\ --max-line-length\ 88\ --extend-ignore=E203\ %:S
-setlocal errorformat=%f:%l:%c:\ %t%n\ %m
-augroup lint
+function! LintPython()
+    if executable("xflake8")
+        let l:lines = systemlist("flake8 --max-line-length 88 --extend-ignore=E203 " . expand("%:S"))
+    else
+        let l:lines = [expand("%"). ":0:0: W0 flake8 is not available"]
+    endif
+    call setloclist(0, [], "r", {"efm": "%f:%l:%c: %t%n %m", "lines": l:lines, "title": "linter (flake8)"})
+endfunction
+augroup LintPython
     autocmd! * <buffer>
-    autocmd BufWritePost <buffer> silent lmake! | silent redraw!
+    autocmd BufWritePost <buffer> call LintPython()
 augroup END
 
 nnoremap <buffer> <leader>gq :Black<CR>

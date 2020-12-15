@@ -1,6 +1,6 @@
-function! LintBash()
+function! LintSh()
     if executable("shellcheck")
-        let l:lines = systemlist("shellcheck -f gcc -s bash -S warning " . expand("%:S"))
+        let l:lines = systemlist("shellcheck -f gcc -s sh -S warning " . expand("%:S"))
     else
         let l:lines = [expand("%") . ":0:0: Warning: shellcheck is not available"]
     endif
@@ -11,7 +11,7 @@ function! LintBash()
                 \"
     call setloclist(0, [], "r", {"efm": l:efm, "lines": l:lines, "title": "linter (shellcheck)"})
 endfunction
-augroup LintBash
+augroup LintSh
     autocmd! * <buffer>
-    autocmd BufWritePost <buffer> call LintBash()
+    autocmd BufWritePost <buffer> call LintSh()
 augroup END

@@ -10,5 +10,12 @@ if [ -L "${XDG_CONFIG_HOME}/vim/vimrc" ]; then
         vim -E -s -u "${XDG_CONFIG_HOME}/vim/vimrc" +PlugInstall +qall
         # Trigger black install
         vim -E -s -u "${XDG_CONFIG_HOME}/vim/vimrc" +qall
+
+        if [ ! -n "$(type flake8 2>/dev/null)" ]; then
+            echo "Reminder: install flake8"
+        fi
+        if [ ! -n "$(type shellcheck 2>/dev/null)" ]; then
+            echo "Reminder: install shellcheck"
+        fi
     fi
 fi

@@ -92,6 +92,9 @@ set spelllang=en_gb
 " blank *.tex files are still latex, not plaintex
 let g:tex_flavor = "latex"
 
+" kornshell/posix by default
+let g:is_posix = 1
+
 
 " ---- Statusline --------------------------------------------------------------
 
@@ -145,6 +148,9 @@ function! LinterStatus()
         let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && (v.type == 'E' || v.type == 'F')}))
         let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'W'}))
     elseif &filetype == 'bash'
+        let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'e'}))
+        let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'w'}))
+    elseif &filetype == 'sh'
         let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'e'}))
         let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'w'}))
     else
