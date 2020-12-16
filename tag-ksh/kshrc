@@ -58,7 +58,7 @@ function _prompt_pwd
 function _prompt_ssh
 {
     if [ -n "${SSH_TTY}" ]; then
-        printf '\033[38;2;136;192;208m%s\033[0m' " ${USER}@$(hostname -s)"
+        printf '\033[38;2;136;192;208m%s\033[0m' "${USER}@$(hostname -s) "
     fi
 }
 
@@ -77,7 +77,7 @@ function _prompt_arrow
 }
 
 PS1='
-$(_prompt_jobs)$(_prompt_pwd)$(_prompt_ssh)
+$(_prompt_jobs)$(_prompt_ssh)$(_prompt_pwd)
 $(_prompt_venv)$(_prompt_arrow) '
 PS2="$(printf '\033[38;2;76;86;106m... ❯\033[0m') "
 
