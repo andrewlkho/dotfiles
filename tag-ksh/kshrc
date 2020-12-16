@@ -91,6 +91,22 @@ if [[ $(uname -s) == 'Darwin' ]]; then
 fi
 
 
+# Functions ####################################################################
+
+function pwgen
+{
+    if [ ! -d "${XDG_CACHE_HOME}/pwgen" ]; then
+        mkdir -p "${XDG_CACHE_HOME}"
+        git clone https://github.com/andrewlkho/pwgen-xkcd.git "${XDG_CACHE_HOME}/pwgen"
+        curl --silent \
+            --output "${XDG_CACHE_HOME}/pwgen/eff_large_wordlist.txt" \
+            https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt
+    fi
+    "${XDG_CACHE_HOME}/pwgen/pwgen.py" $* \
+        "${XDG_CACHE_HOME}/pwgen/eff_large_wordlist.txt"
+}
+
+
 # Package-specific #############################################################
 
 export VIMINIT="source ${XDG_CONFIG_HOME}/vim/vimrc"
