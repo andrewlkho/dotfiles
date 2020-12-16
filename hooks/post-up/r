@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -L "${XDG_CONFIG_HOME}/R/Rprofile" ]; then
+    echo "Installing some useful R packages: lintr, styler, tidyverse"
+    Rscript --no-restore --no-save \
+        -e 'install.packages(c("lintr", "styler", "tidyverse"))'
+fi
