@@ -153,6 +153,9 @@ function! LinterStatus()
     elseif &filetype == 'sh'
         let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'e'}))
         let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'w'}))
+    elseif &filetype == 'r'
+        let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'E'}))
+        let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'W'}))
     else
         return ''
     endif
