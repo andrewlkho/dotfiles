@@ -87,7 +87,6 @@ PS2="$(printf '\033[38;2;76;86;106m... ❯\033[0m') "
 alias ls="ls -lp"
 if [[ $(uname -s) == 'Darwin' ]]; then
     alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
-    alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
 fi
 
 
@@ -105,6 +104,45 @@ function pwgen
     "${XDG_CACHE_HOME}/pwgen/pwgen.py" $* \
         "${XDG_CACHE_HOME}/pwgen/eff_large_wordlist.txt"
 }
+
+function mergepdf
+{
+    # This is a convenience function for merging scanned PDFs
+    if [ $# -ne 2 ]; then
+        echo "Usage: mergepdf output.pdf max-index" >&2
+        return 1
+    fi
+
+    if [ ! -n "$(whence trash)" ]; then
+        echo "Error: trash not installed (brew install trash)" >&2
+        return 1
+    fi
+
+    if [ -a "${1}" ]; then
+        echo "Error: ${1} already exists" >&2
+        return 1
+    fi
+
+    for i in $(seq 1 ${2}); do
+        if [ ! -a "${HOME}/Desktop/${i}.pdf" ]; then
+            echo "Error: ${HOME}/Desktop/${i}.pdf does not exist" >&2
+            return 1
+        fi
+    done
+
+    echo "Combining PDFs to ${1}:"
+    echo "$(seq -f "    - ${HOME}/Desktop/%g.pdf" 1 ${2})"
+    "/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py" \
+        -o "${1}" \
+        $(seq -f "${HOME}/Desktop/%g.pdf" -s " " 1 ${2})
+    echo "Moving PDFs to trash..."
+    for i in $(seq 1 ${2}); do
+        trash "${HOME}/Desktop/${i}.pdf"
+    done
+}
+if [ "$(uname -s)" != "Darwin" ]; then
+    unset -f mergepdf
+fi
 
 
 # Package-specific #############################################################
