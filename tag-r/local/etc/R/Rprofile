@@ -11,3 +11,8 @@ vd <- function(d) {
   system(paste0("vd ", filename))
   invisible(file.remove(filename))
 }
+
+# Remove all variables
+cls <- function() {
+  rm(list = setdiff(ls(.GlobalEnv), lsf.str(.GlobalEnv)), pos = .GlobalEnv)
+}
