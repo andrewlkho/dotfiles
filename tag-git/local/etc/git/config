@@ -32,18 +32,18 @@
     ui = true
 
 [color "diff-highlight"]
-    oldNormal = "#FB4932"
-    oldHighlight = "#282828" "#CC241D"
-    newNormal = "#B8BB26"
-    newHighlight = "#282828" "#98971A"
+    oldNormal = "#BF616A" nobold
+    oldHighlight = "#4C566A" "#BF616A"
+    newNormal = "#A3BE8C" nobold
+    newHighlight = "#4C566A" "#A3BE8C"
 
 [color "diff"]
-    meta = "#FABD2F"
-    frag = "#FABD2F"
-    commit = "#FABD2F"
-    old = "#FB4934"
-    new = "#B8BB26"
-    whitespace = "#CC241D" reverse
+    meta = "#EBCB8B"
+    frag = "#EBCB8B"
+    commit = "#EBCB8B"
+    old = "#BF616A"
+    new = "#A3BE8C"
+    whitespace = "#BF616A" reverse
 
 [diff-so-fancy]
     markEmptyLines = false
