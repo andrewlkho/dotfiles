@@ -13,8 +13,8 @@ export VISUAL="vim"
 HISTCONTROL="ignorespace"
 HISTFILE="${XDG_DATA_HOME}/ksh/history"
 HISTSIZE=10000
-HISTEDIT="${EDITOR}"
-FCEDIT="${EDITOR}"
+HISTEDIT='vim -c "set filetype=sh" -c "let b:is_kornshell=1"'
+FCEDIT="${HISTEDIT}"
 set -o vi
 
 # PATH
