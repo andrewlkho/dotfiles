@@ -34,6 +34,15 @@ function! local#ZettelGrep(pattern)
     copen
 endfunction
 
+function! local#ZettelIndex()
+    enew
+    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+    setlocal path=$HOME/Dropbox/Notes/zettel suffixesadd=.md
+    file [ZettelIndex]
+    let l:output = systemlist('find /Users/andrewlkho/Dropbox/Notes/zettel -type f -exec awk ''BEGIN{sprintf("basename -s .md %s", ARGV[1]) | getline fn} /^title:/{sub("^title: *", ""); title=$0} /^tags:/{sub("^tags: *", ""); tags=$0} END{printf "%s|%s|%s\n", fn, title, tags}'' "{}" \; | sort -r | column -s "|" -t')
+    call setline(1, l:output)
+endfunction
+
 function! local#OldfilesQfFunc(info)
     let qfl = getqflist({"id": a:info.id, "items": 1}).items
     let l = []

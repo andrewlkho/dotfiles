@@ -274,6 +274,7 @@ imap <buffer> <C-F> <Plug>FZotF
 " Zettelkasten: autoload/local.vim
 command! ZettelNew call local#ZettelNew()
 command! -nargs=* ZettelGrep call local#ZettelGrep("<args>")
+command! ZettelIndex call local#ZettelIndex()
 
 
 " ---- Plugin-specific settings ------------------------------------------------
