@@ -12,17 +12,22 @@ nnoremap <buffer> k gk
 " shortcut to making environments: type itemize then press <C-B>
 inoremap <buffer> <C-B> <Esc>yypk$<C-V>jA}<Esc>^i\begin{<Esc>j^i\end{<Esc>O
 
-" run latexmk continuously in a terminal open in another tab
+" run latexmk without clobbering the screen
 function! Latexmk()
-    tab terminal ++close latexmk -pvc %
-    tabprevious
+    echo "Compiling with latexmk... "
+    let l:lines = systemlist("latexmk " . expand("%:S"))
+    if v:shell_error
+        echon "failed!"
+    else
+        echon "success!"
+    endif
+    call setqflist([], " ", {"efm": &errorformat, "lines": l:lines})
 endfunction
-command! Latexmk call Latexmk()
-
-nnoremap <buffer> <leader>ll :make<CR>
+nnoremap <buffer> <leader>ll :call Latexmk()<CR>
 nnoremap <buffer> <leader>lc :!latexmk -c %<CR>
 nnoremap <buffer> <leader>lw :!texcount %<CR>
 nnoremap <buffer> <leader>lo :execute "cgetfile" . expand("%:p:r") . ".log"<CR>:copen<CR>
+
 setlocal makeprg=latexmk\ %:S
 " https://github.com/lervag/vimtex/blob/98327bfe0e599bf580e61cfaa6216c8d4177b23d/compiler/latexmk.vim
 setlocal errorformat=%-P**%f
