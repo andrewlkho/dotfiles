@@ -89,8 +89,9 @@ set hidden
 set spellfile=~/Documents/unison/spellfile.utf-8.add
 set spelllang=en_gb
 
-" blank *.tex files are still latex, not plaintex
+" latex
 let g:tex_flavor = "latex"
+let g:tex_fold_enabled = 1
 
 " kornshell/posix by default
 let g:is_posix = 1

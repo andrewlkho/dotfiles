@@ -1,10 +1,17 @@
 setlocal textwidth=100
 
 " Mute the user interface
-syntax off
 setlocal cursorlineopt=number
 setlocal showtabline=0
 setlocal laststatus=0
+setlocal nonumber
+setlocal norelativenumber
+
+setlocal foldmethod=syntax
+augroup StartUnfolded
+    autocmd! * <buffer>
+    autocmd BufEnter <buffer> normal! zR
+augroup END
 
 nnoremap <buffer> j gj
 nnoremap <buffer> k gk
@@ -12,6 +19,7 @@ nnoremap <buffer> k gk
 " shortcut to making environments: type itemize then press <C-B>
 inoremap <buffer> <C-B> <Esc>yypk$<C-V>jA}<Esc>^i\begin{<Esc>j^i\end{<Esc>O
 
+setlocal spell
 " add biblatex citekeys to internal (spell) wordlist
 function! SpellAddCitekeys()
     let l:bibfiles = getline(1, "$")
