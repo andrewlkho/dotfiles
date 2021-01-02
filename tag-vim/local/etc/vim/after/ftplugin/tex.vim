@@ -12,6 +12,29 @@ nnoremap <buffer> k gk
 " shortcut to making environments: type itemize then press <C-B>
 inoremap <buffer> <C-B> <Esc>yypk$<C-V>jA}<Esc>^i\begin{<Esc>j^i\end{<Esc>O
 
+" add biblatex citekeys to internal (spell) wordlist
+function! SpellAddCitekeys()
+    let l:bibfiles = getline(1, "$")
+    call filter(l:bibfiles, {_, v -> match(v, "addbibresource") > -1})
+    call map(l:bibfiles, {_, v -> matchstr(v, "addbibresource{.*}")[15:-2]})
+    for l:b in l:bibfiles
+        if exists("l:allbibs")
+            call extend(l:allbibs, readfile(l:b))
+        else
+            let l:allbibs = readfile(l:b)
+        endif
+    endfor
+    call filter(l:allbibs, {_, v -> match(v, "^@") > -1})
+    call map(l:allbibs, {_, v -> matchstr(v, "{.*,")[1:-2]})
+    for l:citekey in l:allbibs
+        silent execute ":spellgood! " . l:citekey
+    endfor
+endfunction
+augroup SpellAddCitekeys
+    autocmd! * <buffer>
+    autocmd BufEnter,BufWritePost <buffer> call SpellAddCitekeys()
+augroup END
+
 " run latexmk without clobbering the screen
 function! Latexmk()
     echo "Compiling with latexmk... "
