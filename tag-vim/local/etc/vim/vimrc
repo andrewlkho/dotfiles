@@ -144,36 +144,6 @@ highlight StatusLineGroup1Red ctermfg=1 guifg=#bf616a ctermbg=0 guibg=#3B4252
 highlight StatusLineGroup1Yellow ctermfg=3 guifg=#EBCB8B ctermbg=0 guibg=#3B4252
 highlight link StatusLineNC StatusLineGroup0
 
-function! LinterStatus()
-    if &filetype == 'python'
-        let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && (v.type == 'E' || v.type == 'F')}))
-        let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'W'}))
-    elseif &filetype == 'bash'
-        let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'e'}))
-        let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'w'}))
-    elseif &filetype == 'sh'
-        let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'e'}))
-        let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'w'}))
-    elseif &filetype == 'r'
-        let l:errors = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'E'}))
-        let l:warnings = len(filter(getloclist(0), {k, v -> v.valid == 1 && v.type == 'W'}))
-    else
-        return ''
-    endif
-
-    let l:output = ''
-    if l:errors > 0
-        let l:output = l:output . '✗' . l:errors . ' '
-    endif
-    if l:warnings > 0
-        let l:output = l:output . '▲' . l:warnings . ' '
-    endif
-    if len(l:output) > 0
-        let l:output = ' ' . l:output
-    endif
-    return l:output
-endfunction
-
 function! SetStatusLineActive()
     setlocal statusline=
     setlocal statusline+=%#StatusLineNormal#%{(g:mode_colour[mode()]=='normal')?'\ \ '.g:mode_map[mode()].'\ ':''}
@@ -190,7 +160,7 @@ function! SetStatusLineActive()
     setlocal statusline+=%{&fileformat}\ \|
     setlocal statusline+=\ %{&fileencoding?&fileencoding:&encoding}\ \|
     setlocal statusline+=\ %{&filetype!=''?&filetype:'-'}\ 
-    setlocal statusline+=%#StatusLineLint#%{LinterStatus()}
+    setlocal statusline+=%#StatusLineLint#%{local#LinterStatus()}
     setlocal statusline+=%#StatusLineGroup1#%4v:%-4l≡%4L\ 
 endfunction
 
@@ -204,6 +174,7 @@ endfunction
 
 augroup status
     autocmd!
+    autocmd BufWritePost * call local#LinterRun()
     autocmd VimEnter,BufEnter,WinEnter * call SetStatusLineActive()
     autocmd BufLeave,WinLeave * call SetStatusLineInactive()
 augroup END
