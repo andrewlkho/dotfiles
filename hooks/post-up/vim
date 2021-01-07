@@ -3,6 +3,7 @@
 if [ -L "${XDG_CONFIG_HOME}/vim/vimrc" ]; then
     mkdir -p "${XDG_CACHE_HOME}/vim/backup"
     mkdir -p "${XDG_CACHE_HOME}/vim/swap"
+    mkdir -p "${XDG_CACHE_HOME}/vim/tmp"
     mkdir -p "${XDG_CACHE_HOME}/vim/undo"
 
     if [ -d "${XDG_CONFIG_HOME}/vim" -a ! -d "${XDG_CONFIG_HOME}/vim/bundle" ]; then

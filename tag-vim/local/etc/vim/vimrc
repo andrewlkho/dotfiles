@@ -2,6 +2,15 @@ set runtimepath=$XDG_CONFIG_HOME/vim
 set runtimepath+=$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after
 set runtimepath+=$XDG_CONFIG_HOME/vim/after
 
+" vim generates temporary files using tempname() which is a file within a
+" directory within $TMPDIR.  The problem on macOS is that periodic(8) deletes
+" the subdirectory daily if it hasn't been used recently, so that creation of
+" the temporary file causes an error E484 (as its containing directory doesn't
+" exist).  This causes, for example, system() to fail if vim has been open but
+" idle for a while.  The cheap fix is to use a $TMPDIR that isn't cleaned
+" (needs to exist, so create in rcup hook).
+let $TMPDIR = $XDG_CACHE_HOME . "/vim/tmp"
+
 
 " ---- Load plugins ------------------------------------------------------------
 
