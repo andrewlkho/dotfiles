@@ -32,11 +32,13 @@ function! SpellAddCitekeys()
             let l:allbibs = readfile(l:b)
         endif
     endfor
-    call filter(l:allbibs, {_, v -> match(v, "^@") > -1})
-    call map(l:allbibs, {_, v -> matchstr(v, "{.*,")[1:-2]})
-    for l:citekey in l:allbibs
-        silent execute ":spellgood! " . l:citekey
-    endfor
+    if exists("l:allbibs")
+        call filter(l:allbibs, {_, v -> match(v, "^@") > -1})
+        call map(l:allbibs, {_, v -> matchstr(v, "{.*,")[1:-2]})
+        for l:citekey in l:allbibs
+            silent execute ":spellgood! " . l:citekey
+        endfor
+    endif
 endfunction
 augroup SpellAddCitekeys
     autocmd! * <buffer>
