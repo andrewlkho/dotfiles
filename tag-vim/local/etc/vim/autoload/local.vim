@@ -145,6 +145,19 @@ endfunction
 function! local#ListBuffers()
     let bufnrs = range(1, bufnr("$"))
     call filter(bufnrs, {_, v -> buflisted(v)})
+
+    " Work out how long the longest bufhead is to assist with alignment of
+    " buftail
+    for i in bufnrs
+        " + 1 is to account for slash added to the end of bufhead path later
+        let bufheadlen = bufname(i)->fnamemodify(":p:~")->pathshorten()->fnamemodify(":h")->len() + 1
+        if ! exists("maxheadlen")
+            let maxheadlen = bufheadlen
+        else
+            let maxheadlen = bufheadlen > maxheadlen ? bufheadlen : maxheadlen
+        endif
+    endfor
+
     for i in bufnrs
         let bufnum = printf("%*d", bufnr("$")->len(), i)
         let curtag = i == bufnr("%") ? "%" : i == bufnr("#") ? "#" : " "
@@ -153,9 +166,12 @@ function! local#ListBuffers()
                     \ "R" : getbufvar(i, "&modifiable", 1) == 0 ? 
                     \ "-" : " "
         let modifiedtag = getbufvar(i, "&modified", 0) ? "+" : " "
-        let bufname = bufname(i)->empty() ?
+        let bufhead = bufname(i)->empty() ?
+                    \ printf("%-*s", maxheadlen, " ") :
+                    \ printf("%-*s", maxheadlen, bufname(i)->fnamemodify(":p:~")->pathshorten()->fnamemodify(":h") . "/")
+        let buftail = bufname(i)->empty() ?
                     \ "[No Name]" :
-                    \ bufname(i)->fnamemodify(":p:~")->pathshorten()
-        echo bufnum . " " . curtag . activetag . modifiabletag . modifiedtag . " " . bufname
+                    \ bufname(i)->fnamemodify(":t")
+        echo bufnum . " " . curtag . activetag . modifiabletag . modifiedtag . " " . bufhead . "    ". buftail
     endfor
 endfunction
