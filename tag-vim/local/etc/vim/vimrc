@@ -212,24 +212,7 @@ nnoremap <leader>m :silent make! \| silent redraw!<CR>
 inoremap <C-Z> <C-\><C-O>:stop<CR>
 
 " customised buffer list
-function! Buffers()
-    let bufnrs = range(1, bufnr("$"))
-    call filter(bufnrs, {_, v -> buflisted(v)})
-    for i in bufnrs
-        let bufnum = printf("%*d", bufnr("$")->len(), i)
-        let curtag = i == bufnr("%") ? "%" : i == bufnr("#") ? "#" : " "
-        let activetag = win_findbuf(i)->empty() ? "h" : "a"
-        let modifiabletag = getbufvar(i, "&buftype") == "terminal" ?
-                    \ "R" : getbufvar(i, "&modifiable", 1) == 0 ? 
-                    \ "-" : " "
-        let modifiedtag = getbufvar(i, "&modified", 0) ? "+" : " "
-        let bufname = bufname(i)->empty() ?
-                    \ "[No Name]" :
-                    \ bufname(i)->fnamemodify(":p:~")->pathshorten()
-        echo bufnum . " " . curtag . activetag . modifiabletag . modifiedtag . " " . bufname
-    endfor
-endfunction
-nnoremap <C-T> :call Buffers()<CR>:buffer<space>
+nnoremap <C-T> :call local#ListBuffers()<CR>:buffer<space>
 
 " requires vim-commentary
 vmap <leader>\ gc

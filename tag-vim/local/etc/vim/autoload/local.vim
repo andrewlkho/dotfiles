@@ -141,3 +141,21 @@ function! local#LinterStatus()
 
     return l:output
 endfunction
+
+function! local#ListBuffers()
+    let bufnrs = range(1, bufnr("$"))
+    call filter(bufnrs, {_, v -> buflisted(v)})
+    for i in bufnrs
+        let bufnum = printf("%*d", bufnr("$")->len(), i)
+        let curtag = i == bufnr("%") ? "%" : i == bufnr("#") ? "#" : " "
+        let activetag = win_findbuf(i)->empty() ? "h" : "a"
+        let modifiabletag = getbufvar(i, "&buftype") == "terminal" ?
+                    \ "R" : getbufvar(i, "&modifiable", 1) == 0 ? 
+                    \ "-" : " "
+        let modifiedtag = getbufvar(i, "&modified", 0) ? "+" : " "
+        let bufname = bufname(i)->empty() ?
+                    \ "[No Name]" :
+                    \ bufname(i)->fnamemodify(":p:~")->pathshorten()
+        echo bufnum . " " . curtag . activetag . modifiabletag . modifiedtag . " " . bufname
+    endfor
+endfunction
