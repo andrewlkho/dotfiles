@@ -216,7 +216,7 @@ function! Buffers()
     let bufnrs = range(1, bufnr("$"))
     call filter(bufnrs, {_, v -> buflisted(v)})
     for i in bufnrs
-        let bufnum = printf("%*d", bufnr("%")->len(), i)
+        let bufnum = printf("%*d", bufnr("$")->len(), i)
         let curtag = i == bufnr("%") ? "%" : i == bufnr("#") ? "#" : " "
         let activetag = win_findbuf(i)->empty() ? "h" : "a"
         let modifiabletag = getbufvar(i, "&buftype") == "terminal" ?
