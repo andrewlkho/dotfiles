@@ -220,18 +220,6 @@ vmap <leader>\ gc
 " Customised version of :browse oldfiles
 command! Oldfiles call local#Oldfiles()
 
-" diff the current file with the last committed version in a new tab page
-function! GitDiff()
-    tabedit %
-    vnew | setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-    silent! read !git show HEAD:'./#'
-    0d_
-    diffthis
-    wincmd p
-    diffthis
-endfunction
-command! GitDiff call GitDiff()
-
 " requires fzf and fzotf
 imap <buffer> <C-F> <Plug>FZotF
 
