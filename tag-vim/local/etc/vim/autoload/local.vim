@@ -43,26 +43,14 @@ function! local#ZettelIndex()
     call setline(1, l:output)
 endfunction
 
-function! local#OldfilesQfFunc(info)
-    let qfl = getqflist({"id": a:info.id, "items": 1}).items
-    let l = []
-    for i in range(a:info.start_idx - 1, a:info.end_idx - 1)
-        call add(l, bufname(qfl[i].bufnr)->fnamemodify(":p:~") . "|" . qfl[i].lnum . "|" . qfl[i].text)
-    endfor
-    return l
-endfunction
-
 function! local#Oldfiles()
-    " Get the absolute path to all files in v:oldfiles plus any unlisted buffers.
-    " This is easier than fiddling with rviminfo / wviminfo.  I tend to :bdelete
-    " buffers I'm done with, anything else should be in :buffers so doesn't need
-    " to be in the oldfiles listing.
-    let files = mapnew(v:oldfiles, {_, f -> f->fnamemodify(":p")})
+    " Get the absolute path to all files in v:oldfiles plus all buffers
+    let files = mapnew(v:oldfiles, {_, f -> f->fnamemodify(":p")->resolve()})
     let bufnrs = range(1, bufnr("$"))
-    call filter(bufnrs, {_, x -> bufexists(x) && ! buflisted(x)})
+    call filter(bufnrs, {_, x -> bufexists(x)})
     for i in bufnrs
         if bufname(i)->len() > 0
-            files->add(bufname(i)->fnamemodify(":p"))
+            files->add(bufname(i)->fnamemodify(":p")->resolve())
         endif
     endfor
     call uniq(sort(files))
@@ -75,12 +63,16 @@ function! local#Oldfiles()
     call sort(files, {x, y ->  getftime(y) - getftime(x)})
     let items = mapnew(files, {_, f -> {
                 \ "filename": f->fnamemodify(":p"),
-                \ "lnum": 0,
-                \ "col": 0,
+                \ "lnum": 1,
+                \ "col": 1,
                 \ "text": "Last modified: " . strftime("%a %d %B %Y %H:%M", getftime(f))
                 \ }})
-    call setqflist([], ' ', {"items": items, "quickfixtextfunc": "local#OldfilesQfFunc"})
+    call setqflist([], ' ', {"items": items})
+
+    " Make all paths relative to $HOME
+    let oldpwd = chdir($HOME)
     copen
+    call chdir(oldpwd)
 endfunction
 
 function! local#LinterRun()
