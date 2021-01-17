@@ -191,8 +191,15 @@ augroup END
 
 " ---- Custom mappings ---------------------------------------------------------
 
+nnoremap [B :bfirst<CR>
 nnoremap [b :bprevious<CR>
 nnoremap ]b :bnext<CR>
+nnoremap ]B :blast<CR>
+
+nnoremap [T :tabfirst<CR>
+nnoremap [t :tabprevious<CR>
+nnoremap ]t :tabnext<CR>
+nnoremap ]T :tablast<CR
 
 nnoremap [L :lfirst<CR>
 nnoremap [l :lprevious<CR>
