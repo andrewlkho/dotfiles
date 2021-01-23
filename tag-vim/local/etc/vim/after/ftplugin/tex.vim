@@ -7,12 +7,6 @@ setlocal laststatus=0
 setlocal nonumber
 setlocal norelativenumber
 
-setlocal foldmethod=syntax
-augroup StartUnfolded
-    autocmd! * <buffer>
-    autocmd BufEnter <buffer> normal! zR
-augroup END
-
 nnoremap <buffer> j gj
 nnoremap <buffer> k gk
 
