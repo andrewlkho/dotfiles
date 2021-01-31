@@ -39,6 +39,44 @@ augroup SpellAddCitekeys
     autocmd BufEnter,BufWritePost <buffer> call SpellAddCitekeys()
 augroup END
 
+" Abuse the location list to show an outline of the current document
+function! LatexOutline()
+    let l:levels = {"part": 0, "chapter": 1, "section": 2, "subsection": 3,
+                \"subsubsection": 4, "paragraph": 5, "subparagraph": 6}
+
+    let l:lines = getline(1, "$")
+    call map(l:lines, {l, v -> [l+1, v]})
+    let l:pattern = '^\\\(' . join(keys(l:levels), '\|') . '\)'
+    call filter(l:lines, {_, v -> match(v[1], l:pattern) > -1 })
+
+    let l:minlevel = mapnew(l:lines, {_, v -> l:levels[matchstr(v[1], '^\\[^{]\+{')[1:-2]]})->min()
+    let l:items = []
+    for l:row in l:lines
+        let l:bufnr = bufnr()
+        let l:lnum = l:row[0]
+        let l:col = 1
+        let l:level = l:levels[matchstr(l:row[1], '^\\[^{]\+{')[1:-2]] - l:minlevel
+        let l:prefix = repeat("· ", l:level)
+        let l:name = l:row[1]->substitute('\\[^{]\+{', '', 'g')->substitute('}', '', 'g')->substitute('[^\\]%.*$', '', '')
+        call add(l:items, {"bufnr": l:bufnr, "lnum": l:lnum, "col": l:col, "text": l:prefix . l:name})
+    endfor
+    call setloclist(0, [], "r", {"items": l:items, "quickfixtextfunc": "LatexOutlineLLFunc"})
+endfunction
+function! LatexOutlineLLFunc(info)
+    let l:items = getloclist(a:info.winid, {"items": 1}).items
+    let l:l = []
+    for idx in range(a:info.start_idx - 1, a:info.end_idx - 1)
+        call add(l:l, l:items[idx].text)
+    endfor
+    return l:l
+endfunction
+command! LatexShowOutline call LatexOutline() |
+            \ vertical leftabove lopen |
+            \ execute "vertical resize " . mapnew(getline(1, "$"), {_, v -> len(v)})->max() |
+            \ wincmd p |
+            \ lbefore |
+            \ execute "normal \<C-O>"
+
 " run latexmk without clobbering the screen
 function! Latexmk()
     echo "Compiling with latexmk... "
