@@ -20,14 +20,13 @@ function! SpellAddCitekeys()
     call filter(l:bibfiles, {_, v -> match(v, "addbibresource") > -1})
     call map(l:bibfiles, {_, v -> matchstr(v, "addbibresource{.*}")[15:-2]})
     for l:b in l:bibfiles
-        try
+        if filereadable(l:b)
             if exists("l:allbibs")
                 call extend(l:allbibs, readfile(l:b))
             else
                 let l:allbibs = readfile(l:b)
             endif
-        catch
-        endtry
+        endif
     endfor
     if exists("l:allbibs")
         call filter(l:allbibs, {_, v -> match(v, "^@") > -1})
