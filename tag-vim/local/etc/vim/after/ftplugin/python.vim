@@ -11,5 +11,3 @@ nnoremap <buffer> <leader>gq :Black<CR>
 
 nnoremap <buffer> <leader>r :let cwd=expand("%:p:h")<CR>:vertical terminal ++norestore ++close<CR><C-W>:call term_sendkeys("", "cd '" . cwd . "'")<CR><CR>python && exit<CR>import os<CR>
 vnoremap <buffer> <leader>l :'<.'> w! $XDG_CACHE_HOME/vim/repl-tmp<CR><C-W><C-W>print(open(os.environ["XDG_CACHE_HOME"] + "/vim/repl-tmp").read())<CR>exec(open(os.environ["XDG_CACHE_HOME"] + "/vim/repl-tmp").read())<CR>
-
-nnoremap ,main :-1read $XDG_CONFIG_HOME/vim/snippets/main.py<CR>Gdd4k

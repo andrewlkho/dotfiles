@@ -129,6 +129,3 @@ setlocal errorformat+=%-C(fixltx2e)%m
 setlocal errorformat+=%+WPackage\ titlesec\ Warning:\ %m
 setlocal errorformat+=%-C(titlesec)%m
 setlocal errorformat+=%-G%.%#
-
-nnoremap <buffer> ,doc :-1read $XDG_CONFIG_HOME/vim/snippets/doc.tex<CR>Gdd2k
-nnoremap <buffer> ,letter :-1read $XDG_CONFIG_HOME/vim/snippets/letter.tex<CR>Gdd14k:put =strftime('%A %e %B %Y')<CR>V=gg/REPLACEME<CR>
