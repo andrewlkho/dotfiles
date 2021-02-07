@@ -234,6 +234,8 @@ command! ZettelNew call local#ZettelNew()
 command! -nargs=* ZettelGrep call local#ZettelGrep("<args>")
 command! ZettelIndex call local#ZettelIndex()
 
+command! CreateMenu call local#CreateMenu()
+
 
 " ---- Plugin-specific settings ------------------------------------------------
 
