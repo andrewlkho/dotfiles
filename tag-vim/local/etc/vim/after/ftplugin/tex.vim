@@ -22,6 +22,7 @@ augroup END
 command! LatexShowOutline call latex#Outline() |
             \ vertical leftabove lopen |
             \ execute "vertical resize " . mapnew(getline(1, "$"), {_, v -> len(v)})->max() |
+            \ setlocal nonumber norelativenumber |
             \ wincmd p |
             \ lbefore |
             \ execute "normal \<C-O>"
