@@ -27,21 +27,9 @@ command! LatexShowOutline call latex#Outline() |
             \ lbefore |
             \ execute "normal \<C-O>"
 
-" run latexmk without clobbering the screen
-function! Latexmk()
-    echo "Compiling with latexmk... "
-    let l:lines = systemlist("latexmk " . expand("%:S"))
-    if v:shell_error
-        echon "failed!"
-    else
-        echon "success!"
-    endif
-    call setqflist([], " ", {"efm": &errorformat, "lines": l:lines})
-endfunction
-nnoremap <buffer> <leader>ll :call Latexmk()<CR>
+nnoremap <buffer> <leader>ll :call latex#Latexmk()<CR>
 nnoremap <buffer> <leader>lc :!latexmk -c %<CR>
 nnoremap <buffer> <leader>lw :!texcount %<CR>
-nnoremap <buffer> <leader>lo :execute "cgetfile" . expand("%:p:r") . ".log"<CR>:copen<CR>
 
 setlocal makeprg=latexmk\ %:S
 " https://github.com/lervag/vimtex/blob/98327bfe0e599bf580e61cfaa6216c8d4177b23d/compiler/latexmk.vim

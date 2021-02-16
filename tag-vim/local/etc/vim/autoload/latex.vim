@@ -53,3 +53,34 @@ function! latex#OutlineLLFunc(info)
     endfor
     return l:l
 endfunction
+
+let s:latexmk_job = -1
+function! latex#Latexmk()
+    echo "Compiling with latexmk... "
+    if has("job")
+        let s:latexmk_job = job_start(["latexmk", expand("%")], {"close_cb": "latex#LatexmkFinish"})
+    else
+        let l:lines = systemlist("latexmk " . expand("%"))
+        if v:shell_error
+            echon "failed!"
+        else
+            echon "success!"
+        endif
+        call setqflist([], " ", {"efm": &errorformat, "lines": l:lines})
+    endif
+endfunction
+
+function! latex#LatexmkFinish(channel)
+    let l:lines = []
+    while ch_status(a:channel, {"part": "out"}) == "buffered"
+        call add(l:lines, ch_read(a:channel))
+    endwhile
+    let l:exit = ch_getjob(a:channel)->job_info()->get("exitval")
+
+    call setqflist([], " ", {"efm": &errorformat, "lines": l:lines})
+    if l:exit == 0
+        echo "Compiling with latexmk... success!"
+    else
+        echo "Compiling with latexmk... failed!"
+    endif
+endfunction
