@@ -18,7 +18,6 @@ call plug#begin($XDG_CONFIG_HOME . "/vim/bundle")
 Plug 'andrewlkho/vim-fzotf'
 Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/fzf'
-Plug 'justinmk/vim-dirvish'
 Plug 'psf/black', { 'branch': 'stable' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
@@ -216,6 +215,7 @@ nnoremap <leader>q :setlocal hlsearch! hlsearch?<CR>
 nnoremap <leader>m :silent make! \| silent redraw!<CR>
 
 inoremap <C-Z> <C-\><C-O>:stop<CR>
+nnoremap <expr> - ":edit " . expand("%:p:h") . "/<C-D>"
 
 " customised buffer list
 nnoremap <C-T> :call local#ListBuffers()<CR>:buffer<space>
@@ -238,9 +238,6 @@ command! CreateMenu call local#CreateMenu()
 
 
 " ---- Plugin-specific settings ------------------------------------------------
-
-" vim-dirvish
-let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
 
 " black
 let g:black_virtualenv = $XDG_CACHE_HOME . "/vim/black"
