@@ -216,7 +216,9 @@ nnoremap <leader>m :silent make! \| silent redraw!<CR>
 
 inoremap <C-Z> <C-\><C-O>:stop<CR>
 nnoremap <expr> - ":edit " . expand("%:p:h") . "/<C-D>"
-cnoremap <expr> - local#pathdash()
+cnoremap <expr> -
+            \ getcmdpos() > len(getcmdline()) && getcmdline() =~ 'edit /.\+/$' ?
+            \ "\<C-W>\<C-W>\<C-D>" : "-"
 
 " customised buffer list
 nnoremap <C-T> :call local#ListBuffers()<CR>:buffer<space>

@@ -194,11 +194,3 @@ function! local#CreateMenu()
     execute "rightbelow vsplit " . mostrecent
     wincmd h
 endfunction
-
-function local#pathdash()
-    if getcmdpos() > len(getcmdline()) && getcmdline() =~ 'edit /.\+/$'
-        return "\<C-W>\<C-W>\<C-D>"
-    else
-        return "-"
-    endif
-endfunction
