@@ -30,6 +30,7 @@ command! LatexShowOutline call latex#Outline() |
 nnoremap <buffer> <leader>ll :call latex#Latexmk()<CR>
 nnoremap <buffer> <leader>lc :!latexmk -c %<CR>
 nnoremap <buffer> <leader>lw :!texcount %<CR>
+nnoremap <buffer> <leader>lv :call system("open " . expand("%:r") . ".pdf")<CR>
 
 setlocal makeprg=latexmk\ %:S
 " https://github.com/lervag/vimtex/blob/98327bfe0e599bf580e61cfaa6216c8d4177b23d/compiler/latexmk.vim
