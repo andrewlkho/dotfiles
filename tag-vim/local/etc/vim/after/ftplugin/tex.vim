@@ -19,7 +19,7 @@ augroup SpellAddCitekeys
     autocmd BufEnter,BufWritePost <buffer> call local#latex#spelladdcitekeys()
 augroup END
 
-command! LatexShowOutline call local#latex#outline() |
+command! -buffer LatexShowOutline call local#latex#outline() |
             \ vertical leftabove lopen |
             \ execute "vertical resize " . mapnew(getline(1, "$"), {_, v -> len(v)})->max() |
             \ setlocal nonumber norelativenumber |
