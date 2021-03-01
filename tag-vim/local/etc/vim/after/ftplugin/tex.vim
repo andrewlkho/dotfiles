@@ -16,10 +16,10 @@ inoremap <buffer> <C-B> <Esc>yypk$<C-V>jA}<Esc>^i\begin{<Esc>j^i\end{<Esc>O
 setlocal spell
 augroup SpellAddCitekeys
     autocmd! * <buffer>
-    autocmd BufEnter,BufWritePost <buffer> call latex#SpellAddCitekeys()
+    autocmd BufEnter,BufWritePost <buffer> call local#latex#spelladdcitekeys()
 augroup END
 
-command! LatexShowOutline call latex#Outline() |
+command! LatexShowOutline call local#latex#outline() |
             \ vertical leftabove lopen |
             \ execute "vertical resize " . mapnew(getline(1, "$"), {_, v -> len(v)})->max() |
             \ setlocal nonumber norelativenumber |
@@ -27,7 +27,7 @@ command! LatexShowOutline call latex#Outline() |
             \ lbefore |
             \ execute "normal \<C-O>"
 
-nnoremap <buffer> <leader>ll :call latex#Latexmk()<CR>
+nnoremap <buffer> <leader>ll :call local#latex#latexmk()<CR>
 nnoremap <buffer> <leader>lc :!latexmk -c %<CR>
 nnoremap <buffer> <leader>lw :!texcount %<CR>
 nnoremap <buffer> <leader>lv :call system("open " . expand("%:r") . ".pdf")<CR>

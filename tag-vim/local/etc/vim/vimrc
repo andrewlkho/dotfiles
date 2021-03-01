@@ -167,7 +167,7 @@ function! SetStatusLineActive()
     setlocal statusline+=%{&fileformat}\ \|
     setlocal statusline+=\ %{&fileencoding?&fileencoding:&encoding}\ \|
     setlocal statusline+=\ %{&filetype!=''?&filetype:'-'}\ 
-    setlocal statusline+=%#StatusLineLint#%{local#LinterStatus()}
+    setlocal statusline+=%#StatusLineLint#%{local#linter#status()}
     setlocal statusline+=%#StatusLineGroup1#%4v:%-4l≡%4L\ 
 endfunction
 
@@ -181,7 +181,7 @@ endfunction
 
 augroup status
     autocmd!
-    autocmd BufWritePost * call local#LinterRun()
+    autocmd BufWritePost * call local#linter#run()
     autocmd VimEnter,BufEnter,WinEnter * call SetStatusLineActive()
     autocmd BufLeave,WinLeave * call SetStatusLineInactive()
 augroup END
@@ -221,23 +221,23 @@ cnoremap <expr> -
             \ "\<C-W>\<C-W>\<C-D>" : "-"
 
 " customised buffer list
-nnoremap <C-T> :call local#ListBuffers()<CR>:buffer<space>
+nnoremap <C-T> :call local#misc#ls()<CR>:buffer<space>
 
 " requires vim-commentary
 vmap <leader>\ gc
 
 " Customised version of :browse oldfiles
-command! Oldfiles call local#Oldfiles()
+command! Oldfiles call local#misc#oldfiles()
 
 " requires fzf and fzotf
 imap <buffer> <C-F> <Plug>FZotF
 
 " Zettelkasten: autoload/local.vim
-command! ZettelNew call local#ZettelNew()
-command! -nargs=* ZettelGrep call local#ZettelGrep("<args>")
-command! ZettelIndex call local#ZettelIndex()
+command! ZettelNew call local#zettel#new()
+command! -nargs=* ZettelGrep call local#zettel#grep("<args>")
+command! ZettelIndex call local#zettel#index()
 
-command! CreateMenu call local#CreateMenu()
+command! MenuNew call local#menu#new()
 
 
 " ---- Plugin-specific settings ------------------------------------------------

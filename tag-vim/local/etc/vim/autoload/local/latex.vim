@@ -1,5 +1,5 @@
 " add biblatex citekeys to internal (spell) wordlist
-function! latex#SpellAddCitekeys()
+function! local#latex#spelladdcitekeys()
     let l:bibfiles = getline(1, "$")
     call filter(l:bibfiles, {_, v -> match(v, "addbibresource") > -1})
     call map(l:bibfiles, {_, v -> matchstr(v, "addbibresource{.*}")[15:-2]})
@@ -22,7 +22,7 @@ function! latex#SpellAddCitekeys()
 endfunction
 
 " abuse the location list to show an outline of the current document
-function! latex#Outline()
+function! local#latex#outline()
     let l:levels = {"part": 0, "chapter": 1, "section": 2, "subsection": 3,
                 \"subsubsection": 4, "paragraph": 5, "subparagraph": 6}
 
@@ -42,10 +42,10 @@ function! latex#Outline()
         let l:name = l:row[1]->substitute('\\[^{]\+{', '', 'g')->substitute('}', '', 'g')->substitute('[^\\]%.*$', '', '')
         call add(l:items, {"bufnr": l:bufnr, "lnum": l:lnum, "col": l:col, "text": l:prefix . l:name})
     endfor
-    call setloclist(0, [], "r", {"items": l:items, "quickfixtextfunc": "latex#OutlineLLFunc"})
+    call setloclist(0, [], "r", {"items": l:items, "quickfixtextfunc": "local#latex#outlinellfunc"})
 endfunction
 
-function! latex#OutlineLLFunc(info)
+function! local#latex#outlinellfunc(info)
     let l:items = getloclist(a:info.winid, {"items": 1}).items
     let l:l = []
     for idx in range(a:info.start_idx - 1, a:info.end_idx - 1)
@@ -55,10 +55,10 @@ function! latex#OutlineLLFunc(info)
 endfunction
 
 let s:latexmk_job = -1
-function! latex#Latexmk()
+function! local#latex#latexmk()
     echo "Compiling with latexmk... "
     if has("job")
-        let s:latexmk_job = job_start(["latexmk", "-cd", expand("%")], {"close_cb": "latex#LatexmkFinish"})
+        let s:latexmk_job = job_start(["latexmk", "-cd", expand("%")], {"close_cb": "local#latex#latexmkfinish"})
     else
         let l:lines = systemlist("latexmk -cd " . expand("%"))
         if v:shell_error
@@ -70,7 +70,7 @@ function! latex#Latexmk()
     endif
 endfunction
 
-function! latex#LatexmkFinish(channel)
+function! local#latex#latexmkfinish(channel)
     let l:lines = []
     while ch_status(a:channel, {"part": "out"}) == "buffered"
         call add(l:lines, ch_read(a:channel))
