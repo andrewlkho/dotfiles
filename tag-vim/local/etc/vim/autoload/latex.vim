@@ -58,9 +58,9 @@ let s:latexmk_job = -1
 function! latex#Latexmk()
     echo "Compiling with latexmk... "
     if has("job")
-        let s:latexmk_job = job_start(["latexmk", expand("%")], {"close_cb": "latex#LatexmkFinish"})
+        let s:latexmk_job = job_start(["latexmk", "-cd", expand("%")], {"close_cb": "latex#LatexmkFinish"})
     else
-        let l:lines = systemlist("latexmk " . expand("%"))
+        let l:lines = systemlist("latexmk -cd " . expand("%"))
         if v:shell_error
             echon "failed!"
         else
