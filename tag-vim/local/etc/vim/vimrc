@@ -34,7 +34,6 @@ let &t_8f = "[38;2;%lu;%lu;%lum"
 let &t_8b = "[48;2;%lu;%lu;%lum"
 let g:nord_bold_vertical_split_line = 1
 colorscheme nord
-set background=dark
 
 " UI
 set autoindent
