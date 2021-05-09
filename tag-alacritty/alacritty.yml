@@ -58,7 +58,7 @@ cursor:
 live_config_reload: true
 
 shell:
-  program: /usr/local/bin/tmux
+  program: /opt/local/bin/tmux
   args:
     - -f
     - /Users/andrewlkho/.local/etc/tmux/tmux-portal.conf
@@ -70,7 +70,7 @@ shell:
     - foobar-five
     - -s
     - portal
-    - /usr/local/bin/tmux -f /Users/andrewlkho/.local/etc/tmux/tmux.conf -L default new-session -A -s foobar-five
+    - /opt/local/bin/tmux -f /Users/andrewlkho/.local/etc/tmux/tmux.conf -L default new-session -A -s foobar-five
 
 key_bindings:
   - { key: LBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["-L", "portal", "previous-window"] }}

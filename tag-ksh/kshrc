@@ -22,6 +22,7 @@ for TESTPATH in \
     "${HOME}/.local/bin" \
     "${HOME}/bin" \
     /Library/TeX/texbin \
+    /opt/local/{,s}bin \
     /usr/local/{,s}bin \
     /usr/{,s}bin \
     /{,s}bin
@@ -167,11 +168,6 @@ if [ -n "$(whence fzf)" ]; then
     --color=fg:#4C566A,bg:#2E3440,fg+:#D8DEE9,bg+:#2E3440,hl:#81A1C1,hl+:#81A1C1
     --color=gutter:#2E3440,info:#B48DAC,prompt:#A3BE8C,pointer:#B48DAC
     --color=marker:#A3BE8C --no-bold"
-fi
-
-if [ -n "$(whence brew)" ]; then
-    export HOMEBREW_NO_ANALYTICS=1
-    export HOMEBREW_NO_INSECURE_REDIRECT=1
 fi
 
 if [ -n "$(whence R)" ]; then
