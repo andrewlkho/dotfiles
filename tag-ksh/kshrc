@@ -155,6 +155,22 @@ if [ -n "$(whence fzf)" ]; then
     }
 fi
 
+function fc!
+{
+    if [ -n "$(whence doas)" ]; then
+        typeset DOAS="doas"
+    elif [ -n "$(whence sudo)" ]; then
+        typeset DOAS="sudo"
+    else
+        echo 'ERROR: could not find doas or sudo'
+        return 1
+    fi
+    typeset COMMAND="$(fc -lnr | head -n 1 | sed -e 's/^[[:blank:]]*//')"
+
+    echo "${DOAS} ${COMMAND}"
+    ${DOAS} ${COMMAND}
+}
+
 
 # Package-specific #############################################################
 
