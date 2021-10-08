@@ -4,9 +4,7 @@
 [core]
     fileMode = false
     editor = "vim -c 'set wrap tw=76 fo=tqwanl1 spell ft=markdown' +1"
-    # Use the fatpacked version of diff-so-fancy:
-    #     https://github.com/so-fancy/diff-so-fancy/issues/318
-	pager = "diff-so-fancy | less --tabs=4 -RFXS"
+    pager = "less -R"
     autocrlf = false
     excludesfile = ~/.gitignore
 
@@ -30,20 +28,3 @@
 
 [color]
     ui = true
-
-[color "diff-highlight"]
-    oldNormal = "#BF616A" nobold
-    oldHighlight = "#4C566A" "#BF616A"
-    newNormal = "#A3BE8C" nobold
-    newHighlight = "#4C566A" "#A3BE8C"
-
-[color "diff"]
-    meta = "#EBCB8B"
-    frag = "#EBCB8B"
-    commit = "#EBCB8B"
-    old = "#BF616A"
-    new = "#A3BE8C"
-    whitespace = "#BF616A" reverse
-
-[diff-so-fancy]
-    markEmptyLines = false
