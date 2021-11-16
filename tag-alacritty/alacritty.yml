@@ -73,8 +73,8 @@ shell:
     - /opt/local/bin/tmux -f /Users/andrewlkho/.local/etc/tmux/tmux.conf -L default new-session -A -s foobar-five
 
 key_bindings:
-  - { key: LBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["-L", "portal", "previous-window"] }}
-  - { key: RBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["-L", "portal", "next-window"] }}
+  - { key: LBracket, mods: Command|Shift, command: { program: "/opt/local/bin/tmux", args: ["-L", "portal", "previous-window"] }}
+  - { key: RBracket, mods: Command|Shift, command: { program: "/opt/local/bin/tmux", args: ["-L", "portal", "next-window"] }}
   - { key: Key3, mods: Alt, chars: "#" }
 
 
