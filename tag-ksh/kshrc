@@ -155,7 +155,7 @@ if [ -n "$(whence fzf)" ]; then
     }
 fi
 
-function fc!
+function fcc
 {
     if [ -n "$(whence doas)" ]; then
         typeset DOAS="doas"
