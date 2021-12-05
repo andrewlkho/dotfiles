@@ -28,3 +28,6 @@
 
 [color]
     ui = true
+
+[includeIf "gitdir:componc/"]
+    path = config-componc
