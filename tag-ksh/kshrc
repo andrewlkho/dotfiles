@@ -38,26 +38,85 @@ export PATH
 
 # Prompt #######################################################################
 
-function _prompt
+function _prompt_jobs
 {
-    typeset RESET='\[\033[0m\]'
-    typeset BLUE='\[\033[38;2;129;161;193m\]'
-    typeset CYAN='\[\033[38;2;136;192;208m\]'
-    typeset GREEN='\[\033[38;2;163;190;140m\]'
-    typeset GREY='\[\033[38;2;76;86;106m\]'
-
-    typeset P_SSH="${CYAN}${SSH_TTY:+${USER}@$(hostname -s)}${RESET} "
-    typeset P_PWD="${BLUE}\\w${RESET}"
-    typeset P_VENV="${GREY}${VIRTUAL_ENV:+(venv) }${RESET}"
-    typeset P_ARROW="${GREEN}❯${RESET}"
-
-    print ''
-    print "${P_SSH}${P_PWD}"
-    print "${P_VENV}${P_ARROW} "
+    if [ $( jobs | wc -l ) -gt 0 ]; then
+        print -n '\033[38;2;235;203;139m[!!] '
+    fi
 }
 
-PS1="$(_prompt)"
-PS2='\[\033[38;2;76;86;106m\]... ❯\[\033[0m\]'
+function _prompt_ssh
+{
+    if [ -n "${SSH_TTY}" ]; then
+        print "\033[38;2;136;192;208m${USER}@$(hostname -s) "
+    fi
+}
+
+function _prompt_pwd
+{
+	# OpenBSD's pdksh doesn't do ${PWD/pattern/sub}
+	if [ "${PWD#${HOME}}" != "${PWD}" ]; then
+        PWDSHORT="~${PWD#${HOME}}"
+    else
+        PWDSHORT="${PWD}"
+    fi
+	print "\033[38;2;129;161;193m${PWDSHORT}"
+}
+
+function _prompt_venv
+{
+    # OpenBSD's pdksh and macOS's ksh escape non-printing characters in PS1 
+    # from within a function slightly differently
+    case "${KSH_VERSION}" in
+        *PD*)
+            print "\[\033[38;2;76;86;106m\]${VIRTUAL_ENV:+(venv) }"
+            ;;
+        *)
+            print "\002\033[38;2;76;86;106m\002${VIRTUAL_ENV:+(venv) }"
+            ;;
+    esac
+}
+
+function _prompt_arrow
+{
+    # OpenBSD's pdksh and macOS's ksh escape non-printing characters in PS1 
+    # from within a function slightly differently
+    case "${KSH_VERSION}" in
+        *PD*)
+            if [ $? -eq 0 ]; then
+                print '\[\033[38;2;163;190;140m\]❯\[\033[0m\]'
+            else
+                print "\[\033[38;2;191;97;106m\]❯\[\033[0m\]"
+            fi
+            ;;
+        *)
+            if [ $? -eq 0 ]; then
+                print '\001\033[38;2;163;190;140m\002❯\001\033[0m\002'
+            else
+                print "\001\033[38;2;191;97;106m\002❯\001\033[0m\002"
+            fi
+            ;;
+    esac
+}
+
+function _prompt_ps2
+{
+    # OpenBSD's pdksh and macOS's ksh escape non-printing characters in PS1 
+    # from within a function slightly differently
+    case "${KSH_VERSION}" in
+        *PD*)
+            print '\[\033[38;2;76;86;106m\]... ❯\[\033[0m\]'
+            ;;
+        *)
+            print "\001\033[38;2;76;86;106m\002... ❯\001\033[0m\002"
+            ;;
+    esac
+}
+
+PS1='
+$(_prompt_jobs)$(_prompt_ssh)$(_prompt_pwd)
+$(_prompt_venv)$(_prompt_arrow) '
+PS2="$(_prompt_ps2) "
 
 
 # Aliases ######################################################################
