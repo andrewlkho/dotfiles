@@ -31,3 +31,6 @@
 
 [includeIf "gitdir:componc/"]
     path = config-componc
+
+[init]
+    defaultBranch = main
