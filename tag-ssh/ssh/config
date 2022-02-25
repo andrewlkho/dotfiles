@@ -8,10 +8,6 @@ Match originalhost sebastian !exec "ping6 -nqc 1 sebastian.andrewho.co.uk"
     HostName ssh.sebastian.hostedpi.com
     Port 5138
 
-Host nfsn
-    HostName ssh.phx.nearlyfreespeech.net
-    User andrewlkho_andrewho
-
 Host *.onion
     ProxyCommand netcat -x localhost:9050 -X 5 %h %p
 
@@ -34,9 +30,13 @@ Host archive
 Host ocelot
     HostName ocelot.mythic-beasts.com
 
-Host lynx
+Host moms
     HostName lynx.mythic-beasts.com
     User moms
+
+Host matmednet
+    HostName caracal.mythic-beasts.com
+    User matmednet
 
 Host hpc
     User alh08
