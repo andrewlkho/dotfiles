@@ -235,7 +235,7 @@ imap <buffer> <C-F> <Plug>FZotF
 let g:black_virtualenv = $XDG_CACHE_HOME . "/vim/black"
 
 " vim-fzotf
-let g:fzotf_zotdir = '~/Documents/andrewonntserver/Work/Zotero'
+let g:fzotf_zotdir = '~/Documents/Zotero'
 let g:fzotf_options = '--multi --exact'
 let g:fzotf_pre = '\autocite{'
 let g:fzotf_post = '}'
