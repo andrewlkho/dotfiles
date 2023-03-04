@@ -38,86 +38,12 @@ export PATH
 
 # Prompt #######################################################################
 
-function _prompt_jobs
-{
-    if [ $( jobs | wc -l ) -gt 0 ]; then
-        print -n '\033[38;2;235;203;139m[!!] '
-    fi
-}
-
-function _prompt_ssh
-{
-    if [ -n "${SSH_TTY}" ]; then
-        print "\033[38;2;136;192;208m${USER}@$(hostname -s) "
-    fi
-}
-
-function _prompt_pwd
-{
-	# OpenBSD's pdksh doesn't do ${PWD/pattern/sub}
-	if [ "${PWD#${HOME}}" != "${PWD}" ]; then
-        PWDSHORT="~${PWD#${HOME}}"
-    else
-        PWDSHORT="${PWD}"
-    fi
-	print "\033[38;2;129;161;193m${PWDSHORT}"
-}
-
-function _prompt_venv
-{
-    # OpenBSD's pdksh and macOS's ksh escape non-printing characters in PS1 
-    # from within a function slightly differently
-    case "${KSH_VERSION}" in
-        *PD*)
-            print "\[\033[38;2;76;86;106m\]${VIRTUAL_ENV:+(venv) }"
-            ;;
-        *)
-            print "\002\033[38;2;76;86;106m\002${VIRTUAL_ENV:+(venv) }"
-            ;;
-    esac
-}
-
-function _prompt_arrow
-{
-    # OpenBSD's pdksh and macOS's ksh escape non-printing characters in PS1 
-    # from within a function slightly differently
-    case "${KSH_VERSION}" in
-        *PD*)
-            if [ $? -eq 0 ]; then
-                print '\[\033[38;2;163;190;140m\]❯\[\033[0m\]'
-            else
-                print "\[\033[38;2;191;97;106m\]❯\[\033[0m\]"
-            fi
-            ;;
-        *)
-            if [ $? -eq 0 ]; then
-                print '\001\033[38;2;163;190;140m\002❯\001\033[0m\002'
-            else
-                print "\001\033[38;2;191;97;106m\002❯\001\033[0m\002"
-            fi
-            ;;
-    esac
-}
-
-function _prompt_ps2
-{
-    # OpenBSD's pdksh and macOS's ksh escape non-printing characters in PS1 
-    # from within a function slightly differently
-    case "${KSH_VERSION}" in
-        *PD*)
-            print '\[\033[38;2;76;86;106m\]... ❯\[\033[0m\]'
-            ;;
-        *)
-            print "\001\033[38;2;76;86;106m\002... ❯\001\033[0m\002"
-            ;;
-    esac
-}
-
-PS1='
-$(_prompt_jobs)$(_prompt_ssh)$(_prompt_pwd)
-$(_prompt_venv)$(_prompt_arrow) '
-PS2="$(_prompt_ps2) "
-
+PS1='$( print "\001\033[38;2;129;161;193m\002" )'\
+'$( [ "${PWD}" == "${HOME}" ] && print "~" || basename "${PWD}" ]) '\
+'$( print "\001\033[38;2;129;161;193m\002" )'\
+'$( [ $? -eq 0 ] && print "\001\033[38;2;163;190;140m\002" || print "\001\033[38;2;191;97;106m\002" )'\
+'$( [ "${USER}" == "andrewlkho" ] && print "\$" || print "#")'\
+'$( print "\001\033[0m\002" ) '
 
 # Aliases ######################################################################
 
