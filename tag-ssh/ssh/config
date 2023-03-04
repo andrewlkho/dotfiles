@@ -27,6 +27,11 @@ Host archive
     HostName archive.andrewho.co.uk
     ForwardAgent yes
 
+Host macpro
+    ProxyJump archive
+    HostName 192.168.1.22
+    User andrewho
+
 Host ocelot
     HostName ocelot.mythic-beasts.com
 
