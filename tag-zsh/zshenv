@@ -1,0 +1,4 @@
+export ZDOTDIR="${HOME}/.local/etc/zsh"
+if [[ -a "${ZDOTDIR}/.zshenv" ]]; then
+    source "${ZDOTDIR}/.zshenv"
+fi

@@ -1,5 +1,0 @@
-#!/bin/sh
-
-if [ -L "${HOME}/.kshrc" ]; then
-    (. "${HOME}/.kshrc" && mkdir -p "${XDG_DATA_HOME}/ksh")
-fi
