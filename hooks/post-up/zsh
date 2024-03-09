@@ -3,8 +3,11 @@
 # rcm does not symlink dot-prefixed files in subdirectories, which is an issue
 # because zsh uses $ZDOTDIR/.zshrc etc
 
-source "${HOME}/.local/etc/rcm/rcrc"
-find "${DOTFILES_DIRS}/tag-zsh/local/etc/zsh" -type f -name '.*' -print0 |
-    while IFS= read -r -d '' file; do
-        rcup -K -d "${DOTFILES_DIRS}" -t zsh "${file#${DOTFILES_DIRS}/tag-zsh/}"
-    done
+if [[ -L "${HOME}/.zshenv" ]]; then
+    source "${HOME}/.local/etc/rcm/rcrc"
+    find "${DOTFILES_DIRS}/tag-zsh/local/etc/zsh" -type f -name '.*' -print0 |
+        while IFS= read -r -d '' file; do
+            rcup -K -d "${DOTFILES_DIRS}" -t zsh \
+                "${file#${DOTFILES_DIRS}/tag-zsh/}"
+        done
+fi
