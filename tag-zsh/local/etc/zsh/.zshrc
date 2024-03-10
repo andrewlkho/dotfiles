@@ -1,5 +1,6 @@
 setopt NOBEEP
 bindkey -v
+bindkey '^r' history-incremental-search-backward
 
 typeset -U path
 path=(
