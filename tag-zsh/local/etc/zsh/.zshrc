@@ -55,7 +55,7 @@ _prompt_host() {
 
 _prompt_pwd() {
     print -Pn "%F{blue}%~"
-    if [[ "${PWD: -4}" == ".git" ]]; then
+    if [[ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" == "true" ]]; then
         if [[ -n "$(git status --porcelain=v1 2>/dev/null)" ]]; then
             print -Pn "%F{red}*"
         fi
