@@ -1,0 +1,9 @@
+font-family = "JetBrains Mono NL"
+font-size = 12
+theme = iceberg-dark
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+window-inherit-working-directory = false
+window-theme = dark
+macos-titlebar-proxy-icon = hidden
