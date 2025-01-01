@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "config-file = $(zsh -c 'echo ${XDG_CONFIG_HOME}')/ghostty/config" \
+    > "${HOME}/Library/Application Support/com.mitchellh.ghostty/config"
