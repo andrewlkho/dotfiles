@@ -45,6 +45,12 @@ if is_up r; then
         Rscript --no-restore --no-save \
             -e 'install.packages(c("lintr", "styler", "tidyverse"), quiet=TRUE)'
     fi
+    if [ ! -e "${XDG_CACHE_HOME}/visidata/_venv/bin/vd" ]; then
+        echo "Installing visidata"
+        mkdir -p "${XDG_CACHE_HOME}/visidata"
+        python3 -m venv "${XDG_CACHE_HOME}/visidata/_venv"
+        "${XDG_CACHE_HOME}/visidata/_venv/bin/pip3" install visidata
+    fi
 fi
 
 if is_up zsh; then

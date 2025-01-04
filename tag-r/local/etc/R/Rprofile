@@ -8,7 +8,7 @@ options("repos" = c(CRAN = "https://cran.ma.imperial.ac.uk/"))
 vd <- function(d) {
   filename <- tempfile(fileext = ".csv")
   write.csv(d, filename)
-  system(paste0("vd ", filename))
+  system(paste0("${XDG_CACHE_HOME}/visidata/_venv/bin/vd ", filename))
   invisible(file.remove(filename))
 }
 

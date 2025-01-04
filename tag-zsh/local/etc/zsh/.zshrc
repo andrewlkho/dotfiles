@@ -89,6 +89,10 @@ function pwgen() {
         "${XDG_CACHE_HOME}/pwgen/eff_large_wordlist.txt"
 }
 
+if [ -e "${XDG_CACHE_HOME}/visidata/_venv/bin/vd" ]; then
+    alias vd="${XDG_CACHE_HOME}/visidata/_venv/bin/vd"
+fi
+
 
 # Package-specific #############################################################
 
