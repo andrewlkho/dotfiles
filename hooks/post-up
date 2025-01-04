@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# is_up checks if the specified tag has been intsalled.  Because it does not
+# check if this is the first time this tag has been installed, all actions
+# should be idempotent.
+is_up() {
+    CHECKFILE="$( lsrc -t "${1}" | cut -f 1 -d : -s | head -n 1 )"
+    if [ -n "${CHECKFILE}" -a -L "${CHECKFILE}" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+if is_up ghostty; then
+    echo "config-file = $(zsh -c 'echo ${XDG_CONFIG_HOME}')/ghostty/config" \
+        > "${HOME}/Library/Application Support/com.mitchellh.ghostty/config"
+fi
+
+if is_up vim; then
+    mkdir -p "${XDG_CACHE_HOME}/vim/backup"
+    mkdir -p "${XDG_CACHE_HOME}/vim/swap"
+    mkdir -p "${XDG_CACHE_HOME}/vim/tmp"
+    mkdir -p "${XDG_CACHE_HOME}/vim/undo"
+
+    if [ -d "${XDG_CONFIG_HOME}/vim" -a ! -d "${XDG_CONFIG_HOME}/vim/bundle" ]; then
+        echo "Installing vim plugins..."
+        vim -E -s -u "${XDG_CONFIG_HOME}/vim/vimrc" +PlugInstall +qall
+        # Trigger black install
+        vim -E -s -u "${XDG_CONFIG_HOME}/vim/vimrc" +qall
+
+        if [ ! -n "$(type flake8 2>/dev/null)" ]; then
+            echo "Reminder: install flake8"
+        fi
+        if [ ! -n "$(type shellcheck 2>/dev/null)" ]; then
+            echo "Reminder: install shellcheck"
+        fi
+    fi
+fi
+
+if is_up r; then
+    echo "Installing some useful R packages: lintr, styler, tidyverse"
+    Rscript --no-restore --no-save \
+        -e 'install.packages(c("lintr", "styler", "tidyverse"))'
+fi
+
+if is_up zsh; then
+    # rcm does not symlink dot-prefixed files in subdirectories, which is an
+    # issue because zsh uses $ZDOTDIR/.zshrc etc
+    source "${HOME}/.local/etc/rcm/rcrc"
+    find "${DOTFILES_DIRS}/tag-zsh/local/etc/zsh" -type f -name '.*' -print0 |
+        while IFS= read -r -d '' file; do
+            rcup -K -d "${DOTFILES_DIRS}" -t zsh \
+                "${file#${DOTFILES_DIRS}/tag-zsh/}"
+        done
+fi
