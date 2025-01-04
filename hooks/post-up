@@ -39,9 +39,12 @@ if is_up vim; then
 fi
 
 if is_up r; then
-    echo "Installing some useful R packages: lintr, styler, tidyverse"
-    Rscript --no-restore --no-save \
-        -e 'install.packages(c("lintr", "styler", "tidyverse"))'
+    if [ ! -d "${XDG_CACHE_HOME}/r/library/tidyverse" ]; then
+        echo "Installing some useful R packages: lintr, styler, tidyverse"
+        mkdir -p "${XDG_CACHE_HOME}/r/library"
+        Rscript --no-restore --no-save \
+            -e 'install.packages(c("lintr", "styler", "tidyverse"), quiet=TRUE)'
+    fi
 fi
 
 if is_up zsh; then

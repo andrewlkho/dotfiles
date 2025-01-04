@@ -98,6 +98,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 if [ -n "$(whence R)" ]; then
     export R_PROFILE_USER="${XDG_CONFIG_HOME}/R/Rprofile"
+    export R_ENVIRON_USER="${XDG_CONFIG_HOME}/R/Renviron"
 fi
 
 if [ -n "$(whence rcup)" ]; then
@@ -106,8 +107,4 @@ fi
 
 if [ -L "${XDG_CONFIG_HOME}/gnupg/gpg.conf" ]; then
     export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
-fi
-
-if [ -L "${XDG_CONFIG_HOME}/R/Rprofile" ]; then
-    export R_PROFILE_USER="${XDG_CONFIG_HOME}/R/Rprofile"
 fi
