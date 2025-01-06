@@ -45,11 +45,15 @@ if is_up r; then
         Rscript --no-restore --no-save \
             -e 'install.packages(c("lintr", "styler", "tidyverse"), quiet=TRUE)'
     fi
-    if [ ! -e "${XDG_CACHE_HOME}/visidata/_venv/bin/vd" ]; then
-        echo "Installing visidata"
-        mkdir -p "${XDG_CACHE_HOME}/visidata"
-        python3 -m venv "${XDG_CACHE_HOME}/visidata/_venv"
-        "${XDG_CACHE_HOME}/visidata/_venv/bin/pip3" install visidata
+    if ! type vd > /dev/null; then
+        if ! type pipx > /dev/null; then
+            echo "Neither pipx nor visidata installed.  Suggest:"
+            echo "    sudo port install pipx"
+            echo "    pipx install visidata"
+        else
+            echo "Installing visidata"
+            pipx install visidata
+        fi
     fi
 fi
 
