@@ -103,6 +103,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 if [ -n "$(whence R)" ]; then
     export R_PROFILE_USER="${XDG_CONFIG_HOME}/R/Rprofile"
     export R_ENVIRON_USER="${XDG_CONFIG_HOME}/R/Renviron"
+    alias R="R --no-save --no-restore --quiet"
 fi
 
 if [ -n "$(whence rcup)" ]; then
