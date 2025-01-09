@@ -113,3 +113,7 @@ fi
 if [ -L "${XDG_CONFIG_HOME}/gnupg/gpg.conf" ]; then
     export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 fi
+
+if [ -n "$(whence pipx)" ]; then
+    export PIPX_HOME="${XDG_DATA_HOME}/pipx"
+fi
