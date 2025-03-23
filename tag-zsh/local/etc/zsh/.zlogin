@@ -9,7 +9,7 @@ if [[ -n "${SSH_TTY}" ]]; then
         if [[ -n "${SSH_AUTH_SOCK}" ]]; then
             # Symlink to the socket so that it remains accessible to old tmux
             # panes even when the socket changes between sessions
-            mkdir -p "${XDG_RUNTIME_DIR}/ssh/ssh-agent.sock"
+            mkdir -p "${XDG_RUNTIME_DIR}/ssh"
             ln -sf "${SSH_AUTH_SOCK}" "${XDG_RUNTIME_DIR}/ssh/ssh-agent.sock"
             export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh/ssh-agent.sock"
         fi
