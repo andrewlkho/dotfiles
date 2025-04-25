@@ -71,7 +71,11 @@ PROMPT='$(_prompt_host)$(_prompt_pwd)'\
 
 # Aliases and functions ########################################################
 
-alias ls="ls -lF"
+if ls -N &> /dev/null; then
+    alias ls="ls -lFN"
+else
+    alias ls="ls -lF"
+fi
 
 if [[ $(uname -s) == "Darwin" ]]; then
     alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
