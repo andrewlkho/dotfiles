@@ -66,4 +66,5 @@ if is_up zsh; then
             rcup -K -d "${DOTFILES_DIRS}" -t zsh \
                 "${file#${DOTFILES_DIRS}/tag-zsh/}"
         done
+    mkdir -p "${XDG_DATA_HOME}/zsh"
 fi
