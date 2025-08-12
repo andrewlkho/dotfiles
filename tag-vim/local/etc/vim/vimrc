@@ -16,7 +16,7 @@ let $TMPDIR = $XDG_CACHE_HOME . "/vim/tmp"
 
 call plug#begin($XDG_CONFIG_HOME . "/vim/bundle")
 Plug 'andrewlkho/vim-fzotf'
-Plug 'arcticicestudio/nord-vim'
+Plug 'cocopon/iceberg.vim'
 Plug 'junegunn/fzf'
 Plug 'psf/black', { 'branch': 'stable' }
 Plug 'tpope/vim-commentary'
@@ -29,8 +29,9 @@ call plug#end()
 
 " colours
 syntax enable
-let g:nord_bold_vertical_split_line = 1
-colorscheme nord
+set termguicolors
+set background=dark
+colorscheme iceberg
 
 " UI
 set autoindent
@@ -143,6 +144,7 @@ highlight StatusLineGroup1 ctermfg=7 guifg=#E5E9F0 ctermbg=0 guibg=#3B4252
 highlight StatusLineGroup1Red ctermfg=1 guifg=#bf616a ctermbg=0 guibg=#3B4252
 highlight StatusLineGroup1Yellow ctermfg=3 guifg=#EBCB8B ctermbg=0 guibg=#3B4252
 highlight link StatusLineNC StatusLineGroup0
+
 
 function! SetStatusLineActive()
     setlocal statusline=
