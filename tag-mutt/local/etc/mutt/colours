@@ -1,0 +1,14 @@
+color index default default "~A"
+color index color6 default "~N | ~O"
+color index color1 default "~D"
+color index color2 default "~T"
+color index color11 default "~F"
+color indicator color0 color6
+color status color0 color6
+
+color hdrdefault color15 default
+color error color1 default
+color normal default default
+color quoted color5 default
+
+# vim: filetype=muttrc

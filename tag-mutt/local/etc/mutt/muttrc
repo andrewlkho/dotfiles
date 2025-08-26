@@ -1,0 +1,87 @@
+# security add-generic-password \
+#   -l 'mutt:account_name' \
+#   -a 'username' \
+#   -s 'e-mail address' \
+#   -j 'realname' \
+#   -w 'password'
+set my_mxroute_user = "`security find-generic-password -l 'mutt:mxroute' | grep 'acct' | cut -d '"' -f 4`"
+set my_mxroute_pass = "`security find-generic-password -l 'mutt:mxroute' -w`"
+set my_mxroute_from = "`security find-generic-password -l 'mutt:mxroute' | grep 'svce' | cut -d '"' -f 4`"
+set my_mxroute_realname = "`security find-generic-password -l 'mutt:mxroute' | grep 'icmt' | cut -d '"' -f 4`"
+set my_appleonc_user = "`security find-generic-password -l 'mutt:appleonc' | grep 'acct' | cut -d '"' -f 4`"
+set my_appleonc_pass = "`security find-generic-password -l 'mutt:appleonc' -w`"
+set my_appleonc_from = "`security find-generic-password -l 'mutt:appleonc' | grep 'svce' | cut -d '"' -f 4`"
+set my_appleonc_realname = "`security find-generic-password -l 'mutt:appleonc' | grep 'icmt' | cut -d '"' -f 4`"
+set my_hlts_user = "`security find-generic-password -l 'mutt:hlts' | grep 'acct' | cut -d '"' -f 4`"
+set my_hlts_pass = "`security find-generic-password -l 'mutt:hlts' -w`"
+set my_hlts_from = "`security find-generic-password -l 'mutt:hlts' | grep 'svce' | cut -d '"' -f 4`"
+set my_hlts_realname = "`security find-generic-password -l 'mutt:hlts' | grep 'icmt' | cut -d '"' -f 4`"
+set my_moms_user = "`security find-generic-password -l 'mutt:moms' | grep 'acct' | cut -d '"' -f 4`"
+set my_moms_pass = "`security find-generic-password -l 'mutt:moms' -w`"
+set my_moms_from = "`security find-generic-password -l 'mutt:moms' | grep 'svce' | cut -d '"' -f 4`"
+set my_moms_realname = "`security find-generic-password -l 'mutt:moms' | grep 'icmt' | cut -d '"' -f 4`"
+
+# load first account
+set ssl_ca_certificates_file = "/opt/local/etc/openssl/cert.pem"
+source "$XDG_CONFIG_HOME/mutt/account.mxroute"
+
+# ui behaviour
+set abort_noattach = ask-yes
+set attach_save_dir="$HOME/Downloads"
+set beep = no
+set confirmappend = no
+set delete = yes
+set fast_reply = yes
+set include = yes
+set mark_old = no
+set recall = no
+set sleep_time = 0
+set wait_key = no
+
+# ui display
+set help = no
+set index_format = "%4C (%Z) %[%Y-%m-%d %H:%M] %25.25F : %?M?(%M) ?%s "
+set markers = no
+set menu_context = 5
+set menu_scroll = yes
+set pager_context = 5
+set pager_format = " Message: %C/%m %> Attachments: %X "
+set pager_stop = yes
+set read_inc = 500
+set sort = reverse-date-sent
+set status_chars = " *%A"
+set wrap = 80
+folder-hook . 'set status_format = " Mutt: $from%?r?%r? %>  %?V?Limit:%V | ?Msgs:%?M?%M/?%m%?n? New:%n?%?d?  Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p? "'
+folder-hook "$XDG_CACHE_HOME/mutt/search" 'set status_format = " `cat $XDG_CACHE_HOME/mutt/search/.query` %>  %?V?Limit:%V | ?Msgs:%?M?%M/?%m%?n? New:%n?%?d?  Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p? "'
+
+# message display
+unhdr_order *
+hdr_order Date: From: Reply-To: To: Cc: Subject:
+ignore *
+unignore Date: From: Reply-To: To: Cc: Subject:
+auto_view text/html
+set mailcap_path = "$XDG_CONFIG_HOME/mutt/mailcap"
+alternative_order text/plain text/enriched text/html
+
+# composing
+set attribution = "%n <%a> wrote [%{%Y-%m-%d %H:%M %z}]:"
+set forward_format = "Fwd: %s"
+set send_charset = "utf-8"
+set text_flowed = yes
+folder-hook . 'set message_id_format="$XDG_CONFIG_HOME/mutt/message_id_gen.sh $from |"'
+set hostname = "localhost"
+set query_command = "mu cfind --format=mutt-ab %s"
+
+# cache
+set my_cache_init = "`mkdir -p $XDG_CACHE_HOME/mutt`"
+set header_cache = "$XDG_CACHE_HOME/mutt"
+set message_cachedir = "$XDG_CACHE_HOME/mutt"
+
+source "$XDG_CONFIG_HOME/mutt/keybindings"
+source "$XDG_CONFIG_HOME/mutt/colours"
+
+# TODO
+# set print_command = "if [ -a ${HOME}/Desktop/muttprint.pdf ]; then echo '~/Desktop/muttprint.pdf exists, aborting'; exit 1; else muttprint -p - -i off -P A4 -e local -E '%A %d %B %Y %H:%M %Z' | ps2pdf - ${HOME}/Desktop/muttprint.pdf; fi"
+# set print_split
+
+# vim: filetype=muttrc

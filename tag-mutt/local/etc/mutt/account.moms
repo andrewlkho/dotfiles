@@ -1,0 +1,16 @@
+set folder = "$HOME/mail/moms"
+set smtp_url = "smtps://$my_moms_user@mail.runbox.com:465"
+set smtp_pass = "$my_moms_pass"
+
+set from = "$my_moms_from"
+set realname = "$my_moms_realname"
+
+set spoolfile = "+INBOX"
+set postponed = "+Drafts"
+set record = "+Sent"
+set trash = "+Trash"
+
+macro index $ "<sync-mailbox><shell-escape>MBSYNC_USER='$my_moms_user' MBSYNC_PASS='$my_moms_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' moms && mu --quiet index<enter>"
+macro index x ":source $XDG_CONFIG_HOME/mutt/account.mxroute<enter><change-folder>$spoolfile<enter>"
+
+# vim: filetype=muttrc

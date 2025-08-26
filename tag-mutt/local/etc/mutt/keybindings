@@ -1,0 +1,49 @@
+bind editor <space> noop  # needed to switch to folder name with space in it
+folder-hook . 'macro index,pager ! "<change-folder>$spoolfile<enter>"'
+folder-hook . 'macro index,pager < "<change-folder>$record<enter>"'
+macro index,pager c "<change-folder>?"
+macro index,pager C "<copy-message>?"
+
+bind generic,index \cA first-entry
+bind generic,index \cE last-entry
+bind generic,index,pager \cF next-page
+bind generic,index,pager \cB previous-page
+bind generic,index N search-opposite
+bind pager N search-reverse
+
+bind index \cU toggle-new
+bind pager \cU mark-as-new
+bind index \cL flag-message
+macro index G "<sync-mailbox>"
+macro index % "<sync-mailbox><shell-escape> \
+    MBSYNC_USER='$my_mxroute_user' MBSYNC_PASS='$my_mxroute_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' mxroute && \
+    MBSYNC_USER='$my_appleonc_user' MBSYNC_PASS='$my_appleonc_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' appleonc && \
+    MBSYNC_USER='$my_hlts_user' MBSYNC_PASS='$my_hlts_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' hlts && \
+    MBSYNC_USER='$my_moms_user' MBSYNC_PASS='$my_moms_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' moms && \
+    mu --quiet index \
+    <enter>"
+
+macro compose a "<attach-file>~/<tab><tab>"
+bind compose d detach-file
+bind compose A edit-description
+macro attach s "<save-entry>~/Downloads<enter>y<enter>"
+
+# Search using mu to create a virtual maildir
+macro index L "<shell-escape> \
+    read -p 'mu query: ' x; \
+    echo \"\$x\" > '$XDG_CACHE_HOME/mutt/search/.query'; \
+    mu find --format=links --clearlinks --linksdir='$XDG_CACHE_HOME/mutt/search' \$x; \
+    if [[ $? -eq 2 ]]; then find '$XDG_CACHE_HOME/mutt/search' -type l -exec rm {} + ; fi<enter> \
+    <change-folder-readonly>$XDG_CACHE_HOME/mutt/search<enter>"
+
+# Show related messages in the same thread (using a mu search query)
+macro index & "<pipe-message>python3 -c 'if True: \
+    import sys, email.parser; \
+    e = email.parser.HeaderParser().parse(sys.stdin); \
+    print(e[\"message-id\"].strip().strip(\"<>\"))' | \
+    sed -e 's/^/msgid:\"/; s/$/\"/' > '$XDG_CACHE_HOME/mutt/search/.query' && \
+    mu find --include-related --format=links --clearlinks --linksdir='$XDG_CACHE_HOME/mutt/search' \
+    $(cat '$XDG_CACHE_HOME/mutt/search/.query')<enter> \
+    <change-folder-readonly>$XDG_CACHE_HOME/mutt/search<enter>"
+
+# vim: filetype=muttrc

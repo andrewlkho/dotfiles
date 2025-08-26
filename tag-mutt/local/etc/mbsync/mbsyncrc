@@ -1,0 +1,85 @@
+SyncState *
+
+
+IMAPStore mxroute_remote
+Host glacier.mxrouting.net
+Port 993
+TLSType IMAPS
+UserCmd "echo $MBSYNC_USER"
+PassCmd "echo $MBSYNC_PASS"
+
+MaildirStore mxroute_local
+Path ~/mail/mxroute/
+Inbox ~/mail/mxroute/INBOX
+Flatten .
+
+Channel mxroute
+Far :mxroute_remote:
+Near :mxroute_local:
+Patterns *
+Create Near
+Expunge Both
+CopyArrivalDate yes
+
+
+IMAPStore appleonc_remote
+Host imap.mail.me.com
+Port 993
+TLSType IMAPS
+UserCmd "echo $MBSYNC_USER"
+PassCmd "echo $MBSYNC_PASS"
+
+MaildirStore appleonc_local
+Path ~/mail/appleonc/
+Inbox ~/mail/appleonc/INBOX
+Flatten .
+
+Channel appleonc
+Far :appleonc_remote:
+Near :appleonc_local:
+Patterns *
+Create Near
+Expunge Both
+CopyArrivalDate yes
+
+
+IMAPStore hlts_remote
+Host mail.runbox.com
+Port 993
+TLSType IMAPS
+UserCmd "echo $MBSYNC_USER"
+PassCmd "echo $MBSYNC_PASS"
+
+MaildirStore hlts_local
+Path ~/mail/hlts/
+Inbox ~/mail/hlts/INBOX
+Flatten .
+
+Channel hlts
+Far :hlts_remote:
+Near :hlts_local:
+Patterns *
+Create Near
+Expunge Both
+CopyArrivalDate yes
+
+
+IMAPStore moms_remote
+Host mail.runbox.com
+Port 993
+TLSType IMAPS
+UserCmd "echo $MBSYNC_USER"
+PassCmd "echo $MBSYNC_PASS"
+
+MaildirStore moms_local
+Path ~/mail/moms/
+Inbox ~/mail/moms/INBOX
+Flatten .
+
+Channel moms
+Far :moms_remote:
+Near :moms_local:
+Patterns *
+Create Near
+Expunge Both
+CopyArrivalDate yes

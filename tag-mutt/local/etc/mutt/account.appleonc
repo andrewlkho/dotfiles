@@ -1,0 +1,16 @@
+set folder = "$HOME/mail/appleonc"
+set smtp_url = "smtps://$my_appleonc_from@smtp.mail.me.com:465"
+set smtp_pass = "$my_appleonc_pass"
+
+set from = "$my_appleonc_from"
+set realname = "$my_appleonc_realname"
+
+set spoolfile = "+INBOX"
+set postponed = "+Drafts"
+set record = "+Sent Messages"
+set trash = "+Deleted Messages"
+
+macro index $ "<sync-mailbox><shell-escape>MBSYNC_USER='$my_appleonc_user' MBSYNC_PASS='$my_appleonc_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' appleonc && mu --quiet index<enter>"
+macro index x ":source $XDG_CONFIG_HOME/mutt/account.hlts<enter><change-folder>$spoolfile<enter>"
+
+# vim: filetype=muttrc

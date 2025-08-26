@@ -1,0 +1,16 @@
+set folder = "$HOME/mail/hlts"
+set smtp_url = "smtps://$my_hlts_user@mail.runbox.com:465"
+set smtp_pass = "$my_hlts_pass"
+
+set from = "$my_hlts_from"
+set realname = "$my_hlts_realname"
+
+set spoolfile = "+INBOX"
+set postponed = "+Drafts"
+set record = "+Sent"
+set trash = "+Trash"
+
+macro index $ "<sync-mailbox><shell-escape>MBSYNC_USER='$my_hlts_user' MBSYNC_PASS='$my_hlts_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' hlts && mu --quiet index<enter>"
+macro index x ":source $XDG_CONFIG_HOME/mutt/account.moms<enter><change-folder>$spoolfile<enter>"
+
+# vim: filetype=muttrc
