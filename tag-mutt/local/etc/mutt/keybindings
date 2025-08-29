@@ -1,8 +1,8 @@
 bind editor <space> noop  # needed to switch to folder name with space in it
 folder-hook . 'macro index,pager ! "<change-folder>$spoolfile<enter>"'
 folder-hook . 'macro index,pager < "<change-folder>$record<enter>"'
-macro index,pager c "<change-folder>?"
-macro index,pager C "<copy-message>?"
+folder-hook . 'macro index,pager c "<change-folder>$folder/<tab><tab>"'
+folder-hook . 'macro index,pager C "<copy-message>$folder/<tab><tab>"'
 
 bind generic,index \cA first-entry
 bind generic,index \cE last-entry
