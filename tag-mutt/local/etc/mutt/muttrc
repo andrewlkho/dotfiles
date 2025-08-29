@@ -34,6 +34,7 @@ set delete = yes
 set fast_reply = yes
 set include = yes
 set mark_old = no
+set mask = "^[^.]"
 set recall = no
 set sleep_time = 0
 set wait_key = no
