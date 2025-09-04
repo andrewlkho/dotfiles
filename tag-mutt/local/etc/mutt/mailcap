@@ -1,2 +1,2 @@
-text/html; cp %s $TMPDIR/email.html && open -a firefox $TMPDIR/email.html
+text/html; open -a firefox %s && sleep 1
 text/html; w3m -I %{charset} -dump %s; copiousoutput; nametemplate=%s.html
