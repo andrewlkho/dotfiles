@@ -68,3 +68,9 @@ if is_up zsh; then
         done
     mkdir -p "${XDG_DATA_HOME}/zsh"
 fi
+
+if is_up mutt; then
+    if ! type urlscan > /dev/null; then
+        echo "Reminder: install urlscan"
+    fi
+fi

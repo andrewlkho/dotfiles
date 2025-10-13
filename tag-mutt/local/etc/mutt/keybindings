@@ -27,6 +27,7 @@ macro compose a "<attach-file>~/<tab><tab>"
 bind compose d detach-file
 bind compose A edit-description
 macro attach s "<save-entry>~/Downloads<enter>y<enter>"
+macro pager u "<pipe-message>urlscan --dedupe<enter>"
 
 # Search using mu to create a virtual maildir
 macro index L "<shell-escape> \
