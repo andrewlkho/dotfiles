@@ -11,16 +11,18 @@ import xml.etree.ElementTree
 
 
 def get_zotero_creds(file):
-    """Read Zotero API key from line 2 of file and also return user id"""
+    """Read Zotero API key from line 2 of file and also return user id, collection"""
     with open(file, "r") as f:
-        api_key = f.readlines()[1].strip()
+        line = f.readlines()[1].strip()
+        api_key = line.split(":")[0]
+        collection = line.split(":")[1]
 
     req = urllib.request.Request(f"https://api.zotero.org/keys/{api_key}")
     req.add_header("Zotero-API-Version", "3")
     res = urllib.request.urlopen(req).read().decode("utf-8")
-    user_id = json.loads(res)["userID"]
+    user_id = str(json.loads(res)["userID"])
 
-    return {"api_key": api_key, "user_id": user_id}
+    return {"api_key": api_key, "user_id": user_id, "collection": collection}
 
 
 def get_instapaper_creds(file):
@@ -128,7 +130,7 @@ def get_from_pubmed(pmid):
         )
     output["abstractNote"] = "\n\n".join(abstract_list)
 
-    if article.find("./Journal"):
+    if article.find("./Journal") is not None:
         journal_title = article.findtext("./Journal/Title")
         journal_abbrev = article.findtext("./Journal/ISOAbbreviation")
         if not journal_abbrev:
@@ -208,12 +210,14 @@ def get_from_pubmed(pmid):
         tags.append({"tag": kw_et.text, "type": 1})
     output["tags"] = tags
 
-    output["collections"] = ["R9YE82TB"]
+    zotero_creds = get_zotero_creds("/root/.local/share/newsboat/passwd")
+    output["collections"] = [zotero_creds["collection"]]
     output["relations"] = {}
 
     # Remove empty items
     required = ("itemType", "tags", "collections", "relations")
     output = {k: v for k, v in output.items() if v or k in required}
+
     return output
 
 
