@@ -39,5 +39,5 @@ bind ^L articlelist,article bookmark
 bind ! articlelist quit
 bind ! article quit; quit
 
-bookmark-cmd "/root/.config/newsboat/pubmed_to_zotero.py"
+bookmark-cmd "/root/.config/newsboat/bookmark.py"
 bookmark-autopilot yes

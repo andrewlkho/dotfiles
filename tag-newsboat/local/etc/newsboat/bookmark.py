@@ -9,6 +9,19 @@ import urllib.request
 import xml.etree.ElementTree
 
 
+def get_zotero_creds(file):
+    """Read Zotero API key from line 2 of file and also return user id"""
+    with open(file, "r") as f:
+        api_key = f.readlines()[1].strip()
+
+    req = urllib.request.Request(f"https://api.zotero.org/keys/{api_key}")
+    req.add_header("Zotero-API-Version", "3")
+    res = urllib.request.urlopen(req).read().decode("utf-8")
+    user_id = json.loads(res)["userID"]
+
+    return {"api_key": api_key, "user_id": user_id}
+
+
 def url2pmid(url):
     """Take a pubmed URL and extract the pmid"""
     match = re.search(r"/(\d+)/", url)
@@ -50,9 +63,9 @@ def get_from_pubmed(pmid):
     #   output["title"] = article.findtext("./ArticleTitle").strip(". ")
     # because sometimes the title includes HTML tags like <sup>
     title_et = article.find("./ArticleTitle")
-    if not title_et:
+    if title_et is None:
         title_et = article.find("./VernacularTitle")
-    if title_et:
+    if title_et is not None:
         title = xml.etree.ElementTree.tostring(title_et, encoding="unicode")
         # Remove opening and closing <ArticleTitle>/<VernacularTitle> tags
         output["title"] = re.sub(r"^[^>]*>|<[^<]*$", "", title).strip("\n .")
@@ -195,23 +208,13 @@ def get_from_pubmed(pmid):
     return output
 
 
-def get_zotero_creds(file):
-    """Read Zotero API key from line 2 of file and also return user id"""
-    with open(file, "r") as f:
-        api_key = f.readlines()[1].strip()
+def add_to_zotero(url):
+    """Query PubMed for information and add article to Zotero"""
+    pmid = url2pmid(url)
+    article = get_from_pubmed(pmid)
 
-    req = urllib.request.Request(f"https://api.zotero.org/keys/{api_key}")
-    req.add_header("Zotero-API-Version", "3")
-    res = urllib.request.urlopen(req).read().decode("utf-8")
-    user_id = json.loads(res)["userID"]
-
-    return {"api_key": api_key, "user_id": user_id}
-
-
-def add_to_zotero(item):
-    """Write a python dictionary containing article info to Zotero"""
     required = {"itemType", "tags", "collections", "relations"}
-    if not isinstance(item, dict) or not required.issubset(item):
+    if not isinstance(article, dict) or not required.issubset(article):
         print("PubMed data extraction failed")
         sys.exit(1)
 
@@ -222,7 +225,7 @@ def add_to_zotero(item):
     req.add_header("Zotero-API-Version", "3")
     req.add_header("Zotero-API-Key", zotero_creds["api_key"])
     req.add_header("Content-Type", "application/json")
-    data = json.dumps([item]).encode("utf-8")
+    data = json.dumps([article]).encode("utf-8")
     try:
         urllib.request.urlopen(req, data)
     except urllib.error.HTTPError as e:
@@ -231,18 +234,21 @@ def add_to_zotero(item):
 
 
 def main():
-    """Import a pubmed URL to Zotero"""
-    parser = argparse.ArgumentParser(
-        description="bookmark-cmd /path/to/pubmed_to_zotero.py"
-    )
+    """Add URL to Zotero (if PubMed) else Instapaper"""
+    parser = argparse.ArgumentParser(description="bookmark-cmd /path/to/bookmark.py")
     parser.add_argument("url")
     parser.add_argument("title")
     parser.add_argument("description")
     parser.add_argument("feed_url")
     args = parser.parse_args()
 
-    pmid = url2pmid(args.url)
-    add_to_zotero(get_from_pubmed(pmid))
+    if args.url[:31] == "https://pubmed.ncbi.nlm.nih.gov":
+        add_to_zotero(args.url)
+    else:
+        # TODO
+        # add_to_instapaper(args.url)
+        print("Add to instapaper not yet implemented")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
