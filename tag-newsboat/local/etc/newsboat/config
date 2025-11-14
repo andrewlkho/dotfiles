@@ -27,6 +27,7 @@ auto-reload yes
 suppress-first-reload yes
 show-read-articles no
 show-read-feeds yes
+toggleitemread-jumps-to-next-unread yes
 
 bind $ feedlist,articlelist reload-all
 bind j feedlist,articlelist,article next
