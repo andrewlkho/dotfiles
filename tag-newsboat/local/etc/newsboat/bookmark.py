@@ -5,6 +5,7 @@ import json
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree
 
@@ -20,6 +21,14 @@ def get_zotero_creds(file):
     user_id = json.loads(res)["userID"]
 
     return {"api_key": api_key, "user_id": user_id}
+
+
+def get_instapaper_creds(file):
+    """Read instapaper credentials from line 3 of file"""
+    with open(file, "r") as f:
+        line = f.readlines()[2].strip()
+
+    return {"username": line.split(":")[0], "password": line.split(":")[1]}
 
 
 def url2pmid(url):
@@ -233,6 +242,24 @@ def add_to_zotero(url):
         sys.exit(1)
 
 
+def add_to_instapaper(url):
+    """Save URL to instapaper"""
+    instapaper_creds = get_instapaper_creds("/root/.local/share/newsboat/passwd")
+    req = urllib.request.Request("https://www.instapaper.com/api/add")
+    data = urllib.parse.urlencode(
+        {
+            "username": instapaper_creds["username"],
+            "password": instapaper_creds["password"],
+            "url": url,
+        }
+    ).encode("utf-8")
+    try:
+        urllib.request.urlopen(req, data)
+    except urllib.error.HTTPError as e:
+        print(f"HTTP {e.code} received when saving to instapaper")
+        sys.exit(1)
+
+
 def main():
     """Add URL to Zotero (if PubMed) else Instapaper"""
     parser = argparse.ArgumentParser(description="bookmark-cmd /path/to/bookmark.py")
@@ -245,10 +272,7 @@ def main():
     if args.url[:31] == "https://pubmed.ncbi.nlm.nih.gov":
         add_to_zotero(args.url)
     else:
-        # TODO
-        # add_to_instapaper(args.url)
-        print("Add to instapaper not yet implemented")
-        sys.exit(1)
+        add_to_instapaper(args.url)
 
 
 if __name__ == "__main__":

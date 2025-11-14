@@ -103,7 +103,6 @@ fi
 function newsboat() {
     if [[ ! -a "${XDG_DATA_HOME}/newsboat/passwd" ]]; then
         echo "Please create ${XDG_DATA_HOME}/newsboat/passwd" 1>&2
-        echo "The first line should be FreshRSS password, second line Zotero API key" 1>&2
     else
         cd ~/git/dotfiles.git/tag-newsboat
         docker compose run --rm newsboat
