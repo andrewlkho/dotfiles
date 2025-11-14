@@ -1,0 +1,43 @@
+urls-source "freshrss"
+freshrss-url "https://rss.cheredeprince.net/api/greader.php"
+freshrss-login "andrew"
+freshrss-passwordfile "/root/.local/share/newsboat/passwd"
+freshrss-min-items 1000
+freshrss-show-special-feeds false
+
+color listnormal default default
+color listfocus color0 color6
+color listnormal_unread color6 default
+color listfocus_unread color0 color6
+color title color0 color6
+show-keymap-hint no
+show-title-bar yes
+swap-title-and-hints yes
+
+datetime-format "%F"
+feed-sort-order title-asc
+feedlist-format "%4i%S%t %> %U "
+feedlist-title-format " newsboat: index %> %?U?%U unread? "
+article-sort-order date-desc
+articlelist-format "%4i %D %?T?|%=17T| ?%t"
+articlelist-title-format " newsboat: %T %> %?u?%u unread? "
+itemview-title-format " newsboat: %F %> %?u?%u unread? "
+
+auto-reload yes
+suppress-first-reload yes
+show-read-articles no
+show-read-feeds yes
+
+bind $ feedlist,articlelist reload-all
+bind j feedlist,articlelist,article next
+bind k feedlist,articlelist,article prev
+bind ^F feedlist,articlelist pagedown
+bind ^B feedlist,articlelist pageup
+bind ^U articlelist toggle-article-read
+bind A articlelist mark-all-above-as-read
+bind ^L articlelist,article bookmark
+bind ! articlelist quit
+bind ! article quit; quit
+
+bookmark-cmd "/root/.config/newsboat/pubmed_to_zotero.py"
+bookmark-autopilot yes
