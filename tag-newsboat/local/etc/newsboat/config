@@ -1,6 +1,7 @@
+error-log "/root/.local/share/newsboat/error_log"
 urls-source "freshrss"
-freshrss-url "https://rss.cheredeprince.net/api/greader.php"
-freshrss-login "andrew"
+freshrss-url "https://alkhl-freshrss.alwaysdata.net/api/greader.php"
+freshrss-login "alkhl"
 freshrss-passwordfile "/root/.local/share/newsboat/passwd"
 freshrss-min-items 1000
 freshrss-show-special-feeds false
