@@ -22,6 +22,27 @@ Expunge Both
 CopyArrivalDate yes
 
 
+IMAPStore tarandy_remote
+Host glacier.mxrouting.net
+Port 993
+TLSType IMAPS
+UserCmd "echo $MBSYNC_USER"
+PassCmd "echo $MBSYNC_PASS"
+
+MaildirStore tarandy_local
+Path ~/mail/tarandy/
+Inbox ~/mail/tarandy/INBOX
+Flatten .
+
+Channel tarandy
+Far :tarandy_remote:
+Near :tarandy_local:
+Patterns *
+Create Near
+Expunge Both
+CopyArrivalDate yes
+
+
 IMAPStore appleonc_remote
 Host imap.mail.me.com
 Port 993
