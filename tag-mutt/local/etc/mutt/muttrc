@@ -82,11 +82,10 @@ set my_cache_init = "`mkdir -p $XDG_CACHE_HOME/mutt`"
 set header_cache = "$XDG_CACHE_HOME/mutt"
 set message_cachedir = "$XDG_CACHE_HOME/mutt"
 
+# printing
+set print_command = "if [ -a ${HOME}/Downloads/muttprint.pdf ]; then echo '~/Downloads/muttprint exists, aborting'; exit 1; else muttprint -p - -i off -a Date_From_To_Subject -P A4 -F Helvetica -e local -E '%A %d %B %Y %H:%M %Z' | ps2pdf - ${HOME}/Downloads/muttprint.pdf; fi"
+
 source "$XDG_CONFIG_HOME/mutt/keybindings"
 source "$XDG_CONFIG_HOME/mutt/colours"
-
-# TODO
-# set print_command = "if [ -a ${HOME}/Desktop/muttprint.pdf ]; then echo '~/Desktop/muttprint.pdf exists, aborting'; exit 1; else muttprint -p - -i off -P A4 -e local -E '%A %d %B %Y %H:%M %Z' | ps2pdf - ${HOME}/Desktop/muttprint.pdf; fi"
-# set print_split
 
 # vim: filetype=muttrc
