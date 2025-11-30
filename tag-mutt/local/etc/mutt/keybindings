@@ -35,7 +35,8 @@ macro index L "<shell-escape> \
     echo \"\$x\" > '$XDG_CACHE_HOME/mutt/search/.query'; \
     mu find --format=links --clearlinks --linksdir='$XDG_CACHE_HOME/mutt/search' \$x; \
     if [[ $? -eq 2 ]]; then find '$XDG_CACHE_HOME/mutt/search' -type l -exec rm {} + ; fi<enter> \
-    <change-folder-readonly>$XDG_CACHE_HOME/mutt/search<enter>"
+    <change-folder-readonly>$XDG_CACHE_HOME/mutt/search<enter>" \
+    "mu search"
 
 # Show related messages in the same thread (using a mu search query)
 macro index & "<pipe-message>python3 -c 'if True: \
@@ -45,6 +46,30 @@ macro index & "<pipe-message>python3 -c 'if True: \
     sed -e 's/^/msgid:\"/; s/$/\"/' > '$XDG_CACHE_HOME/mutt/search/.query' && \
     mu find --include-related --format=links --clearlinks --linksdir='$XDG_CACHE_HOME/mutt/search' \
     $(cat '$XDG_CACHE_HOME/mutt/search/.query')<enter> \
-    <change-folder-readonly>$XDG_CACHE_HOME/mutt/search<enter>"
+    <change-folder-readonly>$XDG_CACHE_HOME/mutt/search<enter>" \
+    "Show related messages in the same thread"
+
+# Go to the original version of a message (useful for moving from mu readonly
+# virtual maildir to viewing it in the original folder where it can be modified)
+macro index * "<pipe-message>python3 -c 'if True: \
+    import sys, email.parser, subprocess, os.path; \
+    e = email.parser.HeaderParser().parse(sys.stdin); \
+    msgid = e[\"message-id\"].strip().strip(\"<>\"); \
+    msgpath_res = subprocess.run( \
+        [\"mu\", \"find\", f\"msgid:{msgid}\", \"--fields\", \"l\"], capture_output=True, text=True \
+    ); \
+    msgpath = msgpath_res.stdout.strip(); \
+    os.path.isfile(msgpath) or sys.exit(1); \
+    parts = msgpath[len(os.path.expanduser(\"~/mail/\")):].split(\"/\"); \
+    account = parts[0]; \
+    folder = parts[1]; \
+    q = chr(34); \
+    e = chr(60) + \"enter\" + chr(62); \
+    print(f\"source {q}$XDG_CONFIG_HOME/mutt/account.{account}{q}\"); \
+    print(f\"push {q}<change-folder>+{folder}{e}<search>=i {msgid}{e}{q}\"); \
+    ' > $XDG_CACHE_HOME/mutt/go<enter> \
+    <enter-command>source $XDG_CACHE_HOME/mutt/go<enter>" \
+    "Go to original folder of current message"
+
 
 # vim: filetype=muttrc
