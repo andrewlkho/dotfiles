@@ -17,7 +17,7 @@ datetime-format "%F"
 feed-sort-order firsttag-asc
 feedlist-format "%3i %10T%S%t %> %U "
 feedlist-title-format " newsboat: index %> %?U?%U unread? "
-article-sort-order date-desc
+article-sort-order date-asc
 articlelist-format "%4i %D %?T?|%=17T| ?%t"
 articlelist-title-format " newsboat: %T %> %?u?%u unread? "
 itemview-title-format " newsboat: %F %> %?u?%u unread? "
