@@ -17,6 +17,7 @@ bind index \cL flag-message
 macro index G "<sync-mailbox>"
 macro index % "<sync-mailbox><shell-escape> \
     MBSYNC_USER='$my_mxroute_user' MBSYNC_PASS='$my_mxroute_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' mxroute && \
+    MBSYNC_USER='$my_tarandy_user' MBSYNC_PASS='$my_tarandy_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' tarandy && \
     MBSYNC_USER='$my_appleonc_user' MBSYNC_PASS='$my_appleonc_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' appleonc && \
     MBSYNC_USER='$my_hlts_user' MBSYNC_PASS='$my_hlts_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' hlts && \
     MBSYNC_USER='$my_moms_user' MBSYNC_PASS='$my_moms_pass' mbsync -c '$XDG_CONFIG_HOME/mbsync/mbsyncrc' moms && \
