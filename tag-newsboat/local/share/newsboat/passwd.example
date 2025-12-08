@@ -1,3 +1,11 @@
-freshrss_password
-zotero_api_key:zotero_collection
-instapaper_username:instapaper_password
+[oldreader]
+username =
+password =
+
+[zotero]
+api_key =
+collection =
+
+[instapaper]
+username =
+password =

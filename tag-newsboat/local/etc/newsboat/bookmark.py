@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import configparser
 import json
 import re
 import sys
@@ -11,11 +12,11 @@ import xml.etree.ElementTree
 
 
 def get_zotero_creds(file):
-    """Read Zotero API key from line 2 of file and also return user id, collection"""
-    with open(file, "r") as f:
-        line = f.readlines()[1].strip()
-        api_key = line.split(":")[0]
-        collection = line.split(":")[1]
+    """Read Zotero API key passwd file and also return user id, collection"""
+    config = configparser.ConfigParser()
+    config.read(file)
+    api_key = config["zotero"]["api_key"]
+    collection = config["zotero"]["collection"]
 
     req = urllib.request.Request(f"https://api.zotero.org/keys/{api_key}")
     req.add_header("Zotero-API-Version", "3")
@@ -26,11 +27,14 @@ def get_zotero_creds(file):
 
 
 def get_instapaper_creds(file):
-    """Read instapaper credentials from line 3 of file"""
-    with open(file, "r") as f:
-        line = f.readlines()[2].strip()
+    """Read instapaper credentials from passwd file"""
+    config = configparser.ConfigParser()
+    config.read(file)
 
-    return {"username": line.split(":")[0], "password": line.split(":")[1]}
+    return {
+        "username": config["instapaper"]["username"],
+        "password": config["instapaper"]["password"],
+    }
 
 
 def url2pmid(url):

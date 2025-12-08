@@ -1,10 +1,8 @@
 error-log "/root/.local/share/newsboat/error_log"
-urls-source "freshrss"
-freshrss-url "https://alkhl-freshrss.alwaysdata.net/api/greader.php"
-freshrss-login "alkhl"
-freshrss-passwordfile "/root/.local/share/newsboat/passwd"
-freshrss-min-items 1000
-freshrss-show-special-feeds false
+urls-source "oldreader"
+oldreader-login `python3 -c 'import configparser; c = configparser.ConfigParser(); c.read("/root/.local/share/newsboat/passwd"); print(c["oldreader"]["username"]);'`
+oldreader-password `python3 -c 'import configparser; c = configparser.ConfigParser(); c.read("/root/.local/share/newsboat/passwd"); print(c["oldreader"]["password"]);'`
+oldreader-show-special-feeds no
 
 color listnormal default default
 color listfocus color0 color6
