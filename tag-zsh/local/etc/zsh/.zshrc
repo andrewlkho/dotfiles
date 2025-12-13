@@ -133,3 +133,7 @@ fi
 if [ -n "$(whence pipx)" ]; then
     export PIPX_HOME="${XDG_DATA_HOME}/pipx"
 fi
+
+if [[ -a "${HOME}/git/hledger.git/journals/hledger.journal" ]]; then
+    export LEDGER_FILE="${HOME}/git/hledger.git/journals/hledger.journal"
+fi
